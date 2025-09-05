@@ -1,76 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Пример меню с иконками</title>
-    <!-- Подключаем CSS Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Подключаем FontAwesome для иконок -->
-    <script src="https://kit.fontawesome.com/6cde1f1aeb.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <nav class="navbar navbar-light bg-light">
-        <div class="container-fluid">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <!-- Значок Телеграм -->
-                <li class="nav-item mx-2">
-                    <a class="nav-link text-dark" href="https://t.me/your_telegram_username"><i class="fab fa-telegram fa-2x"></i></a>
-                </li>
-                
-                <!-- Значок GitHub -->
-                <li class="nav-item mx-2">
-                    <a class="nav-link text-dark" href="https://github.com/your_github_username"><i class="fab fa-github fa-2x"></i></a>
-                </li>
-                
-                <!-- Значок шестеренки для настройки темы -->
-                <li class="nav-item mx-2">
-                    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#themeModal">
-                        <i class="fas fa-cog fa-2x"></i>
-                    </button>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    
-    <!-- Модальное окно для выбора темы -->
-    <div class="modal fade" id="themeModal" tabindex="-1" aria-labelledby="themeModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="themeModalLabel">Выбор темы сайта</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Выберите цветовую схему:</p>
-                    <label><input type="radio" name="theme" value="light"> Светлая тема</label><br>
-                    <label><input type="radio" name="theme" value="dark"> Темная тема</label>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-primary" onclick="changeTheme()">Применить</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Скрипт для переключения темы -->
+    <title>Обо мне — pepexqw_</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Плавный скроллинг -->
     <script>
-        function changeTheme() {
-            var selectedTheme = document.querySelector('input[name="theme"]:checked').value;
+        document.addEventListener("DOMContentLoaded", function() {
+            const navLinks = document.querySelectorAll('.nav-link');
             
-            if(selectedTheme === 'light') {
-                // Логика для светлой темы
-                console.log("Светлая тема выбрана");
-            } else if(selectedTheme === 'dark') {
-                // Логика для тёмной темы
-                console.log("Темная тема выбрана");
-            }
-        }
+            navLinks.forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    
+                    // Получаем целевой ID
+                    let targetId = link.getAttribute('href').substring(1);
+                    let targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
     </script>
+</head>
+<body class="dark-theme">
+    <header>
+        <nav>
+            <div class="logo">@pepexqw_</div>
+            <ul>
+                <li><a href="#about-me" class="nav-link">Обо мне</a></li>
+                <li><a href="#server-info" class="nav-link">Сервер Minecraft</a></li>
+                <li><a href="#music" class="nav-link">Моя любимая музыка</a></li>
+                <li><a href="https://t.me/pepexqw_" target="_blank" class="nav-link">Мой Telegram</a></li>
+            </ul>
+        </nav>
+        <h1>Привет! Меня зовут pepexqw_, мне 14 лет.</h1>
+    </header>
+    
+    <section id="about-me">
+        <h2>Немного обо мне</h2>
+        <div class="block">
+            Сейчас я активно занимаюсь изучением программирования на Python через платформу Stepik.<br />
+            Это увлекательное путешествие, полное новых открытий!<br /><br />
+            Помимо программирования, я увлекаюсь музыкой и люблю экспериментировать с разными жанрами и инструментами.
+        </div>
+    </section>
 
-    <!-- Подключаем JS библиотеки Bootstrap -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <section id="server-info">
+        <h2>Майнкрафт-сервер</h2>
+        <div class="block">
+            У меня есть свой сервер Minecraft, присоединяйтесь и играйте вместе со мной:<br />
+            IP сервера: <strong>94.156.181.30:26157</strong>
+        </div>
+    </section>
+
+    <section id="music">
+        <h2>Любимая музыка</h2>
+        <div class="block">
+            Моя любимая песня заряжает позитивом и вдохновляет!<br />
+            <audio controls autoplay loop>
+                <source src="https://example.com/faled_down.mp3" type="audio/mpeg">
+                Ваш браузер не поддерживает тег audio.
+            </audio>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 pepexqw_. Все права защищены.</p>
+    </footer>
 </body>
 </html>
