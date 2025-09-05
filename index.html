@@ -5,59 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обо мне — pepexqw_</title>
     <link rel="stylesheet" href="/static/style.css">
+    <!-- Подключение Font-Awesome для иконок -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+    <!-- Стили для плавного перехода -->
     <style>
-        /* Основной стиль баннера */
-        #cookie-banner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-        }
+        body.dark-theme { background-color: #2b2b2b; color: white; transition: all .3s ease-in-out; }
+        body.light-theme { background-color: white; color: black; transition: all .3s ease-in-out; }
+        
+        /* Навигационное меню */
+        nav ul li a { display: inline-block; padding: 10px; text-decoration: none; color: inherit; }
+        nav ul li a:focus, nav ul li a:hover { opacity: 0.8; }
 
-        /* Кнопки */
-        #cookie-banner label, #cookie-banner input[type="submit"] {
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 5px;
-            background-color: #f5a623;
-            color: #fff;
-            border: none;
-            outline: none;
-            transition: background-color 0.3s ease-in-out;
-        }
-
-        #cookie-banner label:hover, #cookie-banner input[type="submit"]:hover {
-            background-color: #d48c15;
-        }
-
-        /* Раскрывающееся окно политики cookie */
-        #cookie-policy-modal {
-            display: none;
-            position: absolute;
-            top: calc(100% + 10px); /* Появится ниже баннера */
-            background-color: #fff;
-            color: #333;
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,.5);
-            transform: translateY(-10px); /* Начальная позиция выше */
-            transition: transform 0.3s ease-in-out; /* Анимация раскрытия */
-        }
-
-        /* Раскрытое состояние окна политики cookie */
-        #cookie-policy-checkbox:checked ~ #cookie-policy-modal {
-            display: block;
-            transform: translateY(0); /* Перемещается вниз плавно */
-        }
+        section h2 { margin-top: 2rem; font-size: 2em; }
+        footer p { text-align: center; margin-bottom: 1rem; }
     </style>
+
+    <!-- Скрипты -->
+    <script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Плавный скроллинг
+            const navLinks = document.querySelectorAll(".nav-link");
+            navLinks.forEach((link) => {
+                link.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const targetId = link.getAttribute("href").substr(1); // Удаляем "#"
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        window.scrollTo({ top: targetSection.offsetTop, behavior: "smooth" });
+                    }
+                });
+            });
+
+            // Переключение тем
+            const themeToggleButton = document.querySelector("#theme-toggle");
+            themeToggleButton.addEventListener("click", () => {
+                document.body.classList.toggle("dark-theme");
+                document.body.classList.toggle("light-theme");
+            });
+        });
+    </script>
 </head>
 
 <body class="dark-theme">
@@ -69,6 +55,7 @@
                 <li><a href="#server-info" class="nav-link">Сервер Minecraft</a></li>
                 <li><a href="#music" class="nav-link">Моя любимая музыка</a></li>
                 <li><a href="#" id="theme-toggle" title="Изменение темы сайта"><i class="fas fa-moon"></i></a></li>
+                <!-- Добавляем новые кнопки с иконками -->
                 <li><a href="https://t.me/pepexqw_" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a></li>
                 <li><a href="https://github.com/pepexqw_" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></li>
             </ul>
@@ -109,16 +96,5 @@
     <footer>
         <p>© 2025 pepexqw_. Все права защищены.</p>
     </footer>
-
-    <!-- Согласие на использование файлов cookie -->
-    <div id="cookie-banner">
-        Мы используем файлы cookie для улучшения функциональности нашего веб-сайта. Продолжая пользоваться сайтом, вы соглашаетесь с использованием файлов cookie.
-        <input type="submit" value="Принять" onclick="this.parentNode.style.display='none'">
-        <input type="checkbox" id="cookie-policy-checkbox" hidden>
-        <label for="cookie-policy-checkbox">Подробнее</label>
-        <div id="cookie-policy-modal">
-            Мы используем файлы cookie для хранения ваших предпочтений и аналитики действий на сайте. Вы можете ознакомиться с нашей политикой конфиденциальности здесь.
-        </div>
-    </div>
 </body>
 </html>
