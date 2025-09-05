@@ -1,40 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Theme Website</title>
-    <style>
-        body {
-            background-color: #121212; /* Тёмный фон */
-            color: white;              /* Белый цвет текста */
-            font-family: Arial, sans-serif;
-            padding: 2rem;
-        }
-        
-        h1, p {
-            margin-bottom: 1em;
-        }
-        
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-decoration: none;
-            color: black;
-            background-color: #ffffff;
-            transition: all 0.3s ease-in-out;
-        }
-        
-        .button:hover {
-            background-color: #c0c0c0;
-        }
-    </style>
+    <title>Обо мне — pepexqw_</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- Плавный скроллинг -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    
+                    // Получаем целевой ID
+                    let targetId = link.getAttribute('href').substring(1);
+                    let targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
 </head>
+<body class="dark-theme">
+    <header>
+        <nav>
+            <div class="logo">@pepexqw_</div>
+            <ul>
+                <li><a href="#about-me" class="nav-link">Обо мне</a></li>
+                <li><a href="#server-info" class="nav-link">Сервер Minecraft</a></li>
+                <li><a href="#music" class="nav-link">Моя любимая музыка</a></li>
+                <li><a href="https://t.me/pepexqw_" target="_blank" class="nav-link">Мой Telegram</a></li>
+            </ul>
+        </nav>
+        <h1>Привет! Меня зовут pepexqw_, мне 14 лет.</h1>
+    </header>
+    
+    <section id="about-me">
+        <h2>Немного обо мне</h2>
+        <div class="block">
+            Сейчас я активно занимаюсь изучением программирования на Python через платформу Stepik.<br />
+            Это увлекательное путешествие, полное новых открытий!<br /><br />
+            Помимо программирования, я увлекаюсь музыкой и люблю экспериментировать с разными жанрами и инструментами.
+        </div>
+    </section>
 
-<body>
-    <h1>Привет, мир!</h1>
-    <p>Это мой первый сайт с тёмной темой.</p>
-    <a href="#" class="button">Нажми меня</a>
+    <section id="server-info">
+        <h2>Майнкрафт-сервер</h2>
+        <div class="block">
+            У меня есть свой сервер Minecraft, присоединяйтесь и играйте вместе со мной:<br />
+            IP сервера: <strong>94.156.181.30:26157</strong>
+        </div>
+    </section>
+
+    <section id="music">
+        <h2>Любимая музыка</h2>
+        <div class="block">
+            Моя любимая песня заряжает позитивом и вдохновляет!<br />
+            <audio controls autoplay loop>
+                <source src="https://example.com/faled_down.mp3" type="audio/mpeg">
+                Ваш браузер не поддерживает тег audio.
+            </audio>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 pepexqw_. Все права защищены.</p>
+    </footer>
 </body>
 </html>
