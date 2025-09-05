@@ -2,32 +2,50 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обо мне — pepexqw_</title>
     <link rel="stylesheet" href="/static/style.css">
-    <!-- Плавный скроллинг -->
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const navLinks = document.querySelectorAll('.nav-link');
-            
-            navLinks.forEach(link => {
-                link.addEventListener('click', e => {
-                    e.preventDefault();
-                    
-                    // Получаем целевой ID
-                    let targetId = link.getAttribute('href').substring(1);
-                    let targetElement = document.getElementById(targetId);
-                    
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop,
-                            behavior: 'smooth'
-                        });
+    <!-- Подключение Font-Awesome для иконок -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+    <!-- Стили для плавного перехода -->
+    <style>
+        body.dark-theme { background-color: #2b2b2b; color: white; transition: all .3s ease-in-out; }
+        body.light-theme { background-color: white; color: black; transition: all .3s ease-in-out; }
+        
+        /* Навигационное меню */
+        nav ul li a { display: inline-block; padding: 10px; text-decoration: none; color: inherit; }
+        nav ul li a:focus, nav ul li a:hover { opacity: 0.8; }
+
+        section h2 { margin-top: 2rem; font-size: 2em; }
+        footer p { text-align: center; margin-bottom: 1rem; }
+    </style>
+
+    <!-- Скрипты -->
+    <script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Плавный скроллинг
+            const navLinks = document.querySelectorAll(".nav-link");
+            navLinks.forEach((link) => {
+                link.addEventListener("click", (event) => {
+                    event.preventDefault();
+                    const targetId = link.getAttribute("href").substr(1); // Удаляем "#"
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        window.scrollTo({ top: targetSection.offsetTop, behavior: "smooth" });
                     }
                 });
+            });
+
+            // Переключение тем
+            const themeToggleButton = document.querySelector("#theme-toggle");
+            themeToggleButton.addEventListener("click", () => {
+                document.body.classList.toggle("dark-theme");
+                document.body.classList.toggle("light-theme");
             });
         });
     </script>
 </head>
+
 <body class="dark-theme">
     <header>
         <nav>
@@ -36,39 +54,41 @@
                 <li><a href="#about-me" class="nav-link">Обо мне</a></li>
                 <li><a href="#server-info" class="nav-link">Сервер Minecraft</a></li>
                 <li><a href="#music" class="nav-link">Моя любимая музыка</a></li>
-                <li><a href="https://t.me/pepexqw_" target="_blank" class="nav-link">Мой Telegram</a></li>
+                <li><a href="#" id="theme-toggle" title="Изменение темы сайта"><i class="fas fa-moon"></i></a></li>
             </ul>
         </nav>
         <h1>Привет! Меня зовут pepexqw_, мне 14 лет.</h1>
     </header>
-    
-    <section id="about-me">
-        <h2>Немного обо мне</h2>
-        <div class="block">
-            Сейчас я активно занимаюсь изучением программирования на Python через платформу Stepik.<br />
-            Это увлекательное путешествие, полное новых открытий!<br /><br />
-            Помимо программирования, я увлекаюсь музыкой и люблю экспериментировать с разными жанрами и инструментами.
-        </div>
-    </section>
 
-    <section id="server-info">
-        <h2>Майнкрафт-сервер</h2>
-        <div class="block">
-            У меня есть свой сервер Minecraft, присоединяйтесь и играйте вместе со мной:<br />
-            IP сервера: <strong>94.156.181.30:26157</strong>
-        </div>
-    </section>
+    <main role="main">
+        <section id="about-me">
+            <h2>Немного обо мне</h2>
+            <div class="block">
+                Сейчас я активно изучаю программирование на Python через платформу Stepik.<br />
+                Это увлекательное путешествие, полное новых открытий!<br /><br />
+                Помимо программирования, я увлекаюсь музыкой и люблю экспериментировать с разными жанрами и инструментами.
+            </div>
+        </section>
 
-    <section id="music">
-        <h2>Любимая музыка</h2>
-        <div class="block">
-            Моя любимая песня заряжает позитивом и вдохновляет!<br />
-            <audio controls autoplay loop>
-                <source src="https://example.com/faled_down.mp3" type="audio/mpeg">
-                Ваш браузер не поддерживает тег audio.
-            </audio>
-        </div>
-    </section>
+        <section id="server-info">
+            <h2>Майнкрафт-сервер</h2>
+            <div class="block">
+                У меня есть собственный сервер Minecraft, присоединяйтесь и играйте вместе со мной:<br />
+                IP сервера: <strong>94.156.181.30:26157</strong>
+            </div>
+        </section>
+
+        <section id="music">
+            <h2>Любимая музыка</h2>
+            <div class="block">
+                Моя любимая песня заряжает позитивом и вдохновляет!<br />
+                <audio controls autoplay loop>
+                    <source src="https://example.com/faled_down.mp3" type="audio/mpeg">
+                    Ваш браузер не поддерживает воспроизведение аудиофайлов.
+                </audio>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <p>© 2025 pepexqw_. Все права защищены.</p>
