@@ -7,12 +7,12 @@
     <link rel="stylesheet" href="/static/style.css">
     <!-- Подключение Font-Awesome для иконок -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
-    <!-- Основные стили -->
+    <!-- Стили для плавного перехода -->
     <style>
         body.dark-theme { background-color: #2b2b2b; color: white; transition: all .3s ease-in-out; }
         body.light-theme { background-color: white; color: black; transition: all .3s ease-in-out; }
         
-        /* Настройка навигации */
+        /* Навигационное меню */
         nav ul li a { display: inline-block; padding: 10px; text-decoration: none; color: inherit; }
         nav ul li a:focus, nav ul li a:hover { opacity: 0.8; }
 
@@ -23,12 +23,12 @@
     <!-- Скрипты -->
     <script defer>
         document.addEventListener("DOMContentLoaded", () => {
-            // Плавный скроллинг по внутренним ссылкам
+            // Плавный скроллинг
             const navLinks = document.querySelectorAll(".nav-link");
             navLinks.forEach((link) => {
                 link.addEventListener("click", (event) => {
                     event.preventDefault();
-                    const targetId = link.getAttribute("href").substr(1); // Удаляем символ '#'
+                    const targetId = link.getAttribute("href").substr(1); // Удаляем "#"
                     const targetSection = document.getElementById(targetId);
                     if (targetSection) {
                         window.scrollTo({ top: targetSection.offsetTop, behavior: "smooth" });
@@ -52,11 +52,10 @@
             <div class="logo">@pepexqw_</div>
             <ul>
                 <li><a href="#about-me" class="nav-link">Обо мне</a></li>
+                <li><a href="#server-info" class="nav-link">Сервер Minecraft</a></li>
                 <li><a href="#music" class="nav-link">Моя любимая музыка</a></li>
-                <!-- Замена вкладки "Сервер Minecraft" на "Проекты" -->
-                <li><a href="projects.html" class="nav-link">Проекты</a></li>
                 <li><a href="#" id="theme-toggle" title="Изменение темы сайта"><i class="fas fa-moon"></i></a></li>
-                <!-- Добавленные иконки Telegram и GitHub -->
+                <!-- Добавляем новые кнопки с иконками -->
                 <li><a href="https://t.me/pepexqw_" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a></li>
                 <li><a href="https://github.com/pepexqw_" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></li>
             </ul>
@@ -71,6 +70,14 @@
                 Сейчас я активно изучаю программирование на Python через платформу Stepik.<br />
                 Это увлекательное путешествие, полное новых открытий!<br /><br />
                 Помимо программирования, я увлекаюсь музыкой и люблю экспериментировать с разными жанрами и инструментами.
+            </div>
+        </section>
+
+        <section id="server-info">
+            <h2>Майнкрафт-сервер</h2>
+            <div class="block">
+                У меня есть собственный сервер Minecraft, присоединяйтесь и играйте вместе со мной:<br />
+                IP сервера: <strong>94.156.181.30:26157</strong>
             </div>
         </section>
 
