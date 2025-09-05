@@ -18,44 +18,6 @@
 
         section h2 { margin-top: 2rem; font-size: 2em; }
         footer p { text-align: center; margin-bottom: 1rem; }
-
-        /* Блок согласия на cookie */
-        #cookie-consent-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        #cookie-consent-banner button {
-            background-color: #ff9800;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        #cookie-consent-banner button:hover {
-            background-color: #e68700;
-        }
-
-        #cookie-consent-banner a {
-            color: #fff;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        #cookie-consent-banner a:hover {
-            color: #ddd;
-        }
     </style>
 
     <!-- Скрипты -->
@@ -92,10 +54,11 @@
                 <li><a href="#about-me" class="nav-link">Обо мне</a></li>
                 <li><a href="#server-info" class="nav-link">Сервер Minecraft</a></li>
                 <li><a href="#music" class="nav-link">Моя любимая музыка</a></li>
+                <li><a href="projects.html" class="nav-link">Мои проекты</a></li>
                 <li><a href="#" id="theme-toggle" title="Изменение темы сайта"><i class="fas fa-moon"></i></a></li>
                 <!-- Добавляем новые кнопки с иконками -->
                 <li><a href="https://t.me/pepexqw_" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a></li>
-                <li><a href="https://github.com/pepexqw" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></li>
+                <li><a href="https://github.com/pepexqw_" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></li>
             </ul>
         </nav>
         <h1>Привет! Меня зовут pepexqw_, мне 14 лет.</h1>
@@ -134,18 +97,5 @@
     <footer>
         <p>© 2025 pepexqw_. Все права защищены.</p>
     </footer>
-
-    <!-- Согласие на использование файлов cookie -->
-    <div id="cookie-consent-banner">
-        Мы используем файлы cookie для улучшения функциональности нашего веб-сайта. Нажмите <button onclick="this.parentNode.style.display='none'">«Принять»</button>, чтобы продолжить работу с сайтом.
-        <a href="#" onclick="window.location.href='#cookie-policy'; return false;">Подробнее</a>
-    </div>
-
-    <!-- Политика использования файлов cookie -->
-    <section id="cookie-policy" style="display: none;">
-        <h2>Политика использования файлов cookie</h2>
-        <p>Наш сайт использует файлы cookie для улучшения качества обслуживания и оптимизации взаимодействия с пользователями. Файлы cookie помогают нам запоминать ваши предпочтения и улучшать навигацию по сайту.</p>
-        <p>Продолжая просматривать наш сайт, вы даете свое согласие на использование файлов cookie.</p>
-    </section>
 </body>
 </html>
