@@ -18,11 +18,49 @@
 
         section h2 { margin-top: 2rem; font-size: 2em; }
         footer p { text-align: center; margin-bottom: 1rem; }
+
+        /* Стили для баннера cookie */
+        #cookie-banner {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #333;
+            color: #fff;
+            padding: 10px;
+            z-index: 1000;
+        }
+
+        /* Политика cookie */
+        #cookie-policy-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,.8);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #cookie-policy-modal div {
+            background: #fff;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,.5);
+        }
     </style>
 
     <!-- Скрипты -->
     <script defer>
         document.addEventListener("DOMContentLoaded", () => {
+            // Проверка наличия cookie и показ уведомления
+            checkAndShowCookieBanner();
+            
             // Плавный скроллинг
             const navLinks = document.querySelectorAll(".nav-link");
             navLinks.forEach((link) => {
@@ -43,6 +81,26 @@
                 document.body.classList.toggle("light-theme");
             });
         });
+
+        function checkAndShowCookieBanner() {
+            let accepted = localStorage.getItem('cookiesAccepted');
+            if (!accepted) {
+                document.getElementById('cookie-banner').style.display = 'block';
+            }
+        }
+
+        function acceptCookies() {
+            localStorage.setItem('cookiesAccepted', true);
+            document.getElementById('cookie-banner').style.display = 'none';
+        }
+
+        function showCookiePolicy() {
+            document.getElementById('cookie-policy-modal').style.display = 'flex';
+        }
+
+        function closeCookiePolicyModal() {
+            document.getElementById('cookie-policy-modal').style.display = 'none';
+        }
     </script>
 </head>
 
@@ -96,5 +154,19 @@
     <footer>
         <p>© 2025 pepexqw_. Все права защищены.</p>
     </footer>
+
+    <!-- Баннер согласия на использование файлов cookie -->
+    <div id="cookie-banner">
+        Мы используем файлы cookie для улучшения функциональности нашего веб-сайта. Продолжая пользоваться сайтом, вы соглашаетесь с использованием файлов cookie.   <button onclick="acceptCookies()">Принять</button>  <a href="#" onclick="showCookiePolicy()">Подробнее</a>
+    </div>
+
+    <!-- Модальное окно политики использования файлов cookie -->
+    <div id="cookie-policy-modal">
+        <div>
+            <h2>Политика использования файлов cookie</h2>
+            <p>Мы используем файлы cookie для хранения настроек, сбора статистики и анализа поведения пользователей на нашем сайте. Если вы продолжите просмотр сайта, мы будем считать, что вы согласны с использованием файлов cookie.</p>
+            <button onclick="closeCookiePolicyModal()">Закрыть</button>
+        </div>
+    </div>
 </body>
 </html>
