@@ -5,19 +5,11 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Roboto', Arial, sans-serif;
-    transition: all .3s ease-in-out;
-}
-
 .dark-theme {
     background-color: #1a1b26;
     color: white;
-}
-
-.light-theme {
-    background-color: #ffffff;
-    color: #333333;
+    font-family: 'Roboto', Arial, sans-serif;
+    transition: all .3s ease-in-out;
 }
 
 /* Шрифты */
@@ -25,10 +17,9 @@ body {
 
 /* Навигационное меню */
 nav {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
+    position: relative;
+    z-index: 1000;
+    overflow: hidden;
     height: 60px;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
@@ -36,14 +27,12 @@ nav {
     justify-content: space-between;
     padding-left: 20px;
     padding-right: 20px;
-    backdrop-filter: blur(10px); /* Эффект размытия фона */
 }
 
 .logo {
     font-weight: bold;
     font-size: 1.2em;
     letter-spacing: 1px;
-    color: #fff;
 }
 
 nav ul {
@@ -140,60 +129,7 @@ footer {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Легкая тень */
 }
 
-/* Темная тема - адаптивные изменения цветов */
-.dark-theme .block {
-    background-color: rgba(0, 0, 0, 0.1); /* Меняем цвет блока на темный фон */
-}
-
-.dark-theme footer {
-    background-color: rgba(0, 0, 0, 0.9); /* Тёмнее фон подвала */
-}
-
-.dark-theme section h2 {
-    color: #FFD700; /* Яркий заголовок на темном фоне */
-}
-
-.dark-theme nav ul .nav-link {
-    color: #FFAA00; /* Акцент на ссылку в тёмной теме */
-}
-
-.dark-theme nav ul .nav-link:hover {
-    color: #FFEEDD; /* Цвет при наведении */
-}
-
-.dark-theme nav ul .nav-link::before {
-    background-color: #FFD700; /* Золотистый эффект подсветки ссылок */
-}
-
-.dark-theme nav ul .nav-link:hover::before {
-    transform: scaleX(1); /* Показывать подчеркивание при наведении */
-}
-
-/* Светлая тема - адаптация цветов */
-.light-theme .block {
-    background-color: rgba(255, 255, 255, 0.95); /* Белый полупрозрачный блок */
-}
-
-.light-theme nav ul .nav-link {
-    color: #333; /* Стандартный черный цвет текста */
-}
-
-.light-theme nav ul .nav-link:hover {
-    color: #FFB500; /* Приятный оттенок при наведении */
-}
-
-.light-theme nav ul .nav-link::before {
-    background-color: #FFC300; /* Мягкое золотисто-желтое подчёркивание */
-}
-
-.light-theme nav ul .nav-link:hover::before {
-    transform: scaleX(1); /* Появление эффекта подчёркивания */
-}
-
-.light-theme section h2 {
-    color: #333; /* Обычный чёрный заголовок */
-}
-
 .light-theme footer {
     background-color: rgba(0, 0, 0, 0.1); /* Серый полупрозрачный фон подвала */
 }
+
