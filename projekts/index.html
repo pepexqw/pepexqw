@@ -35,7 +35,7 @@
             display: block;
             margin-bottom: 1rem;
         }
-        article.project button.download-btn {
+        article.project a.download-btn {
             display: inline-block;
             padding: 10px 20px;
             background-color: #28a745; /* Зелёный цвет */
@@ -43,10 +43,11 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            text-decoration: none;
             transition: background-color 0.3s ease;
         }
-        article.project button.download-btn:hover {
-            background-color: #218838; /* Тёмно-зелёный оттенок при наведении */
+        article.project a.download-btn:hover {
+            background-color: #218838; /* Темно-зеленый оттенок при наведении */
         }
     </style>
 
@@ -82,22 +83,22 @@
             <article class="project">
                 <img src="path/to/project-image.jpg" alt="Проект №1">
                 <h3>Название проекта №1</h3>
-                <p>Описание проекта №1... Подробнее о проекте, используемых технологиях и результатах.</p>
-                <button class="download-btn">Скачать</button>
+                <p>Описание проекта №1... Подробнее о проекте, технологиях и результатах.</p>
+                <a href="path/to/download-file.zip" download class="download-btn">Скачать</a>
             </article>
 
             <article class="project">
                 <img src="path/to/project-image.jpg" alt="Проект №2">
                 <h3>Название проекта №2</h3>
                 <p>Описание проекта №2... Описание технологий, целей и достижений проекта.</p>
-                <button class="download-btn">Скачать</button>
+                <a href="path/to/download-file.zip" download class="download-btn">Скачать</a>
             </article>
 
             <article class="project">
                 <img src="path/to/project-image.jpg" alt="Проект №3">
                 <h3>Название проекта №3</h3>
-                <p>Описание проекта №3... Какая технология использовалась, цель и достижение проекта.</p>
-                <button class="download-btn">Скачать</button>
+                <p>Описание проекта №3... Какие технологии использовались, цель и достижения проекта.</p>
+                <a href="path/to/download-file.zip" download class="download-btn">Скачать</a>
             </article>
         </section>
     </main>
