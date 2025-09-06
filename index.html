@@ -1,93 +1,114 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обо мне — pepexqw_</title>
     <link rel="stylesheet" href="/static/style.css">
+    <!-- Подключение Font-Awesome для иконок -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+    <!-- Стили для плавного перехода -->
     <style>
         body.dark-theme { background-color: #2b2b2b; color: white; transition: all .3s ease-in-out; }
         body.light-theme { background-color: white; color: black; transition: all .3s ease-in-out; }
-        nav ul li a { display: inline-block; padding: 10px; text-decoration: none; color: inherit; }
-        nav ul li a:focus, nav ul li a:hover { opacity: 0.8; }
-        section h2 { margin-top: 2rem; font-size: 2em; }
-        footer p { text-align: center; margin-bottom: 1rem; }
-        #cookie-consent-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-        }
-        #cookie-consent-banner button {
-            background-color: #ff9800;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        #cookie-consent-banner button:hover {
-            background-color: #e68700;
-        }
-        #cookie-consent-banner a {
-            color: #fff;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-        #cookie-consent-banner a:hover {
-            color: #ddd;
+        
+
+    /* Навигационное меню */
+    nav ul li a { display: inline-block; padding: 10px; text-decoration: none; color: inherit; }
+    nav ul li a:focus, nav ul li a:hover { opacity: 0.8; }
+
+    section h2 { margin-top: 2rem; font-size: 2em; }
+    footer p { text-align: center; margin-bottom: 1rem; }
+
+    /* Блок согласия на cookie */
+    #cookie-consent-banner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    #cookie-consent-banner button {
+        background-color: #ff9800;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #cookie-consent-banner button:hover {
+        background-color: #e68700;
+    }
+
+    #cookie-consent-banner a {
+        color: #fff;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    #cookie-consent-banner a:hover {
+        color: #ddd;
+    }
+</style>
+
+<!-- Скрипты -->
+<script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Создаем элемент audio
+        let soundEffect = new Audio("/ckik.mp3"); // Путь к файлу звука
+
+        // Функция воспроизведения звука
+        function playSound() {
+            soundEffect.play();
         }
 
-        /* Эффект анимации */
-        .fade-in {
-            animation-name: fadeInAnimation;
-            animation-duration: 0.3s;
-            animation-fill-mode: forwards;
+        // Получаем все элементы навигационного меню
+        const navItems = document.querySelectorAll("nav ul li a");
+
+        // Назначаем обработчик события hover каждому пункту меню
+        navItems.forEach(item => {
+            item.addEventListener("mouseenter", playSound);
+        });
+
+        // Плавный скроллинг для внутренних ссылок
+        const navLinks = document.querySelectorAll(".nav-link");
+        navLinks.forEach((link) => {
+            link.addEventListener("click", (event) => {
+                event.preventDefault();
+                const targetId = link.getAttribute("href").substr(1); // Удаляем "#"
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    window.scrollTo({ top: targetSection.offsetTop, behavior: "smooth" });
+                }
+            });
+        });
+
+        // Дополнительная логика для внешней ссылки
+        const externalLink = document.querySelector('a[href^="https"]');
+        if (externalLink) {
+            externalLink.addEventListener("click", function(event) {
+                event.preventDefault(); // Отмена стандартного поведения
+                location.href = this.href; // Перенаправление на внешнюю страницу
+            });
         }
 
-        @keyframes fadeInAnimation {
-            from {
-                transform: translateY(-10px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        #custom-context-menu {
-            position: absolute;
-            background-color: #2B2B2B; /* Темный фон */
-            color: #FFFFFF; /* Белый цвет текста */
-            border-radius: 10px; /* Округлые углы */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Небольшая тень */
-            padding: 10px;
-            min-width: 150px;
-            z-index: 1000;
-            display: none;
-        }
-
-        #custom-context-menu a {
-            display: block;
-            padding: 8px 12px;
-            text-decoration: none;
-            color: #FFF;
-            transition: background-color 0.3s ease;
-        }
-
-        #custom-context-menu a:hover {
-            background-color: #3D3D3D; /* Немного светлее оттенок фона при наведении */
-        }
-    </style>
+        // Переключение тем
+        const themeToggleButton = document.querySelector("#theme-toggle");
+        themeToggleButton.addEventListener("click", () => {
+            document.body.classList.toggle("dark-theme");
+            document.body.classList.toggle("light-theme");
+        });
+    });
+</script>
 </head>
 
 <body class="dark-theme">
@@ -98,8 +119,9 @@
                 <li><a href="#about-me" class="nav-link">Обо мне</a></li>
                 <li><a href="#server-info" class="nav-link">Сервер Minecraft</a></li>
                 <li><a href="#music" class="nav-link">Моя любимая музыка</a></li>
-                <li><a href="https://pepexqw.vercel.app/projekts/" class="nav-link">Проекты</a></li>
+                <li><a href="https://pepexqw.vercel.app/projekts/" class="nav-link">Проекты</a></li> <!-- Вернули класс nav-link -->
                 <li><a href="#" id="theme-toggle" title="Изменение темы сайта"><i class="fas fa-moon"></i></a></li>
+                <!-- Добавляем новые кнопки с иконками -->
                 <li><a href="https://t.me/pepexqw_" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a></li>
                 <li><a href="https://github.com/pepexqw" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></li>
             </ul>
@@ -107,85 +129,53 @@
         <h1>Привет! Меня зовут pepexqw_, мне 14 лет.</h1>
     </header>
 
-    <!-- Кастомное контекстное меню -->
-    <div id="custom-context-menu" style="display: none;">
-        <a href="https://boosty.to/yourpage" target="_blank">Поддержать автора копейкой</a>
-    </div>
 
-    <main role="main">
-        <section id="about-me">
-            <h2>Немного обо мне</h2>
-            <div class="block">
-                Сейчас я активно изучаю программирование на Python через платформу Stepik.<br />
-                Это увлекательное путешествие, полное новых открытий!<br /><br />
-                Помимо программирования, я увлекаюсь музыкой и люблю экспериментировать с разными жанрами и инструментами.
-            </div>
-        </section>
-
-        <section id="server-info">
-            <h2>Майнкрафт-сервер</h2>
-            <div class="block">
-                У меня есть собственный сервер Minecraft, присоединяйтесь и играйте вместе со мной:<br />
-                IP сервера: <strong>94.156.181.30:26157</strong>
-            </div>
-        </section>
-
-        <section id="music">
-            <h2>Любимая музыка</h2>
-            <div class="block">
-                Моя любимая песня заряжает позитивом и вдохновляет!<br />
-                <audio controls loop>
-                    <source src="Mus_toriel_OST.oga" type="audio/ogg">
-                    Ваш браузер не поддерживает воспроизведение аудиофайлов.
-                </audio>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>© 2025 pepexqw_. Все права защищены.</p>
-    </footer>
-
-    <!-- Панель согласия на cookies -->
-    <div id="cookie-consent-banner">
-        Мы используем файлы cookie для улучшения функциональности нашего веб-сайта. Нажмите <button onclick="this.parentNode.style.display='none'">«Принять»</button>, чтобы продолжить работу с сайтом.
-        <a href="#" onclick="window.location.href='#cookie-policy'; return false;">Подробнее</a>
-    </div>
-
-    <!-- Политика использования файлов cookie -->
-    <section id="cookie-policy" style="display: none;">
-        <h2>Политика использования файлов cookie</h2>
-        <p>Наш сайт использует файлы cookie для улучшения качества обслуживания и оптимизации взаимодействия с пользователями. Файлы cookie помогают нам запоминать ваши предпочтения и улучшать навигацию по сайту.</p>
-        <p>Продолжая просматривать наш сайт, вы даете свое согласие на использование файлов cookie.</p>
+<main role="main">
+    <section id="about-me">
+        <h2>Немного обо мне</h2>
+        <div class="block">
+            Сейчас я активно изучаю программирование на Python через платформу Stepik.<br />
+            Это увлекательное путешествие, полное новых открытий!<br /><br />
+            Помимо программирования, я увлекаюсь музыкой и люблю экспериментировать с разными жанрами и инструментами.
+        </div>
     </section>
 
-    <script>
-    document.addEventListener('contextmenu', function(e) {
-        e.preventDefault(); // Отключаем стандартное контекстное меню
-        var menu = document.getElementById('custom-context-menu');
-        menu.style.left = e.pageX + 'px';
-        menu.style.top = e.pageY + 'px';
-        menu.style.display = 'block';
-        setTimeout(() => {
-            menu.classList.add('fade-in'); // Включаем анимацию плавно
-        }, 10); // Немного задерживаем начало анимации для лучшего восприятия
-    }, false);
+    <section id="server-info">
+        <h2>Майнкрафт-сервер</h2>
+        <div class="block">
+            У меня есть собственный сервер Minecraft, присоединяйтесь и играйте вместе со мной:<br />
+            IP сервера: <strong>94.156.181.30:26157</strong>
+        </div>
+    </section>
 
-    // Закроем меню при клике вне области
-    document.addEventListener('click', function(e) {
-        var menu = document.getElementById('custom-context-menu');
-        menu.style.display = 'none';
-        menu.classList.remove('fade-in'); // Убираем анимационный класс
-    }, true);
+    <section id="music">
+        <h2>Любимая музыка</h2>
+        <div class="block">
+            Моя любимая песня заряжает позитивом и вдохновляет!<br />
+            <audio controls loop>
+                <source src="Mus_toriel_OST.oga" type="audio/ogg">
+                Ваш браузер не поддерживает воспроизведение аудиофайлов.
+            </audio>
+        </div>
+    </section>
+</main>
 
-    // Логика переключения тем
-    document.addEventListener("DOMContentLoaded", () => {
-        const themeToggleButton = document.querySelector("#theme-toggle");
-        themeToggleButton.addEventListener("click", () => {
-            document.body.classList.toggle("dark-theme");
-            document.body.classList.toggle("light-theme");
-        });
-    });
-    </script>
+<footer>
+    <p>© 2025 pepexqw_. Все права защищены.</p>
+</footer>
+
+<!-- Согласие на использование файлов cookie -->
+<div id="cookie-consent-banner">
+    Мы используем файлы cookie для улучшения функциональности нашего веб-сайта. Нажмите <button onclick="this.parentNode.style.display='none'">«Принять»</button>, чтобы продолжить работу с сайтом.
+    <a href="#" onclick="window.location.href='#cookie-policy'; return false;">Подробнее</a>
+</div>
+
+<!-- Политика использования файлов cookie -->
+<section id="cookie-policy" style="display: none;">
+    <h2>Политика использования файлов cookie</h2>
+    <p>Наш сайт использует файлы cookie для улучшения качества обслуживания и оптимизации взаимодействия с пользователями. Файлы cookie помогают нам запоминать ваши предпочтения и улучшать навигацию по сайту.</p>
+    <p>Продолжая просматривать наш сайт, вы даете свое согласие на использование файлов cookie.</p>
+</section>
 </body>
 </html>
+
