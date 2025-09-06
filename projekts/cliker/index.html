@@ -22,6 +22,25 @@
             user-select: none;
         }
         
+        #staminaBar {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 20px;
+            background-color: #666;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        
+        #staminaBarInner {
+            width: 100%; /* Начальная ширина равна полной */
+            height: 100%;
+            background-color: green;
+            transition: width 0.3s ease-out;
+        }
+        
         .popupMessage {
             visibility: visible;
             position: fixed;
@@ -56,6 +75,9 @@
 <body>
     <div style="text-align:center;">
         <img id="shaurma" src="шаурма-с-курицей.png" alt="Шаурма"/>
+        <div id="staminaBar">
+            <div id="staminaBarInner"></div>
+        </div>
         <br/>
         <span id="clicksCounter">Кликов: 0</span>
         <button onclick="resetClicks()">Сбросить клики</button>
@@ -63,19 +85,56 @@
 
     <script>
         let clicksCount = 0;
+        let stamina = 100; // Максимальная энергия
         const shaurmaImg = document.getElementById('shaurma');
+        const staminaBarInner = document.getElementById('staminaBarInner');
         const counterDisplay = document.getElementById('clicksCounter');
+        let isRecharging = false; // Флаг восстановления энергии
 
         // Обработчик кликов по изображению
         shaurmaImg.onclick = function() {
-            clicksCount++;
-            updateCounter();
-            createAndShowRandomPopup(); // Создаёт новое сообщение
+            if (!isRecharging && stamina > 0) {
+                clicksCount++;
+                updateCounter();
+                spendStamina(); // Расходуем энергию
+                createAndShowRandomPopup(); // Генерируем случайное сообщение
+            }
         };
 
-        // Функция обновления отображаемого количества кликов
+        // Отображаем количество кликов
         function updateCounter() {
             counterDisplay.textContent = `Кликов: ${clicksCount}`;
+        }
+
+        // Функция расхода энергии
+        function spendStamina() {
+            stamina -= 10; // Каждый клик уменьшает энергию на 10%
+            staminaBarInner.style.width = `${stamina}%`;
+            if (stamina <= 0) {
+                stopSpend(); // Останавливаем расход энергии, если достигла нуля
+            }
+        }
+
+        // Прекращение уменьшения энергии
+        function stopSpend() {
+            clearInterval(spendInterval);
+            startRecharge(); // Начинаем восстановление энергии
+        }
+
+        // Запуск процесса восстановления энергии
+        function startRecharge() {
+            isRecharging = true;
+            rechargeInterval = setInterval(rechargeStamina, 1000); // Восстанавливаем каждые 1 сек
+        }
+
+        // Процесс восстановления энергии
+        function rechargeStamina() {
+            stamina += 10; // Восстанавливаем 10% энергии в секунду
+            staminaBarInner.style.width = `${Math.min(stamina, 100)}%`;
+            if (stamina >= 100) {
+                clearInterval(rechargeInterval);
+                isRecharging = false;
+            }
         }
 
         // Генерация случайных координат для всплывающего сообщения
@@ -91,7 +150,7 @@
         // Создание нового элемента с надписью '+1'
         function createAndShowRandomPopup() {
             const newMessage = document.createElement('div');
-            newMessage.className = 'popupMessage'; // Применяем класс для стиля
+            newMessage.className = 'popupMessage';
             newMessage.textContent = '+1';
             document.body.appendChild(newMessage);
 
@@ -112,6 +171,8 @@
         // Кнопка сброса кликов
         function resetClicks() {
             clicksCount = 0;
+            stamina = 100;
+            staminaBarInner.style.width = '100%';
             updateCounter();
         }
     </script>
