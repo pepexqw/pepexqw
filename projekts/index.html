@@ -53,6 +53,23 @@
 
     <script defer>
         document.addEventListener("DOMContentLoaded", () => {
+            // Создаем элемент audio
+            let soundEffect = new Audio("/ckik.mp3"); // Путь к файлу звука
+
+            // Функция воспроизведения звука
+            function playSound() {
+                soundEffect.play();
+            }
+
+            // Получаем все элементы навигационного меню
+            const navItems = document.querySelectorAll("nav ul li a");
+
+            // Назначаем обработчик события hover каждому пункту меню
+            navItems.forEach(item => {
+                item.addEventListener("mouseenter", playSound);
+            });
+
+            // Переключение тем
             const themeToggleButton = document.querySelector("#theme-toggle");
             themeToggleButton.addEventListener("click", () => {
                 document.body.classList.toggle("dark-theme");
@@ -111,4 +128,3 @@
     </footer>
 </body>
 </html>
-
