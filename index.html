@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -12,85 +13,102 @@
         body.dark-theme { background-color: #2b2b2b; color: white; transition: all .3s ease-in-out; }
         body.light-theme { background-color: white; color: black; transition: all .3s ease-in-out; }
         
-        /* Навигационное меню */
-        nav ul li a { display: inline-block; padding: 10px; text-decoration: none; color: inherit; }
-        nav ul li a:focus, nav ul li a:hover { opacity: 0.8; }
 
-        section h2 { margin-top: 2rem; font-size: 2em; }
-        footer p { text-align: center; margin-bottom: 1rem; }
+    /* Навигационное меню */
+    nav ul li a { display: inline-block; padding: 10px; text-decoration: none; color: inherit; }
+    nav ul li a:focus, nav ul li a:hover { opacity: 0.8; }
 
-        /* Блок согласия на cookie */
-        #cookie-consent-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
+    section h2 { margin-top: 2rem; font-size: 2em; }
+    footer p { text-align: center; margin-bottom: 1rem; }
+
+    /* Блок согласия на cookie */
+    #cookie-consent-banner {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    #cookie-consent-banner button {
+        background-color: #ff9800;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #cookie-consent-banner button:hover {
+        background-color: #e68700;
+    }
+
+    #cookie-consent-banner a {
+        color: #fff;
+        text-decoration: underline;
+        cursor: pointer;
+    }
+
+    #cookie-consent-banner a:hover {
+        color: #ddd;
+    }
+</style>
+
+<!-- Скрипты -->
+<script defer>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Создаем элемент audio
+        let soundEffect = new Audio("/ckik.mp3"); // Путь к файлу звука
+
+        // Функция воспроизведения звука
+        function playSound() {
+            soundEffect.play();
         }
 
-        #cookie-consent-banner button {
-            background-color: #ff9800;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+        // Получаем все элементы навигационного меню
+        const navItems = document.querySelectorAll("nav ul li a");
 
-        #cookie-consent-banner button:hover {
-            background-color: #e68700;
-        }
+        // Назначаем обработчик события hover каждому пункту меню
+        navItems.forEach(item => {
+            item.addEventListener("mouseenter", playSound);
+        });
 
-        #cookie-consent-banner a {
-            color: #fff;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        #cookie-consent-banner a:hover {
-            color: #ddd;
-        }
-    </style>
-
-    <!-- Скрипты -->
-    <script defer>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Плавный скроллинг для внутренних ссылок
-            const navLinks = document.querySelectorAll(".nav-link");
-            navLinks.forEach((link) => {
-                link.addEventListener("click", (event) => {
-                    event.preventDefault();
-                    const targetId = link.getAttribute("href").substr(1); // Удаляем "#"
-                    const targetSection = document.getElementById(targetId);
-                    if (targetSection) {
-                        window.scrollTo({ top: targetSection.offsetTop, behavior: "smooth" });
-                    }
-                });
-            });
-
-            // Дополнительная логика для внешней ссылки
-            const externalLink = document.querySelector('a[href^="https"]');
-            if (externalLink) {
-                externalLink.addEventListener("click", function(event) {
-                    event.preventDefault(); // Отмена стандартного поведения
-                    location.href = this.href; // Перенаправление на внешнюю страницу
-                });
-            }
-
-            // Переключение тем
-            const themeToggleButton = document.querySelector("#theme-toggle");
-            themeToggleButton.addEventListener("click", () => {
-                document.body.classList.toggle("dark-theme");
-                document.body.classList.toggle("light-theme");
+        // Плавный скроллинг для внутренних ссылок
+        const navLinks = document.querySelectorAll(".nav-link");
+        navLinks.forEach((link) => {
+            link.addEventListener("click", (event) => {
+                event.preventDefault();
+                const targetId = link.getAttribute("href").substr(1); // Удаляем "#"
+                const targetSection = document.getElementById(targetId);
+                if (targetSection) {
+                    window.scrollTo({ top: targetSection.offsetTop, behavior: "smooth" });
+                }
             });
         });
-    </script>
+
+        // Дополнительная логика для внешней ссылки
+        const externalLink = document.querySelector('a[href^="https"]');
+        if (externalLink) {
+            externalLink.addEventListener("click", function(event) {
+                event.preventDefault(); // Отмена стандартного поведения
+                location.href = this.href; // Перенаправление на внешнюю страницу
+            });
+        }
+
+        // Переключение тем
+        const themeToggleButton = document.querySelector("#theme-toggle");
+        themeToggleButton.addEventListener("click", () => {
+            document.body.classList.toggle("dark-theme");
+            document.body.classList.toggle("light-theme");
+        });
+    });
+</script>
 </head>
 
 <body class="dark-theme">
@@ -111,51 +129,52 @@
         <h1>Привет! Меня зовут pepexqw_, мне 14 лет.</h1>
     </header>
 
-    <main role="main">
-        <section id="about-me">
-            <h2>Немного обо мне</h2>
-            <div class="block">
-                Сейчас я активно изучаю программирование на Python через платформу Stepik.<br />
-                Это увлекательное путешествие, полное новых открытий!<br /><br />
-                Помимо программирования, я увлекаюсь музыкой и люблю экспериментировать с разными жанрами и инструментами.
-            </div>
-        </section>
 
-        <section id="server-info">
-            <h2>Майнкрафт-сервер</h2>
-            <div class="block">
-                У меня есть собственный сервер Minecraft, присоединяйтесь и играйте вместе со мной:<br />
-                IP сервера: <strong>94.156.181.30:26157</strong>
-            </div>
-        </section>
-
-        <section id="music">
-            <h2>Любимая музыка</h2>
-            <div class="block">
-                Моя любимая песня заряжает позитивом и вдохновляет!<br />
-                <audio controls loop>
-                    <source src="Mus_toriel_OST.oga" type="audio/ogg">
-                    Ваш браузер не поддерживает воспроизведение аудиофайлов.
-                </audio>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <p>© 2025 pepexqw_. Все права защищены.</p>
-    </footer>
-
-    <!-- Согласие на использование файлов cookie -->
-    <div id="cookie-consent-banner">
-        Мы используем файлы cookie для улучшения функциональности нашего веб-сайта. Нажмите <button onclick="this.parentNode.style.display='none'">«Принять»</button>, чтобы продолжить работу с сайтом.
-        <a href="#" onclick="window.location.href='#cookie-policy'; return false;">Подробнее</a>
-    </div>
-
-    <!-- Политика использования файлов cookie -->
-    <section id="cookie-policy" style="display: none;">
-        <h2>Политика использования файлов cookie</h2>
-        <p>Наш сайт использует файлы cookie для улучшения качества обслуживания и оптимизации взаимодействия с пользователями. Файлы cookie помогают нам запоминать ваши предпочтения и улучшать навигацию по сайту.</p>
-        <p>Продолжая просматривать наш сайт, вы даете свое согласие на использование файлов cookie.</p>
+<main role="main">
+    <section id="about-me">
+        <h2>Немного обо мне</h2>
+        <div class="block">
+            Сейчас я активно изучаю программирование на Python через платформу Stepik.<br />
+            Это увлекательное путешествие, полное новых открытий!<br /><br />
+            Помимо программирования, я увлекаюсь музыкой и люблю экспериментировать с разными жанрами и инструментами.
+        </div>
     </section>
+
+    <section id="server-info">
+        <h2>Майнкрафт-сервер</h2>
+        <div class="block">
+            У меня есть собственный сервер Minecraft, присоединяйтесь и играйте вместе со мной:<br />
+            IP сервера: <strong>94.156.181.30:26157</strong>
+        </div>
+    </section>
+
+    <section id="music">
+        <h2>Любимая музыка</h2>
+        <div class="block">
+            Моя любимая песня заряжает позитивом и вдохновляет!<br />
+            <audio controls loop>
+                <source src="Mus_toriel_OST.oga" type="audio/ogg">
+                Ваш браузер не поддерживает воспроизведение аудиофайлов.
+            </audio>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2025 pepexqw_. Все права защищены.</p>
+</footer>
+
+<!-- Согласие на использование файлов cookie -->
+<div id="cookie-consent-banner">
+    Мы используем файлы cookie для улучшения функциональности нашего веб-сайта. Нажмите <button onclick="this.parentNode.style.display='none'">«Принять»</button>, чтобы продолжить работу с сайтом.
+    <a href="#" onclick="window.location.href='#cookie-policy'; return false;">Подробнее</a>
+</div>
+
+<!-- Политика использования файлов cookie -->
+<section id="cookie-policy" style="display: none;">
+    <h2>Политика использования файлов cookie</h2>
+    <p>Наш сайт использует файлы cookie для улучшения качества обслуживания и оптимизации взаимодействия с пользователями. Файлы cookie помогают нам запоминать ваши предпочтения и улучшать навигацию по сайту.</p>
+    <p>Продолжая просматривать наш сайт, вы даете свое согласие на использование файлов cookie.</p>
+</section>
 </body>
 </html>
