@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Накликай Шаурму!</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #fafafa;
+            font-family: Arial, sans-serif;
+        }
+        
+        #shaurma {
+            width: 300px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        #clicksCounter {
+            font-size: 24px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align:center;">
+        <img id="shaurma" src="shaurma.png" alt="Шаурма"/>
+        <br/>
+        <span id="clicksCounter">Кликов: 0</span>
+        <button onclick="resetClicks()">Сбросить клики</button>
+    </div>
+
+    <script>
+        let clicksCount = 0;
+        const shaurmaImg = document.getElementById('shaurma');
+        const counterDisplay = document.getElementById('clicksCounter');
+
+        // Обработчик кликов по изображению
+        shaurmaImg.onclick = function() {
+            clicksCount++;
+            updateCounter();
+        };
+
+        // Функция обновления отображаемого количества кликов
+        function updateCounter() {
+            counterDisplay.textContent = `Кликов: ${clicksCount}`;
+        }
+
+        // Кнопка сброса кликов
+        function resetClicks() {
+            clicksCount = 0;
+            updateCounter();
+        }
+    </script>
+</body>
+</html>
