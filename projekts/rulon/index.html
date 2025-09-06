@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Разматываем бумагу!</title>
+    <style>
+        body {
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        
+        #paperRoll {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #unwoundPaper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: bottom right;
+            transition: all 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+<div id="paperRoll"></div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const paperRoll = document.getElementById('paperRoll');
+    let unwoundAmount = parseFloat(getCookie('unwoundAmount')) || 0;
+    
+    // Создаем полоску бумаги внутри рулона
+    const unwoundPaper = document.createElement('div');
+    unwoundPaper.id = 'unwoundPaper';
+    unwoundPaper.style.width = `${unwoundAmount * 100}%`;
+    unwoundPaper.style.height = '20px';
+    unwoundPaper.style.backgroundColor = '#ffffff';
+    unwoundPaper.style.transformOrigin = 'bottom right';
+    unwoundPaper.style.transition = 'all 0.5s ease-in-out';
+    paperRoll.appendChild(unwoundPaper);
+
+    // Функция разворачивания бумаги при клике
+    paperRoll.onclick = () => {
+        if (unwoundAmount >= 1) return; // Полностью развернутый рулон
+        unwoundAmount += 0.1;
+        setCookie('unwoundAmount', unwoundAmount.toFixed(1));
+        unwoundPaper.style.width = `${unwoundAmount * 100}%`;
+    };
+});
+
+// Работа с cookie
+function setCookie(name,value,days=365){
+    var expires = "";
+    if(days){
+        var date = new Date();
+        date.setTime(date.getTime() + (days*24*60*60*1000));
+        expires = "; expires="+date.toUTCString();
+    }
+    document.cookie = name+"="+value+expires+"; path=/";
+}
+
+function getCookie(name) {
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if(parts.length === 2) return parts.pop().split(";").shift();
+}
+</script>
+</body>
+</html>
