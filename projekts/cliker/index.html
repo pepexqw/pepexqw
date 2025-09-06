@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Накликай Шаурму!</title>
     <style>
+        /* Оставляем стиль прежним */
         body {
             display: flex;
             justify-content: center;
@@ -69,6 +70,16 @@
         const clickSound = document.getElementById('clickSound'); // Получаем доступ к звуковому объекту
         const counterDisplay = document.getElementById('clicksCounter');
 
+        // Добавляем общий обработчик для запрета клика по всей странице
+        document.addEventListener("mousedown", function(event) {
+            if (event.button === 0) { // Проверяем нажатие левой кнопки мыши
+                event.preventDefault(); // Предотвращаем стандартный клик
+                event.stopPropagation(); // Остановливаем дальнейшую обработку события
+            }
+        });
+
+        // Остальные функции оставляем такими же
+
         // Обработчик кликов по изображению
         shaurmaImg.onclick = function() {
             clicksCount++;
@@ -127,5 +138,3 @@
     </script>
 </body>
 </html>
-
-
