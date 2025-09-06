@@ -3,139 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Мои проекты</title>
+    <title>Портфолио</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+        :root {
+            --primary-color-light: #ffffff;
+            --primary-color-dark: #2b2b2b;
+            --secondary-color-light: #000000;
+            --secondary-color-dark: #ffffff;
+            --accent-color: #ff9800;
         }
 
         body {
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            background-color: var(--primary-color-dark);
+            color: var(--secondary-color-dark);
+            font-family: Roboto, sans-serif;
+            transition: all 0.3s ease-in-out;
         }
 
-        header, main, footer {
-            width: 100%;
-            max-width: 1200px;
-            margin: auto;
-            padding: 20px;
+        body.light-theme {
+            background-color: var(--primary-color-light);
+            color: var(--secondary-color-light);
+        }
+
+        /* Общие стили */
+        h1, h2, h3, p {
+            margin: 0;
         }
 
         header {
-            background-color: rgba(0, 0, 0, 0.05);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            background-color: transparent;
+            padding: 1rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        header h1 {
-            font-weight: bold;
-            font-size: 24px;
-        }
-
         nav ul {
-            list-style-type: none;
+            list-style: none;
             display: flex;
-        }
-
-        nav ul li {
-            margin-left: 20px;
+            gap: 1rem;
         }
 
         nav ul li a {
-            color: inherit;
+            color: currentColor;
             text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
+            transition: color 0.3s ease-in-out;
         }
 
-        nav ul li a:hover,
-        nav ul li a:focus {
-            color: #007BFF;
+        nav ul li a:hover {
+            color: var(--accent-color);
         }
 
+        /* Разделы сайта */
         section {
-            margin: 40px 0;
+            padding: 2rem;
         }
 
-        section h2 {
-            font-size: 28px;
-            margin-bottom: 20px;
+        section > h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
         }
 
-        article {
-            margin-bottom: 30px;
+        /* Контент страницы */
+        .content {
+            max-width: 600px;
+            margin: 0 auto;
         }
 
-        article img {
-            max-width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        /* Переключатель тем */
+        label.switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
         }
 
-        footer {
-            background-color: rgba(0, 0, 0, 0.05);
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            text-align: center;
-            padding: 20px;
+        input[type=checkbox] {
+            opacity: 0;
+            width: 0;
+            height: 0;
         }
 
-        @media screen and (max-width: 768px) {
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider::before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input[type=checkbox]:checked + .slider {
+            background-color: var(--accent-color);
+        }
+
+        input[type=checkbox]:focus + .slider {
+            box-shadow: 0 0 1px var(--accent-color);
+        }
+
+        input[type=checkbox]:checked + .slider::before {
+            transform: translateX(26px);
+        }
+
+        /* Media queries */
+        @media only screen and (max-width: 600px) {
             nav ul {
-                flex-wrap: wrap;
+                flex-direction: column;
+                gap: 0.5rem;
             }
         }
     </style>
 </head>
 
-<body>
+<body class="dark-theme">
     <header>
-        <h1>Мои проекты</h1>
-        <nav>
-            <ul>
-                <li><a href="#projects">Проекты</a></li>
-            </ul>
-        </nav>
+        <h1>Портфолио</h1>
+        <label class="switch">
+            <input type="checkbox" onchange="toggleTheme()">
+            <span class="slider round"></span>
+        </label>
     </header>
 
-    <main>
+    <main class="content">
+        <section id="intro">
+            <h2>Добро пожаловать!</h2>
+            <p>Здесь вы найдёте мои лучшие работы и проекты.</p>
+        </section>
+
         <section id="projects">
-            <h2>Мои проекты</h2>
-            <article>
-                <img src="https://via.placeholder.com/600x400.png?text=My+Project+1" alt="Проект 1">
-                <h3>Проект 1</h3>
-                <p>Описание моего первого проекта.</p>
-                <a href="project1.zip" download class="btn btn-primary">Скачать</a>
-            </article>
-            
-            <article>
-                <img src="https://via.placeholder.com/600x400.png?text=My+Project+2" alt="Проект 2">
-                <h3>Проект 2</h3>
-                <p>Описание моего второго проекта.</p>
-                <a href="project2.zip" download class="btn btn-success">Скачать</a>
-            </article>
-            
-            <article>
-                <img src="https://via.placeholder.com/600x400.png?text=My+Project+3" alt="Проект 3">
-                <h3>Проект 3</h3>
-                <p>Описание моего третьего проекта.</p>
-                <a href="project3.zip" download class="btn btn-warning">Скачать</a>
-            </article>
+            <h2>Проекты</h2>
+            <ul>
+                <li><a href="#">Проект 1</a></li>
+                <li><a href="#">Проект 2</a></li>
+                <li><a href="#">Проект 3</a></li>
+            </ul>
         </section>
     </main>
 
     <footer>
-        © 2025 Мой Портфолио. Все права защищены.
+        <p>© 2025 Автор. Все права защищены.</p>
     </footer>
+
+    <script>
+        function toggleTheme() {
+            document.body.classList.toggle('light-theme');
+        }
+    </script>
 </body>
+</html>
+</body>
+
 </html>
