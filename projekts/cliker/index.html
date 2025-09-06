@@ -25,14 +25,8 @@
         #popupMessage {
             visibility: hidden;
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            z-index: 1;
+            color: yellow; /* Жёлтый цвет */
+            font-size: 24px;
             font-weight: bold;
             opacity: 0;
             transition: opacity 0.3s linear;
@@ -75,10 +69,10 @@
         const counterDisplay = document.getElementById('clicksCounter');
 
         // Обработчик кликов по изображению
-        shaurmaImg.onclick = function() {
+        shaurmaImg.onclick = function(event) {
             clicksCount++;
             updateCounter();
-            showPopup(); // Показываем всплывающее сообщение
+            showPopup(event.clientX, event.clientY); // Передаем координаты клика
         };
 
         // Функция обновления отображаемого количества кликов
@@ -86,8 +80,10 @@
             counterDisplay.textContent = `Кликов: ${clicksCount}`;
         }
 
-        // Всплывающее сообщение
-        function showPopup() {
+        // Функция для показа всплывающего сообщения
+        function showPopup(x, y) {
+            popupMessage.style.left = `${x - 15}px`;
+            popupMessage.style.top = `${y - 15}px`;
             popupMessage.style.visibility = 'visible';
             popupMessage.style.opacity = 1;
             setTimeout(() => {
