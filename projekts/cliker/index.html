@@ -24,7 +24,7 @@
         
         #popupMessage {
             visibility: hidden;
-            position: absolute;
+            position: fixed; /* Используем фиксированное позиционирование */
             color: yellow; /* Жёлтый цвет */
             font-size: 24px;
             font-weight: bold;
@@ -69,10 +69,10 @@
         const counterDisplay = document.getElementById('clicksCounter');
 
         // Обработчик кликов по изображению
-        shaurmaImg.onclick = function(event) {
+        shaurmaImg.onclick = function() {
             clicksCount++;
             updateCounter();
-            showPopup(event.clientX, event.clientY); // Передаем координаты клика
+            showRandomPopup(); // Случайное расположение сообщения
         };
 
         // Функция обновления отображаемого количества кликов
@@ -80,10 +80,21 @@
             counterDisplay.textContent = `Кликов: ${clicksCount}`;
         }
 
-        // Функция для показа всплывающего сообщения
-        function showPopup(x, y) {
-            popupMessage.style.left = `${x - 15}px`;
-            popupMessage.style.top = `${y - 15}px`;
+        // Генерация случайных координат для всплывающего сообщения
+        function randomPosition() {
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            return {
+                x: Math.random() * (windowWidth - 50),
+                y: Math.random() * (windowHeight - 50)
+            };
+        }
+
+        // Функция для показа всплывающего сообщения в случайном месте
+        function showRandomPopup() {
+            const pos = randomPosition();
+            popupMessage.style.left = `${pos.x}px`;
+            popupMessage.style.top = `${pos.y}px`;
             popupMessage.style.visibility = 'visible';
             popupMessage.style.opacity = 1;
             setTimeout(() => {
