@@ -21,6 +21,13 @@
             box-shadow: 0 0 10px rgba(0,0,0,.1);
             padding: 1rem;
             border-radius: 5px;
+            transform: translateY(-20px);
+            opacity: 0;
+            animation: fadeInDown 0.5s forwards cubic-bezier(.17,.67,.83,.67);
+        }
+        @keyframes fadeInDown {
+          from {transform: translateY(-20px); opacity: 0;}
+          to   {transform: translateY(0); opacity: 1;}
         }
         article.project img {
             max-width: 100%;
@@ -62,19 +69,19 @@
             <article class="project">
                 <img src="path/to/project-image.jpg" alt="Проект №1">
                 <h3>Название проекта №1</h3>
-                <p>Описание проекта №1... Здесь можно рассказать подробнее о проекте, технологии и результатах.</p>
+                <p>Описание проекта №1... Здесь можно рассказать подробнее о проекте, технологиях и результатах.</p>
             </article>
 
             <article class="project">
                 <img src="path/to/project-image.jpg" alt="Проект №2">
                 <h3>Название проекта №2</h3>
-                <p>Описание проекта №2... Опишите технологию разработки, цели и достижения.</p>
+                <p>Описание проекта №2... Подробности о разработке, целях и итогах проекта.</p>
             </article>
 
             <article class="project">
                 <img src="path/to/project-image.jpg" alt="Проект №3">
                 <h3>Название проекта №3</h3>
-                <p>Описание проекта №3... Что было сделано, какими средствами и каковы итоги?</p>
+                <p>Описание проекта №3... Технология, цели и достижения проекта.</p>
             </article>
         </section>
     </main>
