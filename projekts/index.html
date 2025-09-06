@@ -35,6 +35,19 @@
             display: block;
             margin-bottom: 1rem;
         }
+        article.project button.download-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #28a745; /* Зелёный цвет */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        article.project button.download-btn:hover {
+            background-color: #218838; /* Тёмно-зелёный оттенок при наведении */
+        }
     </style>
 
     <script defer>
@@ -68,20 +81,23 @@
             
             <article class="project">
                 <img src="path/to/project-image.jpg" alt="Проект №1">
-                <h3>Сайт портфолио</h3>
-                <p>Первый сайт с реализацией многостраничной системы, информацией, ссылками, и возможностью скачивать файлы.</p>
+                <h3>Название проекта №1</h3>
+                <p>Описание проекта №1... Подробнее о проекте, используемых технологиях и результатах.</p>
+                <button class="download-btn">Скачать</button>
             </article>
 
             <article class="project">
                 <img src="path/to/project-image.jpg" alt="Проект №2">
                 <h3>Название проекта №2</h3>
-                <p>Описание проекта №2... Подробности о разработке, целях и итогах проекта.</p>
+                <p>Описание проекта №2... Описание технологий, целей и достижений проекта.</p>
+                <button class="download-btn">Скачать</button>
             </article>
 
             <article class="project">
                 <img src="path/to/project-image.jpg" alt="Проект №3">
                 <h3>Название проекта №3</h3>
-                <p>Описание проекта №3... Технология, цели и достижения проекта.</p>
+                <p>Описание проекта №3... Какая технология использовалась, цель и достижение проекта.</p>
+                <button class="download-btn">Скачать</button>
             </article>
         </section>
     </main>
@@ -91,5 +107,3 @@
     </footer>
 </body>
 </html>
-
-
