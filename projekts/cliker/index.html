@@ -22,14 +22,14 @@
             user-select: none;
         }
         
-        #popupMessage {
-            visibility: hidden;
-            position: fixed; /* Используем фиксированное позиционирование */
-            color: yellow; /* Жёлтый цвет */
+        .popupMessage {
+            visibility: visible;
+            position: fixed;
+            color: yellow;
             font-size: 24px;
             font-weight: bold;
-            opacity: 0;
-            transition: opacity 0.3s linear;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
         }
         
         button {
@@ -56,7 +56,6 @@
 <body>
     <div style="text-align:center;">
         <img id="shaurma" src="шаурма-с-курицей.png" alt="Шаурма"/>
-        <div id="popupMessage">+1</div>
         <br/>
         <span id="clicksCounter">Кликов: 0</span>
         <button onclick="resetClicks()">Сбросить клики</button>
@@ -65,14 +64,13 @@
     <script>
         let clicksCount = 0;
         const shaurmaImg = document.getElementById('shaurma');
-        const popupMessage = document.getElementById('popupMessage');
         const counterDisplay = document.getElementById('clicksCounter');
 
         // Обработчик кликов по изображению
         shaurmaImg.onclick = function() {
             clicksCount++;
             updateCounter();
-            showRandomPopup(); // Случайное расположение сообщения
+            createAndShowRandomPopup(); // Создаёт новое сообщение
         };
 
         // Функция обновления отображаемого количества кликов
@@ -90,19 +88,25 @@
             };
         }
 
-        // Функция для показа всплывающего сообщения в случайном месте
-        function showRandomPopup() {
+        // Создание нового элемента с надписью '+1'
+        function createAndShowRandomPopup() {
+            const newMessage = document.createElement('div');
+            newMessage.className = 'popupMessage'; // Применяем класс для стиля
+            newMessage.textContent = '+1';
+            document.body.appendChild(newMessage);
+
+            // Получаем случайные координаты
             const pos = randomPosition();
-            popupMessage.style.left = `${pos.x}px`;
-            popupMessage.style.top = `${pos.y}px`;
-            popupMessage.style.visibility = 'visible';
-            popupMessage.style.opacity = 1;
+            newMessage.style.left = `${pos.x}px`;
+            newMessage.style.top = `${pos.y}px`;
+
+            // Через две секунды начинаем плавно скрывать надпись
             setTimeout(() => {
-                popupMessage.style.opacity = 0;
+                newMessage.style.opacity = 0;
                 setTimeout(() => {
-                    popupMessage.style.visibility = 'hidden';
-                }, 300); // Пауза перед скрытием элемента
-            }, 1000); // Время отображения сообщения
+                    document.body.removeChild(newMessage); // Удаляем элемент после полного исчезновения
+                }, 500); // Задержка после начала перехода
+            }, 2000); // Время задержки до начала исчезания
         }
 
         // Кнопка сброса кликов
