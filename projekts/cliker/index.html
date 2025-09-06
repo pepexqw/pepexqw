@@ -10,15 +10,32 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background-color: #2B2D30; /* Тёмный фон */
-            color: #EFEFEF; /* Светлый текст */
+            background-color: #2B2D30;
+            color: #EFEFEF;
             font-family: Arial, sans-serif;
         }
         
         #shaurma {
+            position: relative;
             width: 300px;
             cursor: pointer;
             user-select: none;
+        }
+        
+        #popupMessage {
+            visibility: hidden;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            z-index: 1;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s linear;
         }
         
         button {
@@ -26,14 +43,14 @@
             padding: 10px 20px;
             font-size: 16px;
             cursor: pointer;
-            background-color: #FF5C5C; /* Красный цвет кнопки */
-            color: #FFFFFF; /* Белый текст кнопки */
+            background-color: #FF5C5C;
+            color: #FFFFFF;
             border: none;
             border-radius: 5px;
         }
         
         button:hover {
-            background-color: #FF3C3C; /* Изменяется цвет при наведении */
+            background-color: #FF3C3C;
         }
         
         #clicksCounter {
@@ -45,6 +62,7 @@
 <body>
     <div style="text-align:center;">
         <img id="shaurma" src="шаурма-с-курицей.png" alt="Шаурма"/>
+        <div id="popupMessage">+1</div>
         <br/>
         <span id="clicksCounter">Кликов: 0</span>
         <button onclick="resetClicks()">Сбросить клики</button>
@@ -53,17 +71,31 @@
     <script>
         let clicksCount = 0;
         const shaurmaImg = document.getElementById('shaurma');
+        const popupMessage = document.getElementById('popupMessage');
         const counterDisplay = document.getElementById('clicksCounter');
 
         // Обработчик кликов по изображению
         shaurmaImg.onclick = function() {
             clicksCount++;
             updateCounter();
+            showPopup(); // Показываем всплывающее сообщение
         };
 
         // Функция обновления отображаемого количества кликов
         function updateCounter() {
             counterDisplay.textContent = `Кликов: ${clicksCount}`;
+        }
+
+        // Всплывающее сообщение
+        function showPopup() {
+            popupMessage.style.visibility = 'visible';
+            popupMessage.style.opacity = 1;
+            setTimeout(() => {
+                popupMessage.style.opacity = 0;
+                setTimeout(() => {
+                    popupMessage.style.visibility = 'hidden';
+                }, 300); // Пауза перед скрытием элемента
+            }, 1000); // Время отображения сообщения
         }
 
         // Кнопка сброса кликов
