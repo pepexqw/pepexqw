@@ -61,17 +61,27 @@
         <button onclick="resetClicks()">Сбросить клики</button>
     </div>
 
+    <audio id="clickSound" src="жмяк.mp3" preload="auto"></audio> <!-- Скрытое аудиополе -->
+
     <script>
         let clicksCount = 0;
         const shaurmaImg = document.getElementById('shaurma');
+        const clickSound = document.getElementById('clickSound'); // Получаем доступ к звуковому объекту
         const counterDisplay = document.getElementById('clicksCounter');
 
         // Обработчик кликов по изображению
         shaurmaImg.onclick = function() {
             clicksCount++;
             updateCounter();
+            playClickSound(); // Воспроизводим звук при клике
             createAndShowRandomPopup(); // Создаёт новое сообщение
         };
+
+        // Функция воспроизведения звука
+        function playClickSound() {
+            clickSound.currentTime = 0; // Перематываем трек назад, если ранее звучал
+            clickSound.play(); // Проигрываем звук
+        }
 
         // Функция обновления отображаемого количества кликов
         function updateCounter() {
