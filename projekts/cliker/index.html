@@ -13,41 +13,6 @@
             background-color: #2B2D30;
             color: #EFEFEF;
             font-family: Arial, sans-serif;
-            position: relative;
-        }
-        
-        /* Форма ввода */
-        form {
-            display: inline-block;
-            margin-right: auto;
-        }
-        
-        input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-        
-        /* Стиль кнопки */
-        button {
-            margin-left: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #FF5C5C;
-            color: #FFFFFF;
-            border: none;
-            border-radius: 5px;
-        }
-        
-        button:hover {
-            background-color: #FF3C3C;
-        }
-        
-        /* Основная область игры */
-        #gameArea {
-            text-align: center;
         }
         
         #shaurma {
@@ -67,119 +32,49 @@
             transition: opacity 0.5s ease-out;
         }
         
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #FF5C5C;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 5px;
+        }
+        
+        button:hover {
+            background-color: #FF3C3C;
+        }
+        
         #clicksCounter {
             font-size: 24px;
             margin-top: 10px;
         }
-        
-        /* Таблица рекордов */
-        #recordsTable {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 10;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 10px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        
-        #recordsTable h2 {
-            margin: 0 0 10px;
-            color: white;
-        }
-        
-        #recordsTable table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-        }
-        
-        #recordsTable th,
-        #recordsTable td {
-            padding: 8px;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        #recordsTable tr:nth-child(even){
-            background-color: #f2f2f2;
-        }
     </style>
 </head>
 <body>
-    <!-- Форма ввода имени -->
-    <form id="nameForm">
-        <input type="text" placeholder="Ваш никнейм" required />
-        <button type="submit">Продолжить</button>
-    </form>
-
-    <!-- Основная игровая зона -->
-    <div id="gameArea" style="display:none;">
+    <div style="text-align:center;">
         <img id="shaurma" src="шаурма-с-курицей.png" alt="Шаурма"/>
         <br/>
         <span id="clicksCounter">Кликов: 0</span>
         <button onclick="resetClicks()">Сбросить клики</button>
     </div>
 
-    <!-- Таблица рекордов -->
-    <div id="recordsTable">
-        <h2>Рекорды:</h2>
-        <table></table>
-    </div>
-
     <audio id="clickSound" src="жмяк.mp3" preload="auto"></audio> <!-- Скрытое аудиополе -->
 
     <script>
         let clicksCount = 0;
-        let playerName = '';
         const shaurmaImg = document.getElementById('shaurma');
-        const clickSound = document.getElementById('clickSound');
+        const clickSound = document.getElementById('clickSound'); // Получаем доступ к звуковому объекту
         const counterDisplay = document.getElementById('clicksCounter');
-        const recordsTableBody = document.querySelector('#recordsTable table');
-
-        // Сохранение рекорда в LocalStorage
-        function saveRecord(name, count) {
-            let records = JSON.parse(localStorage.getItem('records')) || [];
-            records.push({ name, count });
-            records.sort((a, b) => b.count - a.count);
-            localStorage.setItem('records', JSON.stringify(records));
-        }
-
-        // Отображение записей в таблице
-        function showRecords() {
-            recordsTableBody.innerHTML = ''; // Очищаем старую таблицу
-            
-            let records = JSON.parse(localStorage.getItem('records')) || [];
-            if (!records.length) return;
-
-            for(let i = 0; i < records.length && i < 10; i++) { // Показывать максимум 10 рекордов
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${i + 1}.</td>
-                    <td>${records[i].name}</td>
-                    <td>${records[i].count}</td>
-                `;
-                recordsTableBody.append(row);
-            }
-        }
-
-        // Запуск игры после ввода имени
-        document.getElementById('nameForm').addEventListener('submit', event => {
-            event.preventDefault();
-            playerName = event.target.elements[0].value.trim();
-            if(playerName === '') return alert("Выберите ник!");
-
-            document.getElementById('nameForm').style.display = 'none';
-            document.getElementById('gameArea').style.display = 'block';
-            showRecords(); // Показываем начальные рекорды
-        });
 
         // Обработчик кликов по изображению
         shaurmaImg.onclick = function() {
             clicksCount++;
             updateCounter();
             playClickSound(); // Воспроизводим звук при клике
-            createAndShowRandomPopup(); // Создаём новое сообщение
+            createAndShowRandomPopup(); // Создаёт новое сообщение
         };
 
         // Функция воспроизведения звука
@@ -203,7 +98,7 @@
             };
         }
 
-        // Создание нового элемента с надписью "+1"
+        // Создание нового элемента с надписью '+1'
         function createAndShowRandomPopup() {
             const newMessage = document.createElement('div');
             newMessage.className = 'popupMessage'; // Применяем класс для стиля
@@ -229,14 +124,8 @@
             clicksCount = 0;
             updateCounter();
         }
-
-        // Сохранение результата при выходе
-        window.addEventListener('beforeunload', () => {
-            if(clicksCount > 0) {
-                saveRecord(playerName, clicksCount);
-                showRecords(); // Обновляем таблицу рекордов
-            }
-        });
     </script>
 </body>
 </html>
+
+
