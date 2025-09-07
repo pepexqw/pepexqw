@@ -4,13 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
+        /* Используем фоновое изображение вместо цвета */
         #sharedCursor {
             position: absolute;
             width: 20px;
             height: 20px;
-            background-color: red;
-            border-radius: 50%;
-            pointer-events: none;
+            background-image: url('cursor.png'); /* Берём картинку из той же папки */
+            background-size: cover;              /* Растягиваем её на весь элемент */
+            border-radius: 50%;                 /* Округляем углы */
+            pointer-events: none;               /* Убираем реакцию на клики */
         }
     </style>
     <title>Shared Cursor Demo</title>
@@ -19,28 +21,27 @@
 <div id="sharedCursor"></div>
 <script>
     const sharedCursor = document.getElementById('sharedCursor');
-    let lastMouseMoveTime = Date.now(); // Отслеживаем последнее движение мыши
+    let lastMouseMoveTime = Date.now();
 
     window.addEventListener('mousemove', e => {
         const x = e.clientX;
         const y = e.clientY;
         
-        localStorage.setItem('cursor_position', `${x},${y}`); // Сохраняем положение курсора
-        lastMouseMoveTime = Date.now(); // Обновляем таймер последнего движения
+        localStorage.setItem('cursor_position', `${x},${y}`);
+        lastMouseMoveTime = Date.now();
     });
 
     setInterval(() => {
-        const storedPosition = localStorage.getItem('cursor_position'); // Получаем сохраненную позицию
+        const storedPosition = localStorage.getItem('cursor_position');
         if(storedPosition){
             const [x,y] = storedPosition.split(',');
-            sharedCursor.style.transform = `translate(${x}px, ${y}px)`; // Перемещаем общий курсор
+            sharedCursor.style.transform = `translate(${x}px, ${y}px)`;
         }
         
-        // Удаление устаревших позиций через некоторое время
-        if(Date.now() - lastMouseMoveTime > 1000 * 60){ // Через минуту удаляем запись
+        if(Date.now() - lastMouseMoveTime > 1000 * 60){
             localStorage.removeItem('cursor_position');
         }
-    }, 100); // Обновление каждые 100 мс
+    }, 100);
 </script>
 </body>
 </html>
