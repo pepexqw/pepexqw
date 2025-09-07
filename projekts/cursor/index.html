@@ -4,38 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden; /* Убираем прокрутку страницы */
-            cursor: none !important; /* Полностью скрываем оригинальный курсор */
-        }
-
-        #customCursor {
-            position: fixed; /* Фиксированное позиционирование относительно окна */
-            z-index: 9999;   /* Элемент поверх всего остального контента */
+        /* Используем фоновое изображение вместо цвета */
+        #sharedCursor {
+            position: absolute;
             width: 20px;
             height: 20px;
-            background-image: url('cursor.png'); /* Загружаем изображение курсора */
-            background-size: contain;           /* Масштабируем изображение */
-            transition: transform 0.1s ease-out; /* Небольшая анимация плавности перемещения */
-            pointer-events: none;               /* Курсор не влияет на элементы страницы */
+            background-image: url('cursor.png'); /* Берём картинку из той же папки */
+            background-size: cover;              /* Растягиваем её на весь элемент */
+            border-radius: 50%;                 /* Округляем углы */
+            pointer-events: none;               /* Убираем реакцию на клики */
         }
     </style>
-    <title>Custom Cursor Replacement</title>
+    <title>Shared Cursor Demo</title>
 </head>
 <body>
-<!-- Наш новый курсор -->
-<div id="customCursor"></div>
-
+<div id="sharedCursor"></div>
 <script>
-    const customCursor = document.getElementById('customCursor');
+    const sharedCursor = document.getElementById('sharedCursor');
+    let lastMouseMoveTime = Date.now();
 
-    document.body.addEventListener('mousemove', (event) => {
-        // Устанавливаем новое положение курсора на экране
-        customCursor.style.left = `${event.pageX - 10}px`; // Вычитаем половину ширины курсора
-        customCursor.style.top = `${event.pageY - 10}px`;  // Вычитаем половину высоты курсора
+    window.addEventListener('mousemove', e => {
+        const x = e.clientX;
+        const y = e.clientY;
+        
+        localStorage.setItem('cursor_position', `${x},${y}`);
+        lastMouseMoveTime = Date.now();
     });
+
+    setInterval(() => {
+        const storedPosition = localStorage.getItem('cursor_position');
+        if(storedPosition){
+            const [x,y] = storedPosition.split(',');
+            sharedCursor.style.transform = `translate(${x}px, ${y}px)`;
+        }
+        
+        if(Date.now() - lastMouseMoveTime > 1000 * 60){
+            localStorage.removeItem('cursor_position');
+        }
+    }, 100);
 </script>
 </body>
 </html>
