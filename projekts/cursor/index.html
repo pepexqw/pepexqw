@@ -3,45 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shared Cursor</title>
     <style>
-        /* Используем фоновое изображение вместо цвета */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
         #sharedCursor {
             position: absolute;
             width: 20px;
             height: 20px;
-            background-image: url('cursor.png'); /* Берём картинку из той же папки */
-            background-size: cover;              /* Растягиваем её на весь элемент */
-            border-radius: 50%;                 /* Округляем углы */
-            pointer-events: none;               /* Убираем реакцию на клики */
+            background-color: red;
+            border-radius: 50%;
+            pointer-events: none;
         }
     </style>
-    <title>Shared Cursor Demo</title>
 </head>
 <body>
+<h1 style="color:white;">Shared Cursor Experiment</h1>
 <div id="sharedCursor"></div>
-<script>
-    const sharedCursor = document.getElementById('sharedCursor');
-    let lastMouseMoveTime = Date.now();
 
-    window.addEventListener('mousemove', e => {
-        const x = e.clientX;
-        const y = e.clientY;
-        
-        localStorage.setItem('cursor_position', `${x},${y}`);
-        lastMouseMoveTime = Date.now();
+<script src="https://cdn.pusher.com/js/7.x/pusher.min.js"></script>
+<script>
+    // Настройки подключения к Pusher
+    var pusher = new Pusher('<YOUR_PUSHER_APP_KEY>', {
+      cluster: '<YOUR_CLUSTER>',
+      encrypted: true
     });
 
-    setInterval(() => {
-        const storedPosition = localStorage.getItem('cursor_position');
-        if(storedPosition){
-            const [x,y] = storedPosition.split(',');
-            sharedCursor.style.transform = `translate(${x}px, ${y}px)`;
-        }
-        
-        if(Date.now() - lastMouseMoveTime > 1000 * 60){
-            localStorage.removeItem('cursor_position');
-        }
-    }, 100);
+    // Присоединяемся к каналу
+    var channel = pusher.subscribe('shared_cursor_channel');
+
+    // Обработчик движения мыши
+    document.addEventListener('mousemove', function(event) {
+        const cursorData = {
+            x: event.clientX,
+            y: event.clientY
+        };
+        channel.trigger('client-mouse-move', cursorData); // Отправляем данные на сервер
+    });
+
+    // Прием данных от других клиентов
+    channel.bind('client-mouse-move', function(cursorData) {
+        const sharedCursor = document.getElementById('sharedCursor');
+        sharedCursor.style.left = cursorData.x + 'px';
+        sharedCursor.style.top = cursorData.y + 'px';
+    });
 </script>
 </body>
 </html>
