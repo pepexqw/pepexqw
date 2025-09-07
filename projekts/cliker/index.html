@@ -53,7 +53,7 @@
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="customContextMenu(event); return false;"> <!-- Добавляем обработчик события -->
     <div style="text-align:center;">
         <img id="shaurma" src="шаурма-с-курицей.png" alt="Шаурма"/>
         <br/>
@@ -124,9 +124,13 @@
             clicksCount = 0;
             updateCounter();
         }
+
+        // Кастомное контекстное меню при нажатии правой кнопки мыши
+        function customContextMenu(e) {
+            e.preventDefault(); // Отменяем стандартное поведение браузера
+
+            alert("Ты не сможешь стырить код сайта, печалька)");
+        }
     </script>
 </body>
 </html>
-
-
-
