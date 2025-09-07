@@ -87,7 +87,7 @@
             max-width: 100%;
             height: auto;
             object-fit: cover;
-            border-radius: 10px; /* Скругление углов изображений */
+            border-radius: 10px; /* Закруглены углы изображений */
             margin-bottom: 1rem;
         }
 
@@ -126,51 +126,27 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        /* Переключение тем */
+        body.light-theme {
+            --bg-dark: #ffffff;
+            --fg-dark: #333333;
+            --bg-light: #2b2b2b;
+            --fg-light: #ffffff;
+        }
+
         @keyframes slideUp {
             from {opacity: 0; transform: scale(0.9);}
             to {opacity: 1; transform: scale(1);}
-        }
-
-        /* Переключатель тем */
-        input[type='checkbox'] {
-            display: none;
-        }
-
-        label.theme-toggle {
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            user-select: none;
-        }
-
-        label.theme-toggle::before {
-            content: '';
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: #ccc;
-            margin-right: 10px;
-            transition: background-color 0.3s ease;
-        }
-
-        input[type='checkbox']:checked + label.theme-toggle::before {
-            background-color: #007bff;
         }
     </style>
 
     <script defer>
         document.addEventListener('DOMContentLoaded', () => {
             // Переключение тем
-            const themeToggleLink = document.querySelector('#theme-toggle');
-            if (themeToggleLink) {
-                themeToggleLink.addEventListener('click', () => {
-                    document.body.classList.toggle('light-theme');
-                });
-            }
-
-            // Запрещаем стандартный контекст браузера
-            window.oncontextmenu = e => e.preventDefault();
+            const themeToggleButton = document.querySelector("#theme-toggle");
+            themeToggleButton.addEventListener("click", () => {
+                document.body.classList.toggle("light-theme");
+            });
         });
     </script>
 </head>
@@ -207,7 +183,7 @@
             <article class="film">
                 <img src="John_Wick.jpg" alt="Джон Уик">
                 <h3>Джон Уик</h3>
-                <p>Знаменитый фильм о профессиональном убийце, вернувшемся к старому ремеслу после атаки на его дом.</p>
+                <p>Знаменитый фильм о профессиональном убийце, вернувшемся к своему прошлому делу после нападения на его дом.</p>
                 <button class="watch-btn">Посмотреть</button>
             </article>
         </section>
