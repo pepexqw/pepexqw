@@ -3,66 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фильмы</title>
+    <title>Фильм-сайт — pepexqw_</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #fafafa;
-            color: #333;
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
+        body.dark-theme { background-color: #2b2b2b; color: white; transition: all .3s ease-in-out; }
+        body.light-theme { background-color: white; color: black; transition: all .3s ease-in-out; }
+    
+        /* Навигационное меню */
+        nav ul li a { display: inline-block; padding: 10px; text-decoration: none; color: inherit; }
+        nav ul li a:focus, nav ul li a:hover { opacity: 0.8; }
+
+        section h2 { margin-top: 2rem; font-size: 2em; }
+        footer p { text-align: center; margin-bottom: 1rem; }
+
+        /* Блок согласия на cookie */
+        #cookie-consent-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
         }
-        h1 {
-            text-align: center;
-            color: #555;
-        }
-        .film-list {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        .film-item {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .film-item a {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            background-color: #4caf50;
-            color: white;
-            text-decoration: none;
+
+        #cookie-consent-banner button {
+            background-color: #ff9800;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,.1);
-            transition: transform .3s ease;
+            cursor: pointer;
         }
-        .film-item a:hover {
-            transform: scale(1.05);
+
+        #cookie-consent-banner button:hover {
+            background-color: #e68700;
+        }
+
+        #cookie-consent-banner a {
+            color: #fff;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        #cookie-consent-banner a:hover {
+            color: #ddd;
         }
     </style>
+
+    <!-- Скрипты -->
+    <script defer>
+        document.addEventListener("DOMContentLoaded", () => {
+            // Создание элемента audio
+            let soundEffect = new Audio("/ckik.mp3"); // Путь к файлу звука
+
+            // Воспроизведение звука
+            function playSound() {
+                soundEffect.play();
+            }
+
+            // Обработчики для пунктов меню
+            const navItems = document.querySelectorAll("nav ul li a");
+            navItems.forEach(item => {
+                item.addEventListener("mouseenter", playSound);
+            });
+
+            // Логика для переключения тем
+            const themeToggleButton = document.querySelector("#theme-toggle");
+            themeToggleButton.addEventListener("click", () => {
+                document.body.classList.toggle("dark-theme");
+                document.body.classList.toggle("light-theme");
+            });
+        });
+    </script>
 </head>
-<body>
-    <h1>Список фильмов</h1>
-    <ul class="film-list">
-        <li class="film-item">
-            <a href="https://pepexqw.vercel.app/djon">Джон Уик</a>
-        </li>
-        <li class="film-item">
-            <a href="https://pepexqw.vercel.app/igra">Игра в кальмара</a>
-        </li>
-        <li class="film-item">
-            <a href="https://pepexqw.vercel.app/lovushka">Ловушка времени</a>
-        </li>
-        <li class="film-item">
-            <a href="https://pepexqw.vercel.app/duna">Дюна</a>
-        </li>
-        <li class="film-item">
-            <a href="https://pepexqw.vercel.app/simpsony">Симпсоны</a>
-        </li>
-        <li class="film-item">
-            <a href="https://pepexqw.vercel.app/nikto">Никто</a>
-        </li>
-    </ul>
+
+<body class="dark-theme">
+    <header>
+        <nav>
+            <div class="logo">@pepexqw_</div>
+            <ul>
+                <li><a href="https://pepexqw.vercel.app/" class="nav-link">Главная страница</a></li>
+                <li><a href="#films" class="nav-link">Фильмы</a></li>
+                <li><a href="#" id="theme-toggle" title="Изменение темы сайта"><i class="fas fa-moon"></i></a></li>
+            </ul>
+        </nav>
+        <h1>Привет! Добро пожаловать на мой кино-сайт.</h1>
+    </header>
+
+    <main role="main">
+        <section id="films">
+            <h2>Выбор фильмов:</h2>
+            <ul class="film-list">
+                <li class="film-item">
+                    <a href="https://pepexqw.vercel.app/djon">Джон Уик</a>
+                </li>
+                <li class="film-item">
+                    <a href="https://pepexqw.vercel.app/igra">Игра в кальмара</a>
+                </li>
+                <li class="film-item">
+                    <a href="https://pepexqw.vercel.app/lovushka">Ловушка времени</a>
+                </li>
+                <li class="film-item">
+                    <a href="https://pepexqw.vercel.app/duna">Дюна</a>
+                </li>
+                <li class="film-item">
+                    <a href="https://pepexqw.vercel.app/simpsony">Симпсоны</a>
+                </li>
+                <li class="film-item">
+                    <a href="https://pepexqw.vercel.app/nikto">Никто</a>
+                </li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 pepexqw_. Все права защищены.</p>
+    </footer>
+
+    <!-- Согласие на использование файлов cookie -->
+    <div id="cookie-consent-banner">
+        Мы используем файлы cookie для улучшения функциональности нашего веб-сайта. Нажмите <button onclick="this.parentNode.style.display='none'">«Принять»</button>, чтобы продолжить работу с сайтом.
+        <a href="#" onclick="window.location.href='#cookie-policy'; return false;">Подробнее</a>
+    </div>
+
+    <!-- Политика использования файлов cookie -->
+    <section id="cookie-policy" style="display: none;">
+        <h2>Политика использования файлов cookie</h2>
+        <p>Наш сайт использует файлы cookie для улучшения качества обслуживания и оптимизации взаимодействия с пользователями. Продолжая просмотр, вы соглашаетесь на использование файлов cookie.</p>
+    </section>
 </body>
 </html>
