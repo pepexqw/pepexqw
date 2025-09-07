@@ -3,138 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фильм-сайт — pepexqw_</title>
+    <title>Фильмы</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
     <style>
-        body.dark-theme { background-color: #2b2b2b; color: white; transition: all .3s ease-in-out; }
-        body.light-theme { background-color: white; color: black; transition: all .3s ease-in-out; }
-    
-        /* Навигационное меню */
-        nav ul li a { display: inline-block; padding: 10px; text-decoration: none; color: inherit; }
-        nav ul li a:focus, nav ul li a:hover { opacity: 0.8; }
-
-        section h2 { margin-top: 2rem; font-size: 2em; }
-        footer p { text-align: center; margin-bottom: 1rem; }
-
-        /* Блок согласия на cookie */
-        #cookie-consent-banner {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background-color: #333;
-            color: #fff;
-            padding: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
         }
-
-        #cookie-consent-banner button {
-            background-color: #ff9800;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
+        h1 {
+            text-align: center;
+            color: #555;
+        }
+        .film-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .film-item {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .film-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        .film-description {
+            margin-bottom: 15px;
+        }
+        .watch-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #4caf50;
+            color: white;
+            text-decoration: none;
             border-radius: 5px;
-            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,.1);
+            transition: transform .3s ease;
         }
-
-        #cookie-consent-banner button:hover {
-            background-color: #e68700;
-        }
-
-        #cookie-consent-banner a {
-            color: #fff;
-            text-decoration: underline;
-            cursor: pointer;
-        }
-
-        #cookie-consent-banner a:hover {
-            color: #ddd;
+        .watch-button:hover {
+            transform: scale(1.05);
         }
     </style>
-
-    <!-- Скрипты -->
-    <script defer>
-        document.addEventListener("DOMContentLoaded", () => {
-            // Создание элемента audio
-            let soundEffect = new Audio("/ckik.mp3"); // Путь к файлу звука
-
-            // Воспроизведение звука
-            function playSound() {
-                soundEffect.play();
-            }
-
-            // Обработчики для пунктов меню
-            const navItems = document.querySelectorAll("nav ul li a");
-            navItems.forEach(item => {
-                item.addEventListener("mouseenter", playSound);
-            });
-
-            // Логика для переключения тем
-            const themeToggleButton = document.querySelector("#theme-toggle");
-            themeToggleButton.addEventListener("click", () => {
-                document.body.classList.toggle("dark-theme");
-                document.body.classList.toggle("light-theme");
-            });
-        });
-    </script>
 </head>
-
-<body class="dark-theme">
-    <header>
-        <nav>
-            <div class="logo">@pepexqw_</div>
-            <ul>
-                <li><a href="https://pepexqw.vercel.app/" class="nav-link">Главная страница</a></li>
-                <li><a href="#films" class="nav-link">Фильмы</a></li>
-                <li><a href="#" id="theme-toggle" title="Изменение темы сайта"><i class="fas fa-moon"></i></a></li>
-            </ul>
-        </nav>
-        <h1>Привет! Добро пожаловать на мой кино-сайт.</h1>
-    </header>
-
-    <main role="main">
-        <section id="films">
-            <h2>Выбор фильмов:</h2>
-            <ul class="film-list">
-                <li class="film-item">
-                    <a href="https://pepexqw.vercel.app/djon">Джон Уик</a>
-                </li>
-                <li class="film-item">
-                    <a href="https://pepexqw.vercel.app/igra">Игра в кальмара</a>
-                </li>
-                <li class="film-item">
-                    <a href="https://pepexqw.vercel.app/lovushka">Ловушка времени</a>
-                </li>
-                <li class="film-item">
-                    <a href="https://pepexqw.vercel.app/duna">Дюна</a>
-                </li>
-                <li class="film-item">
-                    <a href="https://pepexqw.vercel.app/simpsony">Симпсоны</a>
-                </li>
-                <li class="film-item">
-                    <a href="https://pepexqw.vercel.app/nikto">Никто</a>
-                </li>
-            </ul>
-        </section>
-    </main>
-
-    <footer>
-        <p>© 2025 pepexqw_. Все права защищены.</p>
-    </footer>
-
-    <!-- Согласие на использование файлов cookie -->
-    <div id="cookie-consent-banner">
-        Мы используем файлы cookie для улучшения функциональности нашего веб-сайта. Нажмите <button onclick="this.parentNode.style.display='none'">«Принять»</button>, чтобы продолжить работу с сайтом.
-        <a href="#" onclick="window.location.href='#cookie-policy'; return false;">Подробнее</a>
-    </div>
-
-    <!-- Политика использования файлов cookie -->
-    <section id="cookie-policy" style="display: none;">
-        <h2>Политика использования файлов cookie</h2>
-        <p>Наш сайт использует файлы cookie для улучшения качества обслуживания и оптимизации взаимодействия с пользователями. Продолжая просмотр, вы соглашаетесь на использование файлов cookie.</p>
-    </section>
+<body>
+    <h1>Список фильмов</h1>
+    <ul class="film-list">
+        <li class="film-item">
+            <span class="film-title">Джон Уик</span>
+            <div class="film-description">История бывшего киллера Джона Уика, чья жизнь меняется навсегда после смерти жены и похищения любимой собаки.</div>
+            <a href="https://pepexqw.vercel.app/djon" class="watch-button">Посмотреть</a>
+        </li>
+        <li class="film-item">
+            <span class="film-title">Игра в кальмара</span>
+            <div class="film-description">Южнокорейская драма о людях, участвующих в смертельных играх, чтобы выиграть крупную сумму денег.</div>
+            <a href="https://pepexqw.vercel.app/igra" class="watch-button">Посмотреть</a>
+        </li>
+        <li class="film-item">
+            <span class="film-title">Ловушка времени</span>
+            <div class="film-description">Приключенческий фильм о подростке, попавшем в прошлое и пытающемся вернуться домой.</div>
+            <a href="https://pepexqw.vercel.app/lovushka" class="watch-button">Посмотреть</a>
+        </li>
+        <li class="film-item">
+            <span class="film-title">Дюна</span>
+            <div class="film-description">Эпическое фэнтези о борьбе за контроль над планетой Арракис, богатой ценным ресурсом спайсом.</div>
+            <a href="https://pepexqw.vercel.app/duna" class="watch-button">Посмотреть</a>
+        </li>
+        <li class="film-item">
+            <span class="film-title">Симпсоны</span>
+            <div class="film-description">Классический мультсериал о приключениях семьи Симпсонов в городе Спрингфилд.</div>
+            <a href="https://pepexqw.vercel.app/simpsony" class="watch-button">Посмотреть</a>
+        </li>
+        <li class="film-item">
+            <span class="film-title">Никто</span>
+            <div class="film-description">История тихого семейного мужчины, вынужденного вновь стать опасным убийцей, чтобы защитить свою семью.</div>
+            <a href="https://pepexqw.vercel.app/nikto" class="watch-button">Посмотреть</a>
+        </li>
+    </ul>
 </body>
 </html>
