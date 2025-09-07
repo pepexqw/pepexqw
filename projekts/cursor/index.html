@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #sharedCursor {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+    <title>Shared Cursor Demo</title>
+</head>
+<body>
+<div id="sharedCursor"></div>
+<script>
+    const sharedCursor = document.getElementById('sharedCursor');
+    let lastMouseMoveTime = Date.now(); // Отслеживаем последнее движение мыши
+
+    window.addEventListener('mousemove', e => {
+        const x = e.clientX;
+        const y = e.clientY;
+        
+        localStorage.setItem('cursor_position', `${x},${y}`); // Сохраняем положение курсора
+        lastMouseMoveTime = Date.now(); // Обновляем таймер последнего движения
+    });
+
+    setInterval(() => {
+        const storedPosition = localStorage.getItem('cursor_position'); // Получаем сохраненную позицию
+        if(storedPosition){
+            const [x,y] = storedPosition.split(',');
+            sharedCursor.style.transform = `translate(${x}px, ${y}px)`; // Перемещаем общий курсор
+        }
+        
+        // Удаление устаревших позиций через некоторое время
+        if(Date.now() - lastMouseMoveTime > 1000 * 60){ // Через минуту удаляем запись
+            localStorage.removeItem('cursor_position');
+        }
+    }, 100); // Обновление каждые 100 мс
+</script>
+</body>
+</html>
