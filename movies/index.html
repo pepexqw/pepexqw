@@ -3,85 +3,132 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Фильмы</title>
+    <title>Фильмы — pepexqw_</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #fafafa;
-            color: #333;
-            max-width: 800px;
-            margin: auto;
+            font-family: Arial, Helvetica, sans-serif;
+            line-height: 1.6;
+            background-color: #2d2d2d;
+            color: #ececec;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background-color: #333;
+            color: #ffffff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+        nav {
+            background-color: #444;
+            overflow: hidden;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            float: left;
+        }
+        nav ul li a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+        nav ul li a:hover {
+            background-color: #555;
+        }
+        main {
+            flex-grow: 1;
             padding: 20px;
         }
-        h1 {
-            text-align: center;
-            color: #555;
+        section {
+            margin-bottom: 40px;
         }
-        .film-list {
-            list-style-type: none;
-            padding-left: 0;
-        }
-        .film-item {
+        section h2 {
+            font-size: 2em;
             margin-bottom: 20px;
-            text-align: center;
         }
-        .film-title {
-            font-weight: bold;
-            font-size: 1.2em;
+        article.film {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,.1);
+        }
+        article.film h3 {
+            font-size: 1.5em;
             margin-bottom: 10px;
         }
-        .film-description {
+        article.film p {
             margin-bottom: 15px;
         }
-        .watch-button {
+        article.film a.watch-btn {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #4caf50;
+            background-color: #28a745; /* Зелёный цвет */
             color: white;
-            text-decoration: none;
+            border: none;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,.1);
-            transition: transform .3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
         }
-        .watch-button:hover {
-            transform: scale(1.05);
+        article.film a.watch-btn:hover {
+            background-color: #218838; /* Темно-зеленый оттенок при наведении */
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1>Список фильмов</h1>
-    <ul class="film-list">
-        <li class="film-item">
-            <span class="film-title">Джон Уик</span>
-            <div class="film-description">История бывшего киллера Джона Уика, чья жизнь меняется навсегда после смерти жены и похищения любимой собаки.</div>
-            <a href="https://pepexqw.vercel.app/djon" class="watch-button">Посмотреть</a>
-        </li>
-        <li class="film-item">
-            <span class="film-title">Игра в кальмара</span>
-            <div class="film-description">Южнокорейская драма о людях, участвующих в смертельных играх, чтобы выиграть крупную сумму денег.</div>
-            <a href="https://pepexqw.vercel.app/igra" class="watch-button">Посмотреть</a>
-        </li>
-        <li class="film-item">
-            <span class="film-title">Ловушка времени</span>
-            <div class="film-description">Приключенческий фильм о подростке, попавшем в прошлое и пытающемся вернуться домой.</div>
-            <a href="https://pepexqw.vercel.app/lovushka" class="watch-button">Посмотреть</a>
-        </li>
-        <li class="film-item">
-            <span class="film-title">Дюна</span>
-            <div class="film-description">Эпическое фэнтези о борьбе за контроль над планетой Арракис, богатой ценным ресурсом спайсом.</div>
-            <a href="https://pepexqw.vercel.app/duna" class="watch-button">Посмотреть</a>
-        </li>
-        <li class="film-item">
-            <span class="film-title">Симпсоны</span>
-            <div class="film-description">Классический мультсериал о приключениях семьи Симпсонов в городе Спрингфилд.</div>
-            <a href="https://pepexqw.vercel.app/simpsony" class="watch-button">Посмотреть</a>
-        </li>
-        <li class="film-item">
-            <span class="film-title">Никто</span>
-            <div class="film-description">История тихого семейного мужчины, вынужденного вновь стать опасным убийцей, чтобы защитить свою семью.</div>
-            <a href="https://pepexqw.vercel.app/nikto" class="watch-button">Посмотреть</a>
-        </li>
-    </ul>
+    <header>
+        <h1>Фильмы pepexqw_</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#films">Фильмы</a></li>
+            <li><a href="https://pepexqw.vercel.app/movies/john-wick/">Джон Уик</a></li>
+            <li><a href="https://pepexqw.vercel.app/movies/game-of-squid/">Игра в Кальмара</a></li>
+        </ul>
+    </nav>
+    <main>
+        <section id="films">
+            <h2>Список фильмов</h2>
+            <article class="film">
+                <h3>Джон Уик</h3>
+                <p>История бывшего киллера, которого вынуждают вернуться к прошлому ради мести.</p>
+                <a href="https://pepexqw.vercel.app/movies/john-wick/" class="watch-btn">Посмотреть</a>
+            </article>
+            <article class="film">
+                <h3>Игра в Кальмара</h3>
+                <p>Группа людей участвует в опасных детских играх, рискуя жизнью ради большого денежного приза.</p>
+                <a href="https://pepexqw.vercel.app/movies/game-of-squid/" class="watch-btn">Посмотреть</a>
+            </article>
+            <article class="film">
+                <h3>Дюна</h3>
+                <p>Захватывающий научно-фантастический фильм о борьбе за контроль над планетой Арракис.</p>
+                <a href="https://pepexqw.vercel.app/movies/dune/" class="watch-btn">Посмотреть</a>
+            </article>
+        </section>
+    </main>
+    <footer>
+        <p>© 2025 pepexqw_. Все права защищены.</p>
+    </footer>
 </body>
 </html>
