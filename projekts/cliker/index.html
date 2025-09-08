@@ -22,6 +22,23 @@
             user-select: none;
         }
         
+        /* Новый стиль для появления лукового бонуса */
+        #onionBonus {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 10;
+            display: none;
+            animation: appearLuk 1s forwards;
+        }
+        
+        @keyframes appearLuk {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
         .popupMessage {
             visibility: visible;
             position: fixed;
@@ -55,37 +72,71 @@
 </head>
 <body oncontextmenu="customContextMenu(event); return false;"> <!-- Добавляем обработчик события -->
     <div style="text-align:center;">
-        <img id="shaurma" src="шаурма-с-курицей.png" alt="Шаурма"/>
+        <img id="shaurma" src="шаверма-в-соусе.png" alt="Шаурма"/>
         <br/>
         <span id="clicksCounter">Кликов: 0</span>
         <button onclick="resetClicks()">Сбросить клики</button>
     </div>
+    
+    <!-- Новое изображение лукового бонуса -->
+    <img id="onionBonus" src="луковица.png" alt="Луковица"/>
 
     <audio id="clickSound" src="жмяк.mp3" preload="auto"></audio> <!-- Скрытое аудиополе -->
+    <audio id="bonusSound" src="особый-звук.mp3" preload="auto"></audio> <!-- Звук для особых моментов -->
 
     <script>
         let clicksCount = 0;
         const shaurmaImg = document.getElementById('shaurma');
-        const clickSound = document.getElementById('clickSound'); // Получаем доступ к звуковому объекту
+        const onionBonus = document.getElementById('onionBonus'); // Луковая фишка
+        const clickSound = document.getElementById('clickSound'); // Основной звук
+        const bonusSound = document.getElementById('bonusSound'); // Особый звук
         const counterDisplay = document.getElementById('clicksCounter');
 
         // Обработчик кликов по изображению
         shaurmaImg.onclick = function() {
             clicksCount++;
+            
+            if(clicksCount % 10 === 0 && clicksCount > 0){
+                playSpecialSound(); // Особенный звук каждые 10 кликов
+            }
+            
+            if(clicksCount >= 100){ // Бонус после достижения отметки в 100 кликов
+                showOnionBonus();
+            }
+            
             updateCounter();
-            playClickSound(); // Воспроизводим звук при клике
-            createAndShowRandomPopup(); // Создаёт новое сообщение
+            playClickSound(); // Обычный звук клика
+            createAndShowRandomPopup(); // Сообщение с очками
         };
 
-        // Функция воспроизведения звука
-        function playClickSound() {
-            clickSound.currentTime = 0; // Перематываем трек назад, если ранее звучал
-            clickSound.play(); // Проигрываем звук
+        // Показ луковой фишки
+        function showOnionBonus(){
+            onionBonus.style.display = 'block';
+            setTimeout(function(){ // Убираем лук спустя некоторое время
+                onionBonus.style.display = 'none';
+            }, 3000);
         }
 
-        // Функция обновления отображаемого количества кликов
+        // Особый звук каждые 10 кликов
+        function playSpecialSound() {
+            bonusSound.currentTime = 0; // Перематываем трек назад
+            bonusSound.play(); // Проигрываем особый звук
+        }
+
+        // Функция воспроизведения обычного звука
+        function playClickSound() {
+            clickSound.currentTime = 0; // Перематываем обычный звук
+            clickSound.play(); // Проигрываем обычный звук
+        }
+
+        // Функция обновления счётчика кликов
         function updateCounter() {
             counterDisplay.textContent = `Кликов: ${clicksCount}`;
+        }
+
+        // Генерируем случайные очки для сообщений
+        function generateRandomPoints() {
+            return '+' + (Math.floor(Math.random() * 10) + 1);
         }
 
         // Генерация случайных координат для всплывающего сообщения
@@ -98,11 +149,11 @@
             };
         }
 
-        // Создание нового элемента с надписью '+1'
+        // Создание нового элемента с надписью '+N' (случайные очки)
         function createAndShowRandomPopup() {
             const newMessage = document.createElement('div');
             newMessage.className = 'popupMessage'; // Применяем класс для стиля
-            newMessage.textContent = '+1';
+            newMessage.textContent = generateRandomPoints(); // Случайные очки
             document.body.appendChild(newMessage);
 
             // Получаем случайные координаты
@@ -134,6 +185,3 @@
     </script>
 </body>
 </html>
-
-
-
