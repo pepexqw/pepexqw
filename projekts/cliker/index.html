@@ -55,7 +55,7 @@
 </head>
 <body oncontextmenu="customContextMenu(event); return false;"> <!-- Добавляем обработчик события -->
     <div style="text-align:center;">
-        <img id="shaurma" src="шаверма-в-соусе.png" alt="Шаурма"/>
+        <img id="shaurma" src="шаурма-с-курицей.png" alt="Шаурма"/>
         <br/>
         <span id="clicksCounter">Кликов: 0</span>
         <button onclick="resetClicks()">Сбросить клики</button>
@@ -65,36 +65,27 @@
 
     <script>
         let clicksCount = 0;
-        let multiplier = 1; // Начальное значение множителя очков
         const shaurmaImg = document.getElementById('shaurma');
-        const clickSound = document.getElementById('clickSound'); // Доступ к звуку
+        const clickSound = document.getElementById('clickSound'); // Получаем доступ к звуковому объекту
         const counterDisplay = document.getElementById('clicksCounter');
 
         // Обработчик кликов по изображению
         shaurmaImg.onclick = function() {
-            clicksCount++; // Увеличили общее количество кликов
-            let pointsToAdd = clicksCount * multiplier; // Количество очков зависит от текущего множителя
-            
-            // Проверяем достижение новой сотни кликов
-            if ((clicksCount % 100) === 0 && clicksCount !== 0) {
-                multiplier *= 2; // Удвоение очков
-                console.log(`Новый уровень! Очки умножаются на ${multiplier}`);
-            }
-            
-            updateCounter(pointsToAdd); // Обновляем отображаемые очки
-            playClickSound(); // Играть звук клика
-            createAndShowRandomPopup(pointsToAdd); // Сообщение с очками
+            clicksCount++;
+            updateCounter();
+            playClickSound(); // Воспроизводим звук при клике
+            createAndShowRandomPopup(); // Создаёт новое сообщение
         };
 
         // Функция воспроизведения звука
         function playClickSound() {
-            clickSound.currentTime = 0; // Перематываем звук обратно
+            clickSound.currentTime = 0; // Перематываем трек назад, если ранее звучал
             clickSound.play(); // Проигрываем звук
         }
 
-        // Функция обновления отображаемых очков
-        function updateCounter(pointsAdded) {
-            counterDisplay.textContent = `Кликов: ${pointsAdded}`;
+        // Функция обновления отображаемого количества кликов
+        function updateCounter() {
+            counterDisplay.textContent = `Кликов: ${clicksCount}`;
         }
 
         // Генерация случайных координат для всплывающего сообщения
@@ -107,11 +98,11 @@
             };
         }
 
-        // Создание нового элемента с количеством заработанных очков
-        function createAndShowRandomPopup(points) {
+        // Создание нового элемента с надписью '+1'
+        function createAndShowRandomPopup() {
             const newMessage = document.createElement('div');
             newMessage.className = 'popupMessage'; // Применяем класс для стиля
-            newMessage.textContent = `+${points}`; // Информируем пользователя о количестве очков
+            newMessage.textContent = '+1';
             document.body.appendChild(newMessage);
 
             // Получаем случайные координаты
@@ -119,7 +110,7 @@
             newMessage.style.left = `${pos.x}px`;
             newMessage.style.top = `${pos.y}px`;
 
-            // Через две секунды плавно скрываем надпись
+            // Через две секунды начинаем плавно скрывать надпись
             setTimeout(() => {
                 newMessage.style.opacity = 0;
                 setTimeout(() => {
@@ -131,8 +122,7 @@
         // Кнопка сброса кликов
         function resetClicks() {
             clicksCount = 0;
-            multiplier = 1; // Возвращаем множитель обратно в начальное состояние
-            updateCounter(0); // Обнуляем отображаемое количество очков
+            updateCounter();
         }
 
         // Кастомное контекстное меню при нажатии правой кнопки мыши
@@ -144,3 +134,8 @@
     </script>
 </body>
 </html>
+
+
+
+
+
