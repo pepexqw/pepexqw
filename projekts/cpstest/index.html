@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>КПС Тест</title>
+    <style>
+        :root {
+            --bg-light: #ffffff;
+            --fg-light: #333333;
+            --bg-dark: #2b2b2b;
+            --fg-dark: #ffffff;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--fg-dark);
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        header {
+            background-color: var(--bg-dark);
+            color: var(--fg-dark);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #target-area {
+            width: 200px;
+            height: 200px;
+            background-color: red;
+            cursor: pointer;
+            margin: 2rem auto;
+            border-radius: 50%;
+        }
+
+        #timer {
+            font-size: 2rem;
+            margin-top: 1rem;
+        }
+
+        #result {
+            font-size: 2rem;
+            margin-top: 1rem;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        footer {
+            background-color: var(--bg-dark);
+            color: var(--fg-dark);
+            padding: 1rem;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Переключение тем */
+        body.light-theme {
+            --bg-dark: #ffffff;
+            --fg-dark: #333333;
+            --bg-light: #2b2b2b;
+            --fg-light: #ffffff;
+        }
+    </style>
+
+    <script defer>
+        let clicks = 0;
+        let timerInterval;
+
+        function startTest() {
+            clicks = 0;
+            document.getElementById('result').innerText = '';
+            document.getElementById('timer').innerText = '5';
+            clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                let currentTime = parseInt(document.getElementById('timer').innerText);
+                if(currentTime > 0){
+                    document.getElementById('timer').innerText = (currentTime - 1).toString();
+                } else{
+                    clearInterval(timerInterval);
+                    calculateResult();
+                }
+            }, 1000);
+        }
+
+        function clickTarget(){
+            clicks++;
+        }
+
+        function calculateResult(){
+            document.getElementById('result').innerText = `Вы сделали ${clicks} кликов.`;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const resetButton = document.querySelector('#reset');
+            resetButton.addEventListener('click', startTest);
+            
+            const targetArea = document.querySelector('#target-area');
+            targetArea.addEventListener('click', clickTarget);
+        });
+    </script>
+</head>
+
+<body class="dark-theme">
+    <header>
+        <h1>Тест скорости кликов</h1>
+    </header>
+
+    <main role="main">
+        <div id="target-area"></div>
+        <span id="timer"></span>
+        <br/>
+        <button id="reset">Сбросить</button>
+        <br/>
+        <span id="result"></span>
+    </main>
+
+    <footer>
+        <p>© 2025 Ваш Сайт. Все права защищены.</p>
+    </footer>
+</body>
+</html>
