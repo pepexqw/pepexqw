@@ -16,137 +16,128 @@
         }
         
         #shaurma {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
             width: 300px;
             cursor: pointer;
             user-select: none;
         }
         
-        #explosion {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 1000;
+        .popupMessage {
+            visibility: visible;
+            position: fixed;
+            color: yellow;
+            font-size: 24px;
+            font-weight: bold;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
         }
         
-        #cloud {
-            position: absolute;
-            width: 100px;
-            height: auto;
-            animation: flyCloud linear infinite;
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #FF5C5C;
+            color: #FFFFFF;
+            border: none;
+            border-radius: 5px;
         }
         
-        @keyframes flyCloud {
-            from {transform: translateX(-100vw);}
-            to   {transform: translateX(100vw);}
+        button:hover {
+            background-color: #FF3C3C;
         }
         
-        .hidden {
-            display: none !important;
+        #clicksCounter {
+            font-size: 24px;
+            margin-top: 10px;
         }
     </style>
 </head>
-<body oncontextmenu="return false;" tabindex="0">
-<div style="text-align:center;">
-    <img id="shaurma" src="шаурма-с-курицей.png" alt="Шаурма"/>
-    <br/>
-    <span id="clicksCounter">Кликов: 0</span>
-    <button onclick="resetClicks()">Сбросить клики</button>
-</div>
+<body oncontextmenu="customContextMenu(event); return false;"> <!-- Добавляем обработчик события -->
+    <div style="text-align:center;">
+        <img id="shaurma" src="шаурма-с-курицей.png" alt="Шаурма"/>
+        <br/>
+        <span id="clicksCounter">Кликов: 0</span>
+        <button onclick="resetClicks()">Сбросить клики</button>
+    </div>
 
-<!-- Изображения -->
-<img id="explosion" class="hidden" src="взрыв.png" />
-<img id="cloud" class="hidden" src="облока.png" />
+    <audio id="clickSound" src="жмяк.mp3" preload="auto"></audio> <!-- Скрытое аудиополе -->
 
-<!-- Аудиофайлы -->
-<audio id="bitvaAudio" src="bitva.mp3" preload="auto"></audio>
-<audio id="hitSound" src="урон.mp3" preload="auto"></audio>
+    <script>
+        let clicksCount = 0;
+        const shaurmaImg = document.getElementById('shaurma');
+        const clickSound = document.getElementById('clickSound'); // Получаем доступ к звуковому объекту
+        const counterDisplay = document.getElementById('clicksCounter');
 
-<script>
-let clicksCount = 0;
-const shaurmaImg = document.getElementById('shaurma');
-const explosionImg = document.getElementById('explosion');
-const cloudImg = document.getElementById('cloud');
-const hitSound = document.getElementById('hitSound');
-const bitvaAudio = document.getElementById('bitvaAudio');
-const counterDisplay = document.getElementById('clicksCounter');
+        // Обработчик кликов по изображению
+        shaurmaImg.onclick = function() {
+            clicksCount++;
+            updateCounter();
+            playClickSound(); // Воспроизводим звук при клике
+            createAndShowRandomPopup(); // Создаёт новое сообщение
+        };
 
-// Скорость перемещения объектов
-let speedFactor = 1;
+        // Функция воспроизведения звука
+        function playClickSound() {
+            clickSound.currentTime = 0; // Перематываем трек назад, если ранее звучал
+            clickSound.play(); // Проигрываем звук
+        }
 
-// Обработчик кликов по изображению
-shaurmaImg.onclick = function() {
-    if (clicksCount >= 100 && clicksCount % 20 === 0) {
-        explodeShaurma();
-        return;
-    }
-    
-    clicksCount++;
-    updateCounter();
-    teleportShaurma();
-    moveClouds();
-    playHitSound();
-};
+        // Функция обновления отображаемого количества кликов
+        function updateCounter() {
+            counterDisplay.textContent = `Кликов: ${clicksCount}`;
+        }
 
-// Воспроизведение звука удара
-function playHitSound() {
-    hitSound.currentTime = 0;
-    hitSound.play();
-}
+        // Генерация случайных координат для всплывающего сообщения
+        function randomPosition() {
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            return {
+                x: Math.random() * (windowWidth - 50),
+                y: Math.random() * (windowHeight - 50)
+            };
+        }
 
-// Телепортация шаурмы
-function teleportShaurma() {
-    const maxOffset = 300;
-    const offsetX = Math.floor(Math.random() * maxOffset) - maxOffset / 2;
-    const offsetY = Math.floor(Math.random() * maxOffset) - maxOffset / 2;
-    shaurmaImg.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
-}
+        // Создание нового элемента с надписью '+1'
+        function createAndShowRandomPopup() {
+            const newMessage = document.createElement('div');
+            newMessage.className = 'popupMessage'; // Применяем класс для стиля
+            newMessage.textContent = '+1';
+            document.body.appendChild(newMessage);
 
-// Перемещение облаков
-function moveClouds() {
-    cloudImg.style.animationDuration = `${speedFactor}s`; // Меняем скорость движения облака
-    speedFactor += 0.1; // Постепенно увеличиваем скорость
-}
+            // Получаем случайные координаты
+            const pos = randomPosition();
+            newMessage.style.left = `${pos.x}px`;
+            newMessage.style.top = `${pos.y}px`;
 
-// Взрыв шаурмы
-function explodeShaurma() {
-    console.log("Взрыв!");
-    explosionImg.classList.toggle('hidden');
-    setTimeout(() => {
-        explosionImg.classList.add('hidden');
-        clicksCount = 0;
-        updateCounter();
-        shaurmaImg.style.display = 'none';
-        showBitvaScreen();
-    }, 1000);
-}
+            // Через две секунды начинаем плавно скрывать надпись
+            setTimeout(() => {
+                newMessage.style.opacity = 0;
+                setTimeout(() => {
+                    document.body.removeChild(newMessage); // Удаляем элемент после полного исчезновения
+                }, 500); // Задержка после начала перехода
+            }, 2000); // Время задержки до начала исчезания
+        }
 
-// Показ экрана битвы
-function showBitvaScreen() {
-    bitvaAudio.play();
-    alert("Хватит, мне надоело что ты кликаешь по мне! Я тебя убью");
-}
+        // Кнопка сброса кликов
+        function resetClicks() {
+            clicksCount = 0;
+            updateCounter();
+        }
 
-// Функция обновления отображаемого количества кликов
-function updateCounter() {
-    counterDisplay.textContent = `Кликов: ${clicksCount}`;
-}
+        // Кастомное контекстное меню при нажатии правой кнопки мыши
+        function customContextMenu(e) {
+            e.preventDefault(); // Отменяем стандартное поведение браузера
 
-// Сброс кликов
-function resetClicks() {
-    clicksCount = 0;
-    updateCounter();
-    shaurmaImg.style.display = '';
-    explosionImg.classList.add('hidden');
-    speedFactor = 1;
-}
-
-document.body.focus(); // Для предотвращения выбора текста
-</script>
+            alert("Ты не сможешь баловаться с кодом сайта, печалька)");
+        }
+    </script>
 </body>
 </html>
+
+
+
+
+
+
+
