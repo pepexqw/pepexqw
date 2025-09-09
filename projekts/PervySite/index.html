@@ -10,13 +10,29 @@
   p {
       color: tomato;
     }
+     
+.block {
+    background-color: var(--bg-dark); /* Цвет фона блока */
+    color: var(--fg-dark); /* Цвет текста */
+    padding: 1.5rem; /* Внутренние отступы */
+    border-radius: 10px; /* Округлость углов блока */
+    box-shadow: 0 1px 5px rgba(0,0,0,0.1); /* Легкая тень вокруг блока */
+    transition: transform 0.3s ease-in-out; /* Анимация при наведении */
+    opacity: 0; /* Начальная прозрачность для анимации появления */
+    transform: scale(0.9); /* Исходное уменьшение размера для эффекта масштабирования */
+    animation: slideUp 0.5s forwards 0.3s; /* Анимация постепенного показа блока */
+}
 
  </style>
 <body>
  <p>:3</p>
- 
+ <div class="block">
+     <p>:3</p>
+     <h1>И т.д</h1>
+
 </body>
 </html>
+
 
 
 
