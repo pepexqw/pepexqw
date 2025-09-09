@@ -2,47 +2,92 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Retro CMD Style Website</title>
+    <title>Retro CMD in Cube</title>
     <style>
-        body {
-            background-color: #000;
+        /* Основные стили */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { height: 100vh; display: flex; justify-content: center; align-items: center; background-color: black; perspective: 1000px; overflow: hidden; }
+
+        /* Стили для нашего куба */
+        .cube-container {
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCube 10s infinite linear;
+        }
+
+        @keyframes rotateCube {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        .face {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            backface-visibility: hidden;
+            border: solid 2px white;
+            opacity: 0.8;
+        }
+
+        .front-face { transform: translateZ(150px); }
+        .back-face { transform: rotateX(-180deg) translateZ(150px); }
+        .top-face { transform: rotateX(90deg) translateZ(150px); }
+        .bottom-face { transform: rotateX(-90deg) translateZ(150px); }
+        .left-face { transform: rotateY(-90deg) translateZ(150px); }
+        .right-face { transform: rotateY(90deg) translateZ(150px); }
+
+        /* Наш псевдо-консольный интерфейс */
+        #console {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: black;
             color: limegreen;
-            font-family: 'Courier New', monospace;
             padding: 20px;
+            font-family: Courier New, monospace;
+            z-index: 10;
         }
-        
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
+
+        #console p {
+            margin-top: 5px;
         }
-        
-        input[type=text], button {
-            border-radius: 0;
-            outline: none;
-            border: none;
+
+        #console input {
             background-color: transparent;
             color: limegreen;
-            font-size: inherit;
+            border: none;
+            border-bottom: 1px dashed limegreen;
+            font-size: 1em;
             width: 100%;
-            padding: 5px;
         }
-        
-        input[type=text]:focus {
-            box-shadow: inset 0 0 5px rgba(0, 255, 0, 0.5);
-        }
-        
-        button {
+
+        #console button {
+            background-color: transparent;
+            color: limegreen;
+            border: none;
+            font-size: 1em;
             cursor: pointer;
-            float: right;
         }
     </style>
 </head>
 <body>
-    
-<h1>RETRO CMD STYLE WEBSITE</h1>
+
+<!-- Куб -->
+<div class="cube-container">
+    <!-- Шесть граней куба -->
+    <div class="face front-face"></div>
+    <div class="face back-face"></div>
+    <div class="face top-face"></div>
+    <div class="face bottom-face"></div>
+    <div class="face left-face"></div>
+    <div class="face right-face"></div>
+</div>
+
+<!-- Консольная оболочка -->
 <div id="console">
+    <h1 style="margin-bottom: 10px;">RETRO CMD IN CUBE</h1>
     <div id="output"></div>
-    <input type="text" id="commandInput" placeholder="Type a command and press Enter..."/>
+    <input type="text" id="commandInput" placeholder="Type a command and press Enter..." />
     <button onclick="runCommand()">Enter</button>
 </div>
 
