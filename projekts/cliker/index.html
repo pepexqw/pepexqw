@@ -71,13 +71,13 @@
         const counterDisplay = document.getElementById('clicksCounter');
 
         // Минимальная задержка между двумя последовательными кликами (в миллисекундах)
-        const MIN_CLICK_INTERVAL = 50; // Допустимая минимальная задержка уменьшена до 50 мс
+        const MIN_CLICK_INTERVAL = 25; // Новая задержка снижена до 25 мс
 
         // Последняя отметка времени клика
         let lastClickTimestamp = Date.now();
 
-        // Максимальная частота кликов за определенный период (например, 20 кликов в секунду)
-        const MAX_CLICKS_PER_SECOND = 20;
+        // Максимальная частота кликов за определенный период (например, 40 кликов в секунду)
+        const MAX_CLICKS_PER_SECOND = 40;
         let recentClicks = [];
 
         // Вычисление текущего множителя кликов
