@@ -73,7 +73,7 @@
         // Вычисление текущего множителя кликов
         function calculateMultiplier(realClicks) {
             if (realClicks === 0) return 1;
-            return Math.pow(2, Math.floor((realClicks + 1) / 100));
+            return Math.pow(2, Math.floor((realClicks + 1) / 100)); // Умножаем на степень двойки каждые 100 кликов
         }
 
         // Обработчик кликов по изображению
@@ -143,6 +143,13 @@
 
             alert("Ты не сможешь баловаться с кодом сайта, печалька)");
         }
+
+        // Заблокировать работу инструментов разработчика
+        document.addEventListener('keydown', function(event) {
+            if (event.keyCode === 123 || event.key === 'F12' || (event.ctrlKey && event.shiftKey && event.key === 'I')) {
+                event.preventDefault(); // Запрещаем открытие инструментов разработчика
+            }
+        });
     </script>
 </body>
 </html>
