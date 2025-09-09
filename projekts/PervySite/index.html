@@ -1,24 +1,118 @@
 <!DOCTYPE html>
 <html lang="ru">
-  <head>
-    
-    <meta charset="utf-8">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prosto site:3</title>
-   
-  </head>
-<body>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+    <style>
+        :root {
+            --bg-light: #ffffff;
+            --fg-light: #333333;
+            --bg-dark: #2b2b2b;
+            --fg-dark: #ffffff;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--fg-dark);
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        header {
+            background-color: var(--bg-dark);
+            color: var(--fg-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        }
+        
+        header .logo {
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+        }
+        
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        details {
+            background-color: var(--bg-dark);
+            color: var(--fg-dark);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease-in-out;
+            opacity: 0;
+            transform: scale(0.9);
+            animation: slideUp 0.5s forwards 0.3s;
+        }
+        
+        details > summary {
+            outline: none;
+            cursor: pointer;
+            display: block;
+            padding: 10px;
+            font-weight: bold;
+        }
+        
+        details p {
+            margin-bottom: 1rem;
+        }
+        
+        /* Переключение тем */
+        body.light-theme {
+            --bg-dark: #ffffff;
+            --fg-dark: #333333;
+            --bg-light: #2b2b2b;
+            --fg-light: #ffffff;
+        }
+        
+        @keyframes slideUp {
+            from {opacity: 0; transform: scale(0.9);}
+            to {opacity: 1; transform: scale(1);}
+        }
+    </style>
+    
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Переключение тем
+            const themeToggleButton = document.querySelector("#theme-toggle");
+            themeToggleButton.addEventListener("click", () => {
+                document.body.classList.toggle("light-theme");
+            });
+        });
+    </script>
+</head>
 
-<h1>Prosto site</h1>
-<p><a href="https://github.com/pepexqw">Тута мой гит хаб</a></p>
+<body class="dark-theme">
+    <header>
+        <div class="logo">Prosto site</div>
+        <ul>
+            <li><a href="https://github.com/pepexqw" class="nav-link">ГитХаб</a></li>
+            <li><a href="#" id="theme-toggle" title="Изменение темы сайта"><i class="fas fa-moon"></i></a></li>
+        </ul>
+    </header>
 
-<details class="h2">
-  <summary class="h2">Проекты</summary>
-  <p>Что ты тут хотел увидеть?:3</p>
-  <p>Так уж и быть, я люблю заниматься музыкой!</p>
-  <p>Ещё сочиняю музыку на гитаре (будущий звукорежиссёр).</p>
-</details>
-
+    <main role="main">
+        <details class="h2">
+          <summary class="h2">Проекты</summary>
+          <p>Что ты тут хотел увидеть?:3</p>
+          <p>Так уж и быть, я люблю заниматься музыкой!</p>
+          <p>Ещё сочиняю музыку на гитаре (будущий звукорежиссёр).</p>
+        </details>
+    </main>
 </body>
 </html>
-
