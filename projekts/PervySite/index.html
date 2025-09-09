@@ -6,7 +6,7 @@
     <title>Prosto site:3</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
     <style>
-        * {
+       * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -19,26 +19,31 @@
             line-height: 1.6;
         }
 
-        header {
+        /* Верхняя панель */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background-color: #333;
             color: #fff;
             padding: 1em;
-            text-align: center;
         }
 
+        /* Логотип слева */
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        /* Навигационная панель справа */
         nav {
-            background-color: #444;
-            overflow: hidden;
+            background-color: transparent;
         }
 
         nav ul {
             list-style-type: none;
             display: flex;
-            justify-content: center;
-        }
-
-        nav ul li {
-            margin-right: 15px;
+            gap: 15px;
         }
 
         nav ul li a {
@@ -49,7 +54,7 @@
         }
 
         nav ul li a:hover {
-            background-color: #555;
+            background-color: rgba(255, 255, 255, 0.1);
         }
 
         main {
@@ -98,3 +103,4 @@
 </footer>
 </body>
 </html>
+
