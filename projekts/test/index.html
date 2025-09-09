@@ -4,72 +4,40 @@
  <meta charcet="UTF-8">
  <title>Тестовая страничка с приколами</title>
  <style>
-       body {
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Моя первая страница</title>
+    <style>
+        body {
             font-family: Arial, sans-serif;
             background-color: #f0f0f0;
             color: #333;
             margin: 0;
             padding: 0;
-        }
-        
-        header {
-            background-color: #4CAF50;
-            color: white;
-            text-align: center;
-            padding: 1em 0;
-        }
-        
-        nav ul {
-            list-style-type: none;
-            padding: 0;
             display: flex;
-            justify-content: space-around;
-            background-color: #333;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
         
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 14px 16px;
-            display: block;
-        }
-        
-        section {
-            max-width: 800px;
-            margin: auto;
-            padding: 20px;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        
-        footer {
+        h2 {
             text-align: center;
-            padding: 10px;
-            background-color: #4CAF50;
-            color: white;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        p {
+            text-align: center;
+            font-size: 1.2rem;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Добро пожаловать!</h1>
-    </header>
-    
-    <nav>
-        <ul>
-            <li><a href="#">Главная</a></li>
-            <li><a href="#">О нас</a></li>
-            <li><a href="#">Контакты</a></li>
-        </ul>
-    </nav>
-    
-    <section>
+    <div class="content">
         <h2>Привет мир!</h2>
         <p>Это моя первая веб-страница.</p>
-    </section>
-    
-    <footer>
-        <p>© 2025 Мой сайт</p>
-    </footer>
+    </div>
 </body>
 </html>
