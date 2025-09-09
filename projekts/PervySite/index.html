@@ -7,62 +7,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
     <title>Prosto site:3</title>
  <style>
- body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            perspective: 1000px; /* Добавляем перспективу */
-        }
-        
-        .cube-container {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            transform-style: preserve-3d;
-            animation: rotateCube 10s infinite linear;
-        }
-        
-        @keyframes rotateCube {
-            from { transform: rotateY(0deg); }
-            to   { transform: rotateY(360deg); }
-        }
-        
-        .face {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            border: 1px solid black;
-            box-sizing: border-box;
-            font-size: 2rem;
-            text-align: center;
-            line-height: 200px;
-            background-color: rgba(255, 255, 255, 0.8);
-            backface-visibility: hidden;
-        }
-        
-        .front-face  { transform: translateZ(100px); }
-        .back-face   { transform: rotateX(-180deg) translateZ(100px); }
-        .top-face    { transform: rotateX(90deg) translateZ(100px); }
-        .bottom-face { transform: rotateX(-90deg) translateZ(100px); }
-        .left-face   { transform: rotateY(-90deg) translateZ(100px); }
-        .right-face  { transform: rotateY(90deg) translateZ(100px); }
- </style>
-</head>
-<body>
- <h1>H1</h1>
- <p>Это тестовая страница</p>
+  p {
+      color: tomato;
+    }
 
-<div class="cube-container">
-    <div class="face front-face">Передняя грань</div>
-    <div class="face back-face">Задняя грань</div>
-    <div class="face top-face">Верхняя грань</div>
-    <div class="face bottom-face">Нижняя грань</div>
-    <div class="face left-face">Левая грань</div>
-    <div class="face right-face">Правая грань</div>
+ </style>
+<body>
+ <p>:3</p>
+ 
 </body>
 </html>
+
 
 
 
