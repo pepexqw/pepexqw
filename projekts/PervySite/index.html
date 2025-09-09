@@ -1,33 +1,75 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Prosto site:3</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
-    <title>Prosto site:3</title>
- <style>
-  p {
-      color: tomato;
-    }
-
-   body {
-            background-color: black; /* Устанавливаем черный цвет фона */
+    <title>Retro CMD Style Website</title>
+    <style>
+        body {
+            background-color: #000;
+            color: limegreen;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
         }
-
- </style>
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        input[type=text], button {
+            border-radius: 0;
+            outline: none;
+            border: none;
+            background-color: transparent;
+            color: limegreen;
+            font-size: inherit;
+            width: 100%;
+            padding: 5px;
+        }
+        
+        input[type=text]:focus {
+            box-shadow: inset 0 0 5px rgba(0, 255, 0, 0.5);
+        }
+        
+        button {
+            cursor: pointer;
+            float: right;
+        }
+    </style>
+</head>
 <body>
-     <p>:3</p>
-     <h1>И т.д</h1>
+    
+<h1>RETRO CMD STYLE WEBSITE</h1>
+<div id="console">
+    <div id="output"></div>
+    <input type="text" id="commandInput" placeholder="Type a command and press Enter..."/>
+    <button onclick="runCommand()">Enter</button>
+</div>
+
+<script>
+document.getElementById('commandInput').addEventListener("keyup", function(event){
+    if (event.key === "Enter") runCommand();
+});
+
+function runCommand(){
+    const output = document.getElementById('output');
+    const command = document.getElementById('commandInput').value.trim().toLowerCase();
+    document.getElementById('commandInput').value = '';
+
+    switch(command){
+        case '':
+            break;
+        case 'home':
+            window.location.href = 'https://example.com';
+            break;
+        case 'gg':
+            window.location.href = 'https://example.com/gg/';
+            break;
+        default:
+            output.innerHTML += `<p>> ${command}<br>> Command not found.</p>`;
+    }
+}
+</script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
