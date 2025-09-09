@@ -64,17 +64,28 @@
     <audio id="clickSound" src="жмяк.mp3" preload="auto"></audio> <!-- Скрытое аудиополе -->
 
     <script>
-        let clicksCount = 0;
+        let realClicksCount = 0; // Реальное количество кликов
+        let displayedClicksCount = 0; // Количество кликов, которое показывается пользователю
         const shaurmaImg = document.getElementById('shaurma');
         const clickSound = document.getElementById('clickSound'); // Получаем доступ к звуковому объекту
         const counterDisplay = document.getElementById('clicksCounter');
 
+        // Вычисление текущего множителя кликов
+        function calculateMultiplier(realClicks) {
+            if (realClicks === 0) return 1;
+            return Math.pow(2, Math.floor((realClicks + 1) / 100));
+        }
+
         // Обработчик кликов по изображению
         shaurmaImg.onclick = function() {
-            clicksCount++;
+            realClicksCount++; // Увеличиваем реальные клики
+            
+            // Рассчитываем новый множитель и обновляем счётчик отображаемых кликов
+            const multiplier = calculateMultiplier(realClicksCount);
+            displayedClicksCount += multiplier;
             updateCounter();
             playClickSound(); // Воспроизводим звук при клике
-            createAndShowRandomPopup(); // Создаёт новое сообщение
+            createAndShowRandomPopup(`+${multiplier}`); // Показываем мультипликатор клика
         };
 
         // Функция воспроизведения звука
@@ -85,7 +96,7 @@
 
         // Функция обновления отображаемого количества кликов
         function updateCounter() {
-            counterDisplay.textContent = `Кликов: ${clicksCount}`;
+            counterDisplay.textContent = `Кликов: ${displayedClicksCount}`;
         }
 
         // Генерация случайных координат для всплывающего сообщения
@@ -98,11 +109,11 @@
             };
         }
 
-        // Создание нового элемента с надписью '+1'
-        function createAndShowRandomPopup() {
+        // Создание нового элемента с указанием увеличения (+N)
+        function createAndShowRandomPopup(messageText) {
             const newMessage = document.createElement('div');
             newMessage.className = 'popupMessage'; // Применяем класс для стиля
-            newMessage.textContent = '+1';
+            newMessage.textContent = messageText;
             document.body.appendChild(newMessage);
 
             // Получаем случайные координаты
@@ -121,7 +132,8 @@
 
         // Кнопка сброса кликов
         function resetClicks() {
-            clicksCount = 0;
+            realClicksCount = 0;
+            displayedClicksCount = 0;
             updateCounter();
         }
 
@@ -134,11 +146,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
