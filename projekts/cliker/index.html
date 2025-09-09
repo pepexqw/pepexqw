@@ -71,17 +71,18 @@
         const counterDisplay = document.getElementById('clicksCounter');
 
         // Минимальная задержка между двумя последовательными кликами (в миллисекундах)
-        const MIN_CLICK_INTERVAL = 25; // Минимальная задержка составляет 25 мс
+        const MIN_CLICK_INTERVAL = 25; // Новая задержка сократилась до 25 мс
 
         // Последняя отметка времени клика
         let lastClickTimestamp = Date.now();
 
-        // Массив для хранения истории кликов
+        // Максимальная частота кликов за определенный период (например, 40 кликов в секунду)
+        const MAX_CLICKS_PER_SECOND = 40;
         let recentClicks = [];
 
-        // Текущие ограничения после подозрения на автокликер
-        let currentLimitIndex = 0;
-        const LIMIT_SEQUENCE = [50, 40, 35]; // Последовательность лимитов после подозрения на автокликер
+        // Трекер временных ограничений после обнаружения автокликера
+        let penaltyActive = false;
+        let penaltyEndTime = null;
 
         // Вычисление текущего множителя кликов
         function calculateMultiplier(realClicks) {
@@ -93,12 +94,18 @@
         shaurmaImg.onclick = function() {
             const currentTime = Date.now();
 
+            // Если пауза наказания активна, пропускаем клики
+            if (penaltyActive && currentTime <= penaltyEndTime) {
+                return;
+            }
+
             // Проверка минимальной задержки между кликами
             if (currentTime - lastClickTimestamp < MIN_CLICK_INTERVAL) {
                 alert("Автокликер обнаружен! Так нечестно :(");
                 
-                // Начинаем последовательность снижения лимита
-                currentLimitIndex = (currentLimitIndex + 1) % LIMIT_SEQUENCE.length;
+                // Включаем наказание (запрет кликов на 5 секунд)
+                penaltyActive = true;
+                penaltyEndTime = currentTime + 5000; // Пауза длится 5 секунд
                 return;
             }
 
@@ -110,15 +117,13 @@
                 recentClicks.shift(); // Убираем старые клики старше одной секунды
             }
 
-            // Определяем текущий максимальный предел кликов
-            const maxAllowedClicksPerSecond = LIMIT_SEQUENCE[currentLimitIndex];
-
-            // Если достигнут текущий предел кликов
-            if (recentClicks.length >= maxAllowedClicksPerSecond) {
+            // Если достигнута максимальная частота кликов
+            if (recentClicks.length >= MAX_CLICKS_PER_SECOND) {
                 alert("Автокликер обнаружен! Играйте честно!");
                 
-                // Переходим к следующему этапу ограничения
-                currentLimitIndex = (currentLimitIndex + 1) % LIMIT_SEQUENCE.length;
+                // Включаем наказание (запрет кликов на 5 секунд)
+                penaltyActive = true;
+                penaltyEndTime = currentTime + 5000; // Пауза длится 5 секунд
                 return;
             }
 
@@ -199,3 +204,4 @@
     </script>
 </body>
 </html>
+
