@@ -6,113 +6,95 @@
     <title>Prosto site:3</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
     <style>
-        :root {
-            --bg-light: #ffffff;
-            --fg-light: #333333;
-            --bg-dark: #2b2b2b;
-            --fg-dark: #ffffff;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--fg-dark);
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            transition: background-color 0.3s ease, color 0.3s ease;
+            font-family: 'Roboto', sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            line-height: 1.6;
         }
-        
+
         header {
-            background-color: var(--bg-dark);
-            color: var(--fg-dark);
+            background-color: #333;
+            color: #fff;
+            padding: 1em;
+            text-align: center;
+        }
+
+        nav {
+            background-color: #444;
+            overflow: hidden;
+        }
+
+        nav ul {
+            list-style-type: none;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+            justify-content: center;
         }
-        
-        header .logo {
-            font-weight: bold;
-            letter-spacing: 2px;
-            font-size: 1.2rem;
+
+        nav ul li {
+            margin-right: 15px;
         }
-        
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            background-color: #555;
+        }
+
         main {
-            padding: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
+            padding: 20px;
         }
-        
-        details {
-            background-color: var(--bg-dark);
-            color: var(--fg-dark);
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease-in-out;
-            opacity: 0;
-            transform: scale(0.9);
-            animation: slideUp 0.5s forwards 0.3s;
+
+        section {
+            margin-bottom: 20px;
         }
-        
-        details > summary {
-            outline: none;
-            cursor: pointer;
-            display: block;
-            padding: 10px;
-            font-weight: bold;
+
+        h1, h2, h3 {
+            color: #333;
         }
-        
-        details p {
-            margin-bottom: 1rem;
+
+        p {
+            color: #666;
         }
-        
-        /* Переключение тем */
-        body.light-theme {
-            --bg-dark: #ffffff;
-            --fg-dark: #333333;
-            --bg-light: #2b2b2b;
-            --fg-light: #ffffff;
-        }
-        
-        @keyframes slideUp {
-            from {opacity: 0; transform: scale(0.9);}
-            to {opacity: 1; transform: scale(1);}
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
         }
     </style>
-    
-    <script defer>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Переключение тем
-            const themeToggleButton = document.querySelector("#theme-toggle");
-            themeToggleButton.addEventListener("click", () => {
-                document.body.classList.toggle("light-theme");
-            });
-        });
-    </script>
 </head>
-
-<body class="dark-theme">
-    <header>
-        <div class="logo">Prosto site</div>
-        <ul>
-            <li><a href="https://github.com/pepexqw" class="nav-link">ГитХаб</a></li>
-            <li><a href="#" id="theme-toggle" title="Изменение темы сайта"><i class="fas fa-moon"></i></a></li>
-        </ul>
-    </header>
-
-    <main role="main">
-        <details class="h2">
-          <summary class="h2">Проекты</summary>
-          <p>Что ты тут хотел увидеть?:3</p>
-          <p>Так уж и быть, я люблю заниматься музыкой!</p>
-          <p>Ещё сочиняю музыку на гитаре (будущий звукорежиссёр).</p>
-        </details>
-    </main>
+<body>
+ <header>
+  <h1>Prosto site:3</h1>  
+ </header>
+    <nav>
+       <ul>
+          <li><a href="#">Главная</a></li>
+          <li><a href="#">Новости</a></li>
+          <li><a href="#">Контакты</a></li>
+       </ul>
+    </nav>
+<main>
+    <section>
+     <h2>Это мой сайт:3</h2>
+     <p> Так же это сайт 'мини блог'</p>  
+    </section>
+</main>
+<footer>
+  © 2025 шо ты смотришь, тут нечего нет.
+</footer>
 </body>
 </html>
