@@ -80,6 +80,9 @@
         const MAX_CLICKS_PER_SECOND = 40;
         let recentClicks = [];
 
+        // Массив последних трех интервалов между кликами
+        let previousIntervals = [];
+
         // Трекер временных ограничений после обнаружения автокликера
         let penaltyActive = false;
         let penaltyEndTime = null;
@@ -106,6 +109,25 @@
                 // Включаем наказание (запрет кликов на 5 секунд)
                 penaltyActive = true;
                 penaltyEndTime = currentTime + 5000; // Пауза длится 5 секунд
+                return;
+            }
+
+            // Проверка равномерности интервалов между кликами
+            const interval = currentTime - lastClickTimestamp;
+            previousIntervals.push(interval);
+            if (previousIntervals.length > 3) { // Берём три предыдущих интервала
+                previousIntervals.shift(); // Избавляемся от самого старого интервала
+            }
+            
+            // Если накопилось достаточно интервалов, проверяем точность совпадения
+            if (previousIntervals.length === 3 &&
+                Math.abs(previousIntervals[0] - previousIntervals[1]) < 1 &&
+                Math.abs(previousIntervals[1] - previousIntervals[2]) < 1) {
+                alert("Обнаружено идеальное совпадение интервалов! Возможно использование автоколикера.");
+                
+                // Включаем наказание (запрет кликов на 5 минут)
+                penaltyActive = true;
+                penaltyEndTime = currentTime + 300000; // Блокировка на 5 минут
                 return;
             }
 
@@ -204,4 +226,3 @@
     </script>
 </body>
 </html>
-
