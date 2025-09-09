@@ -70,6 +70,16 @@
         const clickSound = document.getElementById('clickSound'); // Получаем доступ к звуковому объекту
         const counterDisplay = document.getElementById('clicksCounter');
 
+        // Минимальная задержка между двумя последовательными кликами (в миллисекундах)
+        const MIN_CLICK_INTERVAL = 100; // Например, минимальное время между кликами — 100 мс
+
+        // Последняя отметка времени клика
+        let lastClickTimestamp = Date.now();
+
+        // Максимальная частота кликов за определенный период (например, 5 кликов в секунду)
+        const MAX_CLICKS_PER_SECOND = 5;
+        let recentClicks = [];
+
         // Вычисление текущего множителя кликов
         function calculateMultiplier(realClicks) {
             if (realClicks === 0) return 1;
@@ -78,9 +88,33 @@
 
         // Обработчик кликов по изображению
         shaurmaImg.onclick = function() {
+            const currentTime = Date.now();
+
+            // Проверка минимальной задержки между кликами
+            if (currentTime - lastClickTimestamp < MIN_CLICK_INTERVAL) {
+                alert("Автокликер обнаружен! Так нечестно :(");
+                return;
+            }
+
+            // Сохраняем временную метку последнего клика
+            lastClickTimestamp = currentTime;
+
+            // Проверка частоты кликов
+            while (recentClicks.length > 0 && currentTime - recentClicks[0] >= 1000) {
+                recentClicks.shift(); // Убираем старые клики старше одной секунды
+            }
+
+            // Если достигнута максимальная частота кликов
+            if (recentClicks.length >= MAX_CLICKS_PER_SECOND) {
+                alert("Автокликер обнаружен! Играйте честно!");
+                return;
+            }
+
+            // Регистрация нового клика
+            recentClicks.push(currentTime);
+
+            // Основной процесс клика
             realClicksCount++; // Увеличиваем реальные клики
-            
-            // Рассчитываем новый множитель и обновляем счётчик отображаемых кликов
             const multiplier = calculateMultiplier(realClicksCount);
             displayedClicksCount += multiplier;
             updateCounter();
