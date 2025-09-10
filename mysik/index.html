@@ -13,154 +13,155 @@
             --fg-dark: #ffffff;
         }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--fg-dark);
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
 
-        nav {
-            background-color: var(--bg-dark);
-            color: var(--fg-dark);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-        }
+    body {
+        font-family: Arial, sans-serif;
+        background-color: var(--bg-dark);
+        color: var(--fg-dark);
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-        nav ul {
-            list-style-type: none;
-            display: flex;
-        }
+    nav {
+        background-color: var(--bg-dark);
+        color: var(--fg-dark);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    }
 
-        nav ul li a {
-            text-decoration: none;
-            color: inherit;
-            padding: 0.5rem 1rem;
-            transition: color 0.3s ease;
-        }
+    nav ul {
+        list-style-type: none;
+        display: flex;
+    }
 
-        nav ul li a:hover,
-        nav ul li a:focus {
-            color: #ff6c6c;
-        }
+    nav ul li a {
+        text-decoration: none;
+        color: inherit;
+        padding: 0.5rem 1rem;
+        transition: color 0.3s ease;
+    }
 
-        nav .logo {
-            font-weight: bold;
-            letter-spacing: 2px;
-            font-size: 1.2rem;
-        }
+    nav ul li a:hover,
+    nav ul li a:focus {
+        color: #ff6c6c;
+    }
 
-        main {
-            padding: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
-        }
+    nav .logo {
+        font-weight: bold;
+        letter-spacing: 2px;
+        font-size: 1.2rem;
+    }
 
-        section#tracks {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
+    main {
+        padding: 2rem;
+        max-width: 800px;
+        margin: 0 auto;
+    }
 
-        article.track {
-            background-color: var(--bg-dark);
-            color: var(--fg-dark);
-            padding: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease-in-out;
-            opacity: 0;
-            transform: scale(0.9);
-            animation: slideUp 0.5s forwards 0.3s;
-        }
+    section#tracks {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+    }
 
-        article.track img {
-            max-width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 10px; /* Закруглено */
-            margin-bottom: 1rem;
-        }
+    article.track {
+        background-color: var(--bg-dark);
+        color: var(--fg-dark);
+        padding: 1.5rem;
+        border-radius: 10px;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        transition: transform 0.3s ease-in-out;
+        opacity: 0;
+        transform: scale(0.9);
+        animation: slideUp 0.5s forwards 0.3s;
+    }
 
-        article.track h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
+    article.track img {
+        max-width: 100%;
+        height: auto;
+        object-fit: cover;
+        border-radius: 10px; /* Закруглено */
+        margin-bottom: 1rem;
+    }
 
-        article.track p {
-            margin-bottom: 1rem;
-        }
+    article.track h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
 
-        article.track button.listen-btn {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
+    article.track p {
+        margin-bottom: 1rem;
+    }
 
-        article.track button.listen-btn:hover {
-            background-color: #0056b3;
-        }
+    article.track button.listen-btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
 
-        footer {
-            background-color: var(--bg-dark);
-            color: var(--fg-dark);
-            padding: 1rem;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
+    article.track button.listen-btn:hover {
+        background-color: #0056b3;
+    }
 
-        /* Переключение тем */
-        body.light-theme {
-            --bg-dark: #ffffff;
-            --fg-dark: #333333;
-            --bg-light: #2b2b2b;
-            --fg-light: #ffffff;
-        }
+    footer {
+        background-color: var(--bg-dark);
+        color: var(--fg-dark);
+        padding: 1rem;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
 
-        @keyframes slideUp {
-            from {opacity: 0; transform: scale(0.9);}
-            to {opacity: 1; transform: scale(1);}
-        }
-    </style>
+    /* Переключение тем */
+    body.light-theme {
+        --bg-dark: #ffffff;
+        --fg-dark: #333333;
+        --bg-light: #2b2b2b;
+        --fg-light: #ffffff;
+    }
 
-    <script defer>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Переключение тем
-            const themeToggleButton = document.querySelector("#theme-toggle");
-            themeToggleButton.addEventListener("click", () => {
-                document.body.classList.toggle("light-theme");
-            });
+    @keyframes slideUp {
+        from {opacity: 0; transform: scale(0.9);}
+        to {opacity: 1; transform: scale(1);}
+    }
+</style>
 
-            // Обработка кнопок "Прослушать"
-            const listenButtons = document.querySelectorAll('.listen-btn');
-            listenButtons.forEach(button => {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault(); // Предотвращаем стандартное поведение кнопки
-                    const link = this.getAttribute('data-href'); // Получаем ссылку из data-href
-                    if(link){
-                        window.location.href = link; // Перенаправление на указанную страницу
-                    }
-                });
+<script defer>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Переключение тем
+        const themeToggleButton = document.querySelector("#theme-toggle");
+        themeToggleButton.addEventListener("click", () => {
+            document.body.classList.toggle("light-theme");
+        });
+
+        // Обработка кнопок "Прослушать"
+        const listenButtons = document.querySelectorAll('.listen-btn');
+        listenButtons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Предотвращаем стандартное поведение кнопки
+                const link = this.getAttribute('data-href'); // Получаем ссылку из data-href
+                if(link){
+                    window.location.href = link; // Перенаправление на указанную страницу
+                }
             });
         });
-    </script>
+    });
+</script>
 </head>
 
 <body class="dark-theme">
@@ -175,39 +176,51 @@
         </ul>
     </nav>
 
-    <main role="main">
-        <section id="tracks">
-            <h2>Список треков</h2>
-            <article class="track">
-                <img src="despacito.jpg" alt="Despacito">
-                <h3>Каникулы на марсе - дедушка</h3>
-                <p>Трек Каникулы На Марсе (Holidays On Mars).</p>
-                <button class="listen-btn" data-href="https://pepexqw.vercel.app/mysik/Despacito/">Прослушать</button>
-            </article>
 
-            <article class="track">
-                <img src="shape-of-you.jpg" alt="Shape of You">
-                <h3>Катюша</h3>
-                <p>Думаю тут и так все знают о чем она:3.</p>
-                <button class="listen-btn" data-href="https://pepexqw.vercel.app/mysik/katysha/">Прослушать</button>
-            </article>
+<main role="main">
+    <section id="tracks">
+        <h2>Список треков</h2>
+        <article class="track">
+            <img src="despacito.jpg" alt="Despacito">
+            <h3>Каникулы на марсе - дедушка</h3>
+            <p>Трек Каникулы На Марсе (Holidays On Mars).</p>
+            <button class="listen-btn" data-href="https://pepexqw.vercel.app/mysik/Despacito/">Прослушать</button>
+        </article>
 
-            <article class="track">
-                <img src="blinding-lights.jpg" alt="Blinding Lights">
-                <h3>Blinding Lights</h3>
-                <p>Гимн Теда Росса, ставший международным феноменом.</p>
-                <button class="listen-btn" data-href="https://pepexqw.vercel.app/mysik/blindinglights">Прослушать</button>
-            </article>
-        </section>
-    </main>
+        <article class="track">
+            <img src="shape-of-you.jpg" alt="Shape of You">
+            <h3>Катюша</h3>
+            <p>Думаю тут и так все знают о чем она:3.</p>
+            <button class="listen-btn" data-href="https://pepexqw.vercel.app/mysik/katysha/">Прослушать</button>
+        </article>
 
-    <footer>
-        <p>© 2025 @pepexqw_. Все права защищены.</p>
-    </footer>
+        <article class="track">
+            <img src="blinding-lights.jpg" alt="Blinding Lights">
+            <h3>Blinding Lights</h3>
+            <p>Гимн Теда Росса, ставший международным феноменом.</p>
+            <button class="listen-btn" data-href="https://pepexqw.vercel.app/mysik/blindinglights">Прослушать</button>
+        </article>
+        
+        <!-- Добавляем новые треки -->
+        <article class="track">
+            <img src="pack-of-cigs.jpg" alt="Пачка сигарет">
+            <h3>Пачка сигарет</h3>
+            <p>Знаменитый хит Виктора Цоя и группы Кино.</p>
+            <button class="listen-btn" data-href="https://pepexqw.vercel.app/mysik/packofcigs">Прослушать</button>
+        </article>
+
+        <article class="track">
+            <img src="gangstas-paradise.jpg" alt="Gangsta's Paradise">
+            <h3>Gangsta's Paradise</h3>
+            <p>Хит Coolio с культовым саундтреком к фильму "Опасные мысли".</p>
+            <button class="listen-btn" data-href="https://pepexqw.vercel.app/mysik/gangstaparadise">Прослушать</button>
+        </article>
+    </section>
+</main>
+
+<footer>
+    <p>© 2025 @pepexqw_. Все права защищены.</p>
+</footer>
 </body>
 
 </html>
-
-
-
-
