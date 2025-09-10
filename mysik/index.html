@@ -87,7 +87,7 @@
             max-width: 100%;
             height: auto;
             object-fit: cover;
-            border-radius: 10px; /* Закругленно */
+            border-radius: 10px; /* Закруглено */
             margin-bottom: 1rem;
         }
 
@@ -147,6 +147,18 @@
             themeToggleButton.addEventListener("click", () => {
                 document.body.classList.toggle("light-theme");
             });
+
+            // Обработка кнопок "Прослушать"
+            const listenButtons = document.querySelectorAll('.listen-btn');
+            listenButtons.forEach(button => {
+                button.addEventListener('click', function(event) {
+                    event.preventDefault(); // Предотвращаем стандартное поведение кнопки
+                    const link = this.getAttribute('data-href'); // Получаем ссылку из data-href
+                    if(link){
+                        window.location.href = link; // Перенаправление на указанную страницу
+                    }
+                });
+            });
         });
     </script>
 </head>
@@ -170,21 +182,21 @@
                 <img src="despacito.jpg" alt="Despacito">
                 <h3>Каникулы на марсе - дедушка</h3>
                 <p>Трек Каникулы На Марсе (Holidays On Mars).</p>
-                <button class="listen-btn">Прослушать</button>
+                <button class="listen-btn" data-href="https://pepexqw.vercel.app/mysik/despacito">Прослушать</button>
             </article>
 
             <article class="track">
                 <img src="shape-of-you.jpg" alt="Shape of You">
                 <h3>Shape of You</h3>
                 <p>Хит Эда Ширана, покоривший мировые чарты.</p>
-                <button class="listen-btn">Прослушать</button>
+                <button class="listen-btn" data-href="https://pepexqw.vercel.app/mysik/shapeofyou">Прослушать</button>
             </article>
 
             <article class="track">
                 <img src="blinding-lights.jpg" alt="Blinding Lights">
                 <h3>Blinding Lights</h3>
                 <p>Гимн Теда Росса, ставший международным феноменом.</p>
-                <button class="listen-btn">Прослушать</button>
+                <button class="listen-btn" data-href="https://pepexqw.vercel.app/mysik/blindinglights">Прослушать</button>
             </article>
         </section>
     </main>
@@ -195,5 +207,3 @@
 </body>
 
 </html>
-
-
