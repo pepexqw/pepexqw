@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Пачка сигорет | Текст песни</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
+    <style>
+        :root {
+            --bg-light: #ffffff;
+            --fg-light: #333333;
+            --bg-dark: #2b2b2b;
+            --fg-dark: #ffffff;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--fg-dark);
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        nav {
+            background-color: var(--bg-dark);
+            color: var(--fg-dark);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: inherit;
+            padding: 0.5rem 1rem;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover,
+        nav ul li a:focus {
+            color: #ff6c6c;
+        }
+
+        nav .logo {
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+        }
+
+        main {
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        section#song-info {
+            display: block;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        audio {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        pre.song-text {
+            white-space: pre-wrap;
+            word-break: break-word;
+            overflow-x: hidden;
+            line-height: 1.5;
+            margin-top: 2rem;
+        }
+
+        footer {
+            background-color: var(--bg-dark);
+            color: var(--fg-dark);
+            padding: 1rem;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Переключение тем */
+        body.light-theme {
+            --bg-dark: #ffffff;
+            --fg-dark: #333333;
+            --bg-light: #2b2b2b;
+            --fg-light: #ffffff;
+        }
+    </style>
+
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Переключение тем
+            const themeToggleButton = document.querySelector("#theme-toggle");
+            themeToggleButton.addEventListener("click", () => {
+                document.body.classList.toggle("light-theme");
+            });
+        });
+    </script>
+</head>
+
+<body class="dark-theme">
+    <nav>
+        <div class="logo">@pepexqw_</div>
+        <ul>
+            <li><a href="https://pepexqw.vercel.app/" class="nav-link">Главная страница</a></li>
+            <li><a href="#" id="theme-toggle" title="Изменение темы сайта"><i class="fas fa-moon"></i></a></li>
+            <li><a href="https://t.me/pepexqw_" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a></li>
+            <li><a href="https://github.com/pepexqw" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></li>
+        </ul>
+    </nav>
+
+    <main role="main">
+        <section id="song-info">
+            <h1>Пачка сигорет</h1>
+            <audio controls>
+                <source src="pachkasigar.mp3" type="audio/mpeg">
+                Ваш браузер не поддерживает элемент audio.
+            </audio>
+            <pre class="song-text">
+Я сижу и смотрю в чужое небо из чужого окна
+И не вижу ни одной знакомой звезды
+Я ходил по всем дорогам и туда, и сюда
+Обернулся и не смог разглядеть следы
+Но если есть в кармане пачка сигарет
+Значит, всё не так уж плохо на сегодняшний день
+И билет на самолёт с серебристым крылом
+Что, взлетая, оставляет земле лишь тень
+И никто не хотел быть виноватым без вина
+И никто не хотел руками жар загребать
+А без музыки на миру смерть не красна
+А без музыки не хочется пропадать
+Но если есть в кармане пачка сигарет
+Значит, всё не так уж плохо на сегодняшний день
+И билет на самолёт с серебристым крылом
+Что, взлетая, оставляет земле лишь тень
+            </pre>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2025 @pepexqw_. Все права защищены.</p>
+    </footer>
+</body>
+
+</html>
