@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Голосовой чат</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        /* Стили контейнера */
+        .container {
+            width: 40%;
+            max-width: 600px;
+            min-height: 400px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,.1);
+            overflow: hidden;
+            position: relative;
+            text-align: center;
+        }
+        
+        /* Заголовок страницы */
+        h1 {
+            font-size: 2em;
+            margin-top: 20px;
+            color: #555;
+        }
+        
+        /* Кнопка звонка */
+        button.call-button {
+            background-color: #ffa500;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            font-size: 2em;
+            outline: none;
+            transition: all 0.3s ease-in-out;
+        }
+        
+        button.call-button:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Дополнительные стили для микрофона и кнопки завершения разговора */
+        .microphone-icon,
+        .hangup-icon {
+            position: absolute;
+            bottom: 20px;
+            left: calc(50% - 50px); /* Центрирование иконки */
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: transparent;
+            cursor: pointer;
+            z-index: 10;
+        }
+        
+        .microphone-icon::before,
+        .hangup-icon::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
+        }
+        
+        .microphone-icon.active::after {
+            content: '🎙️';
+            font-size: 2em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: black;
+        }
+        
+        .hangup-icon.active::after {
+            content: '❌';
+            font-size: 2em;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Контент -->
+    <h1>Привет!</h1>
+    
+    <!-- Микрофон -->
+    <div class="microphone-icon"></div>
+    
+    <!-- Кнопка звонка -->
+    <button class="call-button">Позвонить</button>
+    
+    <!-- Завершение разговора -->
+    <div class="hangup-icon active"></div>
+</div>
+<script>
+// Здесь размещаем JavaScript-код для обработки звонков и взаимодействия с элементами
+document.querySelector('.call-button').addEventListener('click', function() {
+    alert("Звонок установлен!");
+});
+
+document.querySelector('.hangup-icon').addEventListener('click', function() {
+    alert("Разговор завершён.");
+});
+</script>
+</body>
+</html>
