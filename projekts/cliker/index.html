@@ -62,7 +62,7 @@
         }
     </style>
 </head>
-<body oncontextmenu="return false;">
+<body oncontextmenu="return false;" onkeydown="checkDeveloperTools(event)" onmousemove="checkDeveloperTools(event)">
     <div id="version-info">
         v1.1.3<br />
         Ваш IP: <span id="userIP"></span>
@@ -231,6 +231,22 @@
             displayedClicksCount = 0;
             updateCounter();
         }
+
+        // ФУНКЦИЯ ДЛЯ ОБНАРУЖЕНИЯ ОТКРЫТИЯ ИНСТРУМЕНТОВ РАЗРАБОТЧИКА И ПЕРЕЗАГРУЗКИ СТРАНИЦЫ
+        function checkDeveloperTools(e) {
+            if (!window.console || !console.opened) return;
+            location.reload(); // Принудительный перезапуск страницы
+        }
+
+        // Определяем статус open инструмента разработчика
+        Object.defineProperty(console, 'opened', {
+            get: function () {
+                return !!document.querySelector('.devtools-toolbar') ||
+                       !!document.querySelector('#inspectorPanel') ||
+                       !!document.querySelector('#inspector-view') ||
+                       !!document.querySelector('.monaco-workbench');
+            },
+        });
     </script>
 </body>
 </html>
