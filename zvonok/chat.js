@@ -8,7 +8,6 @@ async function startMic() {
     try {
         localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
         micButton.innerHTML = 'Выключить микрофон';
-        micButton.removeAttribute('disabled');
         micButton.classList.toggle('active');
     } catch (err) {
         alert('Ошибка доступа к микрофону.');
@@ -32,7 +31,7 @@ let peer = new Peer({
 
 peer.on('open', function(id) {
     infoMessage.innerHTML = `Ваш ID: ${id}`;
-    micButton.disabled = false;
+    micButton.disabled = false; // Разблокировка кнопки
     micButton.addEventListener('click', toggleMic);
 });
 
@@ -51,14 +50,14 @@ function toggleMic() {
 function answerCall(call) {
     call.answer(localStream);
     call.on('stream', remoteStream => {
-        // Обработка удаленного потока звука
+        // Обработка удалённого потока звука
     });
 }
 
 function makeCall(peerID) {
     let call = peer.call(peerID, localStream);
     call.on('stream', remoteStream => {
-        // Обработка удаленного потока звука
+        // Обработка удалённого потока звука
     });
 }
 
