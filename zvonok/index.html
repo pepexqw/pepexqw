@@ -1,127 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Голосовой чат</title>
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: Arial, Helvetica, sans-serif; display: flex; justify-content: space-between; background-color: #fafafa; }
-        header { width: 100%; padding: 1rem; background-color: #fff; color: #333; text-align: center; }
-        aside { min-width: 250px; max-width: 300px; background-color: #ddd; padding: 1rem; overflow-y: auto; }
-        main { flex-grow: 1; padding: 1rem; }
-        h1 { font-size: 1.5em; }
-        ul { list-style-type: none; padding-left: 0; }
-        li { padding: 0.5rem; transition: all 0.3s ease-in-out; }
-        li.active { background-color: yellowgreen; color: white; }
-        form { display: inline-block; margin-bottom: 1rem; }
-        input[type=submit], button { margin-right: 0.5rem; padding: 0.5rem 1rem; }
-        video { display: none; } /* Скрываем элемент видео */
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
-    <!-- Вход -->
-    <header>
-        <form onsubmit="return joinRoom();">
-            <input type="text" placeholder="Ваше имя..." required />
-            <input type="submit" value="Подключиться"/>
-        </form>
-    </header>
+<div class="container">
+    <h1>Голосовой чат</h1>
+    <button id="mic-btn" disabled>Подождите...</button><br/><br/>
+    <span id="info-message"></span>
+</div>
 
-    <!-- Основная область с действиями -->
-    <main>
-        <section>
-            <button onclick="toggleMic()">Микрофон: Выкл.</button>
-        </section>
-    </main>
-
-    <!-- Справа список пользователей -->
-    <aside>
-        <ul id="usersList"></ul>
-    </aside>
-
-    <!-- Локальное видео скрыто -->
-    <video id="localVideo" autoplay muted style="display:none;"></video>
-
-    <script>
-        const usersListElement = document.getElementById('usersList');
-        let username = '';
-        let localStream = null;
-        let micActive = false;
-
-        // Подключение к комнате
-        function joinRoom(event) {
-            event.preventDefault();
-            username = this.elements[0].value.trim();
-            addUser(username); // Эмулируем подключение нового пользователя
-            showConnectedUsers([username]); // Эмулируем получение списка текущих пользователей
-            return false;
-        }
-
-        // Показываем всех подключенных пользователей
-        function showConnectedUsers(users) {
-            usersListElement.innerHTML = ''; // очищаем предыдущий список
-            for(let user of users) {
-                const li = document.createElement('li');
-                li.textContent = user;
-                usersListElement.appendChild(li);
-            }
-        }
-
-        // Имитация изменения статуса пользователя
-        function setUserActivity(userName, active) {
-            const userLi = Array.from(usersListElement.children)
-                                .find(li => li.textContent === userName);
-            if(!userLi) return;
-            userLi.classList.toggle('active', active);
-        }
-
-        // Включаем / отключаем микрофон
-        function toggleMic() {
-            if(micActive || !localStream) {
-                stopLocalStream();
-                micActive = false;
-                updateButtonText();
-                return;
-            }
-
-            navigator.mediaDevices.getUserMedia({audio:true})
-                .then((stream) => {
-                    localStream = stream;
-                    micActive = true;
-                    updateButtonText();
-                })
-                .catch(err => console.error("Ошибка доступа к микрофону:", err));
-        }
-
-        // Останавливаем поток
-        function stopLocalStream() {
-            if(localStream) {
-                localStream.getTracks().forEach(track => track.stop());
-                localStream = null;
-            }
-        }
-
-        // Обновление текста кнопки
-        function updateButtonText() {
-            const micBtn = document.querySelector('button');
-            micBtn.textContent = `Микрофон: ${micActive ? 'Вкл.' : 'Выкл.'}`;
-        }
-
-        // Добавляет текущего пользователя в список
-        function addUser(name) {
-            const newLI = document.createElement('li');
-            newLI.textContent = name;
-            usersListElement.appendChild(newLI);
-        }
-
-        // Эмуляция присоединения другого пользователя
-        function emulateNewUserJoined(name) {
-            addUser(name);
-            showConnectedUsers(Array.from(usersListElement.children).map(el => el.textContent));
-        }
-
-        // Примечание: здесь должен быть ваш обработчик подключения новых пользователей,
-        // отправляющий события серверу и слушающий уведомления о присоединениях.
-    </script>
+<!-- Подключаем PeerJS -->
+<script src="./peer.min.js"></script>
+<script src="./chat.js"></script>
 </body>
 </html>
