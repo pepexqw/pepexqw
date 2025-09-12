@@ -27,6 +27,14 @@
             margin-bottom: 20px;
         }
 
+        input {
+            padding: 10px;
+            width: 200px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
         button {
             padding: 10px 20px;
             font-size: 1rem;
@@ -38,25 +46,29 @@
             transition: background-color 0.3s;
         }
 
-        button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
+        button:hover {
+            background-color: #45a049;
         }
 
-        button:hover:not(:disabled) {
-            background-color: #45a049;
+        video {
+            width: 320px;
+            height: 240px;
+            object-fit: cover;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>Голосовой чат</h1>
-    <button id="mic-btn" disabled>Подождите...</button><br/><br/>
-    <span id="info-message"></span>
+    <input type="text" id="room-id" placeholder="Введите комнату" />
+    <button id="join-room">Присоединиться</button>
+    <video id="remoteVideo" muted playsinline></video>
+    <audio id="localAudio" controls hidden></audio>
 </div>
 
-<!-- Подключаем PeerJS через CDN -->
-<script src="https://unpkg.com/peerjs@1.5.5/dist/peer.min.js"></script>
+<!-- Подключаем SimplePeer через CDN -->
+<script src="https://cdn.jsdelivr.net/npm/simple-peer@9.11.1/index.min.js"></script>
 <script src="./chat.js"></script>
 </body>
 </html>
