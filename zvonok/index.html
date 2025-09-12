@@ -1,565 +1,105 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Голосовой и видео чат</title>
+    <title>Голосовой чат</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-        
-        .container {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 1200px;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            height: 90vh;
-        }
-        
-        .header {
-            background-color: #4a6cfa;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: #2c3e50;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-        }
-        
-        .main-content {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-        
-        .participants {
-            width: 250px;
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-right: 1px solid #e9ecef;
-            overflow-y: auto;
-        }
-        
-        .participants h3 {
-            margin-bottom: 15px;
-            color: #495057;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #dee2e6;
-        }
-        
-        .user-list {
-            list-style-type: none;
-        }
-        
-        .user-list li {
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: white;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        
-        .user-list .avatar {
-            width: 30px;
-            height: 30px;
-            font-size: 14px;
-        }
-        
-        .chat-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            padding: 20px;
-            background-color: #edf2f7;
-        }
-        
-        .video-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            flex: 1;
-            overflow-y: auto;
-            margin-bottom: 15px;
-        }
-        
-        .video-item {
-            background-color: #2d3748;
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .video-item video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .video-label {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.6);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 14px;
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            padding: 15px;
-            background-color: white;
-            border-top: 1px solid #e9ecef;
-        }
-        
-        .control-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 20px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        
-        .mic-btn {
-            background-color: #4a6cfa;
-            color: white;
-        }
-        
-        .mic-btn.muted {
-            background-color: #ff4757;
-        }
-        
-        .camera-btn {
-            background-color: #4a6cfa;
-            color: white;
-        }
-        
-        .camera-btn.disabled {
-            background-color: #ff4757;
-        }
-        
-        .screen-share-btn {
-            background-color: #4a6cfa;
-            color: white;
-        }
-        
-        .screen-share-btn.active {
-            background-color: #2ed573;
-        }
-        
-        .leave-btn {
-            background-color: #ff4757;
-            color: white;
-        }
-        
-        .login-screen {
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 500px;
-            padding: 30px;
+            font-family: Arial, sans-serif;
             text-align: center;
         }
-        
-        .login-screen h1 {
-            margin-bottom: 20px;
-            color: #2d3748;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-            text-align: left;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #2d3748;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
+        button {
+            margin: 10px;
+            padding: 10px 20px;
             font-size: 16px;
         }
-        
-        .btn {
-            padding: 12px 20px;
-            background-color: #4a6cfa;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: 500;
-            transition: background-color 0.3s;
-            width: 100%;
-        }
-        
-        .btn:hover {
-            background-color: #3a5bd9;
-        }
-        
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px 20px;
-            background-color: #2ed573;
-            color: white;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            transform: translateX(150%);
-            transition: transform 0.3s;
-            z-index: 1000;
-        }
-        
-        .notification.show {
-            transform: translateX(0);
-        }
-        
-        .hidden {
-            display: none;
+        video {
+            width: 320px;
+            height: 240px;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
 <body>
-    <div id="login-screen" class="login-screen">
-        <h1>Присоединиться к голосовому чату</h1>
-        <div class="form-group">
-            <label for="username">Ваше имя</label>
-            <input type="text" id="username" class="form-control" placeholder="Введите ваше имя">
-        </div>
-        <div class="form-group">
-            <label for="room-id">ID комнаты</label>
-            <input type="text" id="room-id" class="form-control" placeholder="Введите ID комнаты">
-        </div>
-        <button id="join-btn" class="btn">Присоединиться</button>
-    </div>
-
-    <div id="app-container" class="container hidden">
-        <div class="header">
-            <h1>Голосовой и видео чат</h1>
-            <div class="user-info">
-                <div class="avatar" id="user-avatar">U</div>
-                <span id="user-name">Пользователь</span>
-            </div>
-        </div>
-        
-        <div class="main-content">
-            <div class="participants">
-                <h3>Участники</h3>
-                <ul id="users-list" class="user-list">
-                    <li>Загрузка...</li>
-                </ul>
-            </div>
-            
-            <div class="chat-area">
-                <div id="video-container" class="video-container">
-                    <!-- Видео элементы будут добавлены здесь -->
-                </div>
-                
-                <div class="controls">
-                    <button id="mic-btn" class="control-btn mic-btn" title="Микрофон">
-                        <i>🎤</i>
-                    </button>
-                    <button id="camera-btn" class="control-btn camera-btn" title="Камера">
-                        <i>📹</i>
-                    </button>
-                    <button id="screen-share-btn" class="control-btn screen-share-btn" title="Демонстрация экрана">
-                        <i>🖥️</i>
-                    </button>
-                    <button id="leave-btn" class="control-btn leave-btn" title="Покинуть чат">
-                        <i>📞</i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+<h1>Голосовой чат</h1>
+<div id="controls">
+    <button onclick="toggleMic()">Микрофон: Выкл.</button>
+    <button onclick="toggleCamera()">Камера: Выкл.</button>
+    <button onclick="shareScreen()">Демонстрация экрана</button>
+</div>
+<video id="localVideo" autoplay muted></video>
+<script>
+    let localStream = null;
+    const micEnabled = false;
+    const cameraEnabled = false;
     
-    <div id="notification" class="notification"></div>
+    // Включаем / отключаем микрофон
+    function toggleMic() {
+        if (!micEnabled && !cameraEnabled) return alert('Сначала включите камеру');
+        
+        navigator.mediaDevices.getUserMedia({ audio: true })
+            .then(stream => {
+                localStream = stream;
+                document.querySelector('#localVideo').srcObject = localStream;
+                
+                updateButtonText();
+            })
+            .catch(err => console.error("Ошибка доступа к микрофону:", err));
+    }
 
-    <script>
-        // Элементы интерфейса
-        const loginScreen = document.getElementById('login-screen');
-        const appContainer = document.getElementById('app-container');
-        const usernameInput = document.getElementById('username');
-        const roomIdInput = document.getElementById('room-id');
-        const joinBtn = document.getElementById('join-btn');
-        const userAvatar = document.getElementById('user-avatar');
-        const userName = document.getElementById('user-name');
-        const usersList = document.getElementById('users-list');
-        const videoContainer = document.getElementById('video-container');
-        const micBtn = document.getElementById('mic-btn');
-        const cameraBtn = document.getElementById('camera-btn');
-        const screenShareBtn = document.getElementById('screen-share-btn');
-        const leaveBtn = document.getElementById('leave-btn');
-        const notification = document.getElementById('notification');
-        
-        // Переменные состояния
-        let localStream = null;
-        let screenStream = null;
-        let isMicMuted = false;
-        let isCameraOff = false;
-        let isScreenSharing = false;
-        let currentUser = null;
-        let roomId = null;
-        
-        // Инициализация приложения
-        function init() {
-            // Генерируем случайный ID комнаты, если не указан
-            roomIdInput.value = generateRoomId();
-            
-            // Обработчики событий
-            joinBtn.addEventListener('click', joinRoom);
-            micBtn.addEventListener('click', toggleMicrophone);
-            cameraBtn.addEventListener('click', toggleCamera);
-            screenShareBtn.addEventListener('click', toggleScreenShare);
-            leaveBtn.addEventListener('click', leaveRoom);
-            
-            // Запрос разрешения на использование микрофона и камеры
-            requestMediaPermissions();
+    // Включаем / отключаем камеру
+    function toggleCamera() {
+        if (cameraEnabled) {
+            stopLocalStream();
+            updateButtonText();
+            return;
         }
-        
-        // Запрос разрешений на медиа
-        async function requestMediaPermissions() {
-            try {
-                // Просто проверяем доступность медиаустройств
-                const devices = await navigator.mediaDevices.enumerateDevices();
-                console.log("Доступные медиаустройства:", devices);
-            } catch (error) {
-                console.error("Ошибка доступа к медиаустройствам:", error);
+
+        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+            .then(stream => {
+                localStream = stream;
+                document.querySelector('#localVideo').srcObject = localStream;
+                updateButtonText();
+            })
+            .catch(err => console.error("Ошибка доступа к камере:", err));
+    }
+
+    // Демонстрируем экран
+    async function shareScreen() {
+        try {
+            const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: { cursor: 'always' }, audio: true });
+            
+            if (screenStream) {
+                document.querySelector('#localVideo').srcObject = screenStream;
+                localStream = screenStream;
+                updateButtonText();
             }
+        } catch (err) {
+            console.error("Ошибка захвата экрана:", err);
         }
-        
-        // Присоединение к комнате
-        async function joinRoom() {
-            const name = usernameInput.value.trim();
-            roomId = roomIdInput.value.trim();
-            
-            if (!name) {
-                showNotification('Введите ваше имя');
-                return;
-            }
-            
-            if (!roomId) {
-                showNotification('Введите ID комнаты');
-                return;
-            }
-            
-            currentUser = {
-                id: generateUserId(),
-                name: name
-            };
-            
-            // Обновляем интерфейс
-            userAvatar.textContent = name.charAt(0).toUpperCase();
-            userName.textContent = name;
-            
-            // Получаем медиапоток
-            try {
-                localStream = await navigator.mediaDevices.getUserMedia({
-                    video: true,
-                    audio: true
-                });
-                
-                // Показываем локальное видео
-                addVideoStream(currentUser.id, localStream, name, true);
-                
-                // Переключаемся в интерфейс чата
-                loginScreen.classList.add('hidden');
-                appContainer.classList.remove('hidden');
-                
-                // Симуляция подключения других пользователей
-                simulateOtherUsers();
-                
-                showNotification(`Вы присоединились к комнате ${roomId}`);
-            } catch (error) {
-                console.error('Ошибка доступа к медиаустройствам:', error);
-                showNotification('Не удалось получить доступ к камере/микрофону');
-            }
+    }
+
+    // Остановка потока медиа
+    function stopLocalStream() {
+        if (localStream) {
+            localStream.getTracks().forEach(track => track.stop());
+            localStream = null;
         }
+    }
+
+    // Обновляем состояние кнопок
+    function updateButtonText() {
+        const micBtn = document.querySelectorAll('button')[0];
+        const camBtn = document.querySelectorAll('button')[1];
         
-        // Добавление видео потока
-        function addVideoStream(userId, stream, name, isLocal = false) {
-            // Удаляем существующий видео элемент, если есть
-            const existingVideo = document.getElementById(`video-${userId}`);
-            if (existingVideo) {
-                existingVideo.remove();
-            }
-            
-            const videoElement = document.createElement('div');
-            videoElement.classList.add('video-item');
-            videoElement.id = `video-${userId}`;
-            
-            const video = document.createElement('video');
-            video.srcObject = stream;
-            video.autoplay = true;
-            video.playsInline = true;
-            video.muted = isLocal;
-            
-            const label = document.createElement('div');
-            label.classList.add('video-label');
-            label.textContent = isLocal ? `${name} (Вы)` : name;
-            
-            videoElement.appendChild(video);
-            videoElement.appendChild(label);
-            videoContainer.appendChild(videoElement);
-            
-            // Добавляем пользователя в список
-            updateUsersList(userId, name);
+        if (localStream) {
+            micBtn.textContent = `Микрофон: ${localStream.getAudioTracks()[0].enabled ? 'Вкл.' : 'Выкл.'}`;
+            camBtn.textContent = `Камера: ${localStream.getVideoTracks()[0].enabled ? 'Вкл.' : 'Выкл.'}`;
+        } else {
+            micBtn.textContent = 'Микрофон: Выкл.';
+            camBtn.textContent = 'Камера: Выкл.';
         }
-        
-        // Обновление списка пользователей
-        function updateUsersList(userId, name) {
-            // Удаляем существующую запись, если есть
-            const existingUser = document.getElementById(`user-${userId}`);
-            if (existingUser) {
-                existingUser.remove();
-            }
-            
-            const userItem = document.createElement('li');
-            userItem.id = `user-${userId}`;
-            
-            const avatar = document.createElement('div');
-            avatar.classList.add('avatar');
-            avatar.textContent = name.charAt(0).toUpperCase();
-            
-            const userName = document.createElement('span');
-            userName.textContent = name;
-            
-            userItem.appendChild(avatar);
-            userItem.appendChild(userName);
-            usersList.appendChild(userItem);
-        }
-        
-        // Переключение микрофона
-        function toggleMicrophone() {
-            if (!localStream) return;
-            
-            const audioTracks = localStream.getAudioTracks();
-            if (audioTracks.length === 0) return;
-            
-            isMicMuted = !isMicMuted;
-            audioTracks[0].enabled = !isMicMuted;
-            
-            micBtn.classList.toggle('muted', isMicMuted);
-            showNotification(isMicMuted ? 'Микрофон отключен' : 'Микрофон включен');
-        }
-        
-        // Переключение камеры
-        function toggleCamera() {
-            if (!localStream) return;
-            
-            const videoTracks = localStream.getVideoTracks();
-            if (videoTracks.length === 0) return;
-            
-            isCameraOff = !isCameraOff;
-            videoTracks[0].enabled = !isCameraOff;
-            
-            cameraBtn.classList.toggle('disabled', isCameraOff);
-            showNotification(isCameraOff ? 'Камера отключена' : 'Камера включена');
-        }
-        
-        // Переключение демонстрации экрана
-        async function toggleScreenShare() {
-            try {
-                if (!isScreenSharing) {
-                    // Запуск демонстрации экрана
-                    screenStream = await navigator.mediaDevices.getDisplayMedia({
-                        video: true,
-                        audio: true
-                    });
-                    
-                    // Заменяем видеотрак в локальном потоке
-                    const videoTrack = screenStream.getVideoTracks()[0];
-                    const localVideoTrack = localStream.getVideoTracks()[0];
-                    localStream.removeTrack(localVideoTrack);
-                    localStream.addTrack(videoTrack);
-                    
-                    // Обновляем видео элемент
-                    addVideoStream(currentUser.id, localStream, currentUser.name, true);
-                    
-                    isScreenSharing = true;
-                    screenShareBtn.classList.add('active');
-                    
-                    // Обработчик завершения демонстрации экрана
-                    videoTrack.onended = () => {
-                        toggleScreenShare();
-                    };
-                    
-                    showNotification('Демонстрация экрана начата');
-                } else {
-                    // Остановка демонстрации экрана
-                    const videoTrack = localStream.getVideoTracks()[0];
-                    localStream.removeTrack(videoTrack);
-                    
-                    // Получаем обратно камеру
-                    const cameraStream = await navigator.mediaDevices.getUserMedia({
-                        video: true,
-                        audio: false
-                    });
-                    
-                    const cameraTrack = cameraStream.getVideoTracks()[0];
-                    localStream.addTrack(cameraTrack);
-                    
-                    // Обновляем видео элемент
-                    addVideoStream(currentUser.id, localStream, currentUser.name, true);
-                    
-                    // Останавливаем screenStream
-                    screenStream.getTracks().forEach(track => track.stop());
-                    screenStream = null;
-                    
-                    isScreenSharing = false
+    }
+</script>
+</body>
+</html>
