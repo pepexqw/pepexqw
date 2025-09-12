@@ -1,66 +1,60 @@
 // chat.js
-let micButton = document.getElementById('mic-btn');
-let infoMessage = document.getElementById('info-message');
-let myPeerConnection = null;
-let localStream = null;
+const roomInput = document.getElementById('room-id');
+const joinBtn = document.getElementById('join-room');
+const remoteVideo = document.getElementById('remoteVideo');
+const localAudio = document.getElementById('localAudio');
 
-async function startMic() {
+let peerInstance = null;
+
+// Функция для присоединения к комнате
+async function joinRoom(roomId) {
     try {
-        localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        micButton.innerHTML = 'Выключить микрофон';
-        micButton.classList.toggle('active');
+        const constraints = { audio: true, video: false }; // Включаем только звук
+        const localStream = await navigator.mediaDevices.getUserMedia(constraints);
+        localAudio.srcObject = localStream;
+
+        peerInstance = new SimplePeer({
+            initiator: true,
+            trickle: false,
+            config: {"iceServers": [
+                {"urls": ["stun:stun.l.google.com:19302"]},
+            ]},
+            stream: localStream
+        });
+
+        fetch(`/api/offers/${roomId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ offer: peerInstance.signal })
+        }).then(response => response.json())
+          .then(signal => {
+              peerInstance.signal(signal.answer);
+          });
+
+        peerInstance.on('signal', signal => {
+            fetch(`/api/offers/${roomId}/answer`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ answer: signal })
+            });
+        });
+
+        peerInstance.on('stream', stream => {
+            remoteVideo.srcObject = stream;
+        });
     } catch (err) {
-        alert('Ошибка доступа к микрофону.');
+        console.error('Ошибка:', err);
     }
 }
 
-function stopMic() {
-    if (!localStream) return;
-    localStream.getTracks().forEach(track => track.stop());
-    localStream = null;
-    micButton.innerHTML = 'Включить микрофон';
-    micButton.classList.toggle('active');
-}
-
-// Используем PeerJS для установки соединений
-let peer = new Peer({
-    host: 'peerjs.cloud',
-    port: 443,
-    secure: true
-});
-
-peer.on('open', function(id) {
-    infoMessage.innerHTML = `Ваш ID: ${id}`;
-    micButton.disabled = false; // Разблокировка кнопки
-    micButton.addEventListener('click', toggleMic);
-});
-
-peer.on('call', call => {
-    answerCall(call);
-});
-
-function toggleMic() {
-    if (localStream) {
-        stopMic();
-    } else {
-        startMic();
+// Присоединяемся к комнате при нажатии кнопки
+joinBtn.addEventListener('click', () => {
+    const roomId = roomInput.value.trim();
+    if (roomId !== '') {
+        joinRoom(roomId);
     }
-}
-
-function answerCall(call) {
-    call.answer(localStream);
-    call.on('stream', remoteStream => {
-        // Обработка удалённого потока звука
-    });
-}
-
-function makeCall(peerID) {
-    let call = peer.call(peerID, localStream);
-    call.on('stream', remoteStream => {
-        // Обработка удалённого потока звука
-    });
-}
-
-window.onload = () => {
-    micButton.addEventListener('click', toggleMic);
-};
+});
