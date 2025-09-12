@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Голосовой чат</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+        }
+        
+        .header {
+            background-color: #4a6cfa;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .content {
+            padding: 20px;
+        }
+        
+        .screen {
+            display: none;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            background-color: #4a6cfa;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+        
+        .btn:hover {
+            background-color: #3a5bd9;
+        }
+        
+        .btn-end {
+            background-color: #ff4757;
+        }
+        
+        .btn-end:hover {
+            background-color: #ff2e43;
+        }
+        
+        .call-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .call-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .call-accept {
+            background-color: #2ed573;
+            color: white;
+        }
+        
+        .call-reject {
+            background-color: #ff4757;
+            color: white;
+        }
+        
+        .status {
+            text-align: center;
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #f1f2f6;
+        }
+        
+        .user-list {
+            list-style-type: none;
+            margin-top: 20px;
+        }
+        
+        .user-list li {
+            padding: 12px;
+            background-color: #f1f2f6;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .call-info {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+        
+        .volume-indicator {
+            height: 5px;
+            background-color: #ddd;
+            border-radius: 3px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .volume-level {
+            height: 100%;
+            width: 0%;
+            background-color: #4a6cfa;
+            transition: width 0.1s;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background-color: #2ed573;
+            color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transform: translateX(150%);
+            transition: transform 0.3s;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Голосовой чат</h1>
+        </div>
+        
+        <div class="content">
+            <!-- Экран входа -->
+            <div id="login-screen" class="screen active">
+                <div class="form-group">
+                    <label for="username">Ваше имя</label>
+                    <input type="text" id="username" class="form-control" placeholder="Введите ваше имя">
+                </div>
+                <button id="login-btn" class="btn">Войти в чат</button>
+            </div>
+            
+            <!-- Экран главного меню -->
+            <div id="lobby-screen" class="screen">
+                <h2>Добро пожаловать, <span id="user-display-name"></span>!</h2>
+                <p>Ваш ID: <span id="user-id-display"></span></p>
+                
+                <div class="form-group" style="margin-top: 30px;">
+                    <label for="call-to-id">ID пользователя для звонка</label>
+                    <input type="text" id="call-to-id" class="form-control" placeholder="Введите ID пользователя">
+                </div>
+                <button id="call-btn" class="btn">Позвонить</button>
+                
+                <div class="status" id="connection-status">Подключение...</div>
+                
+                <h3 style="margin-top: 30px;">Онлайн пользователи</h3>
+                <ul id="online-users" class="user-list">
+                    <li>Загрузка...</li>
+                </ul>
+            </div>
+            
+            <!-- Экран входящего вызова -->
+            <div id="incoming-call-screen" class="screen">
+                <div class="call-info">
+                    <h2>Входящий вызов</h2>
+                    <p>Вам звонит: <span id="caller-name">Пользователь</span></p>
+                </div>
+                
+                <div class="call-controls">
+                    <button id="accept-call" class="call-btn call-accept">✓</button>
+                    <button id="reject-call" class="call-btn call-reject">✕</button>
+                </div>
+            </div>
+            
+            <!-- Экран исходящего вызова -->
+            <div id="outgoing-call-screen" class="screen">
+                <div class="call-info">
+                    <h2>Исходящий вызов</h2>
+                    <p>Вызываем: <span id="callee-name">Пользователь</span></p>
+                    <div class="status">Ожидание ответа...</div>
+                </div>
+                
+                <button id="cancel-call" class="btn btn-end">Отменить вызов</button>
+            </div>
+            
+            <!-- Экран активного звонка -->
+            <div id="active-call-screen" class="screen">
+                <div class="call-info">
+                    <h2>Активный звонок</h2>
+                    <p>Соединение с: <span id="active-call-peer">Пользователь</span></p>
+                    
+                    <div class="volume-indicator">
+                        <div id="volume-level" class="volume-level"></div>
+                    </div>
+                </div>
+                
+                <button id="end-call" class="btn btn-end">Завершить звонок</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="notification" class="notification"></div>
+
+    <!-- Подключаем PeerJS библиотеку -->
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
+    
+    <script>
+        // Элементы интерфейса
+        const screens = {
+            login: document.getElementById('login-screen'),
+            lobby: document.getElementById('lobby-screen'),
+            incomingCall: document.getElementById('incoming-call-screen'),
+            outgoingCall: document.getElementById('outgoing-call-screen'),
+            activeCall: document.getElementById('active-call-screen')
+        };
+        
+        const usernameInput = document.getElementById('username');
+        const loginBtn = document.getElementById('login-btn');
+        const userDisplayName = document.getElementById('user-display-name');
+        const userIdDisplay = document.getElementById('user-id-display');
+        const callToIdInput = document.getElementById('call-to-id');
+        const callBtn = document.getElementById('call-btn');
+        const connectionStatus = document.getElementById('connection-status');
+        const onlineUsersList = document.getElementById('online-users');
+        const callerName = document.getElementById('caller-name');
+        const acceptCallBtn = document.getElementById('accept-call');
+        const rejectCallBtn = document.getElementById('reject-call');
+        const calleeName = document.getElementById('callee-name');
+        const cancelCallBtn = document.getElementById('cancel-call');
+        const activeCallPeer = document.getElementById('active-call-peer');
+        const endCallBtn = document.getElementById('end-call');
+        const volumeLevel = document.getElementById('volume-level');
+        const notification = document.getElementById('notification');
+        
+        // Переменные приложения
+        let peer;
+        let currentUser;
+        let currentConnection;
+        let currentCall;
+        let mediaStream;
+        let audioContext;
+        let analyser;
+        let audioInterval;
+        
+        // Инициализация приложения
+        function init() {
+            loginBtn.addEventListener('click', login);
+            callBtn.addEventListener('click', startCall);
+            acceptCallBtn.addEventListener('click', acceptCall);
+            rejectCallBtn.addEventListener('click', rejectCall);
+            cancelCallBtn.addEventListener('click', cancelCall);
+            endCallBtn.addEventListener('click', endCall);
+        }
+        
+        // Функция входа пользователя
+        function login() {
+            const username = usernameInput.value.trim();
+            if (!username) {
+                showNotification('Введите имя пользователя');
+                return;
+            }
+            
+            currentUser = {
+                name: username,
+                id: generateUserId()
+            };
+            
+            // Инициализируем Peer соединение
+            peer = new Peer(currentUser.id, {
+                host: '0.peerjs.com',
+                port: 443,
+                path: '/',
+                debug: 3
+            });
+            
+            peer.on('open', (id) => {
+                userDisplayName.textContent = currentUser.name;
+                userIdDisplay.textContent = id;
+                connectionStatus.textContent = 'Подключено';
+                connectionStatus.style.backgroundColor = '#2ed57355';
+                showScreen('lobby');
+                
+                // В реальном приложении здесь бы отправлялась информация о пользователе на сервер
+                simulateOnlineUsers();
+            });
+            
+            peer.on('error', (err) => {
+                console.error('Peer error:', err);
+                connectionStatus.textContent = 'Ошибка подключения: ' + err.type;
+                connectionStatus.style.backgroundColor = '#ff475755';
+            });
+            
+            // Обработка входящих вызовов
+            peer.on('call', (call) => {
+                // Сохраняем информацию о текущем вызове
+                currentCall = {
+                    type: 'incoming',
+                    call: call,
+                    peerId: call.peer,
+                    peerName: 'Unknown' // В реальном приложении имя бы получалось из сервера
+                };
+                
+                callerName.textContent = currentCall.peerName;
+                showScreen('incomingCall');
+            });
+            
+            // Обработка входящих соединений (для обмена данными)
+            peer.on('connection', (conn) => {
+                conn.on('data', (data) => {
+                    handleDataMessage(conn, data);
+                });
+            });
+        }
+        
+        // Начать звонок
+        function startCall() {
+            const callToId = callToIdInput.value.trim();
+            if (!callToId) {
+                showNotification('Введите ID пользователя');
+                return;
+            }
+            
+            // В реальном приложении здесь бы проверялось, существует ли пользователь
+            currentCall = {
+                type: 'outgoing',
+                peerId: callToId,
+                peerName: 'User-' + callToId.substring(0, 5) // В реальном приложении имя бы получалось из сервера
+            };
+            
+            calleeName.textContent = currentCall.peerName;
+            showScreen('outgoingCall');
+            
+            // Получаем аудиопоток пользователя
+            navigator.mediaDevices.getUserMedia({ video: false, audio: true })
+                .then((stream) => {
+                    mediaStream = stream;
+                    
+                    // Создаем вызов
+                    const call = peer.call(currentCall.peerId, stream);
+                    currentCall.call = call;
+                    
+                    // Обработка ответа на вызов
+                    call.on('stream', (remoteStream) => {
+                        // Сохраняем удаленный поток
+                        currentCall.remoteStream = remoteStream;
+                        
+                        // Создаем аудио элемент для воспроизведения удаленного звука
+                        const audio = new Audio();
+                        audio.srcObject = remoteStream;
+                        audio.play();
+                        
+                        // Запускаем визуализацию громкости
+                        setupAudioVisualizer(remoteStream);
+                        
+                        activeCallPeer.textContent = currentCall.peerName;
+                        showScreen('activeCall');
+                    });
+                    
+                    call.on('close', () => {
+                        endCall();
+                    });
+                })
+                .catch((err) => {
+                    console.error('Ошибка доступа к микрофону:', err);
+                    showNotification('Не удалось получить доступ к микрофону');
+                    cancelCall();
+                });
+        }
+        
+        // Принять входящий вызов
+        function acceptCall() {
+            if (!currentCall || !currentCall.call) return;
+            
+            // Получаем доступ к микрофону
+            navigator.mediaDevices.getUserMedia({ video: false, audio: true })
+                .then((stream) => {
+                    mediaStream = stream;
+                    
+                    // Отвечаем на вызов с нашим аудиопотоком
+                    currentCall.call.answer(stream);
+                    
+                    // Обработка получения удаленного потока
+                    currentCall.call.on('stream', (remoteStream) => {
+                        currentCall.remoteStream = remoteStream;
+                        
+                        // Создаем аудио элемент для воспроизведения удаленного звука
+                        const audio = new Audio();
+                        audio.srcObject = remoteStream;
+                        audio.play();
+                        
+                        // Запускаем визуализацию громкости
+                        setupAudioVisualizer(remoteStream);
+                        
+                        activeCallPeer.textContent = currentCall.peerName;
+                        showScreen('activeCall');
+                    });
+                })
+                .catch((err) => {
+                    console.error('Ошибка доступа к микрофону:', err);
+                    showNotification('Не удалось получить доступ к микрофону');
+                    rejectCall();
+                });
+        }
+        
+        // Отклонить входящий вызов
+        function rejectCall() {
+            if (currentCall && currentCall.call) {
+                currentCall.call.close();
+            }
+            resetCall();
+            showScreen('lobby');
+        }
+        
+        // Отменить исходящий вызов
+        function cancelCall() {
+            if (currentCall && currentCall.call) {
+                currentCall.call.close();
+            }
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+            }
+            resetCall();
+            showScreen('lobby');
+        }
+        
+        // Завершить активный звонок
+        function endCall() {
+            if (currentCall && currentCall.call) {
+                currentCall.call.close();
+            }
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+            }
+            if (audioInterval) {
+                clearInterval(audioInterval);
+            }
+            resetCall();
+            showScreen('lobby');
+        }
+        
+        // Сброс состояния вызова
+        function resetCall() {
+            currentCall = null;
+            mediaStream = null;
+        }
+        
+        // Настройка визуализатора громкости
+        function setupAudioVisualizer(stream) {
+            if (audioInterval) {
+                clearInterval(audioInterval);
+            }
+            
+            // Создаем контекст для анализа аудио
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            analyser.minDecibels = -90;
+            analyser.maxDecibels = -10;
+            analyser.smoothingTimeConstant = 0.85;
+            
+            const source = audioContext.createMediaStreamSource(stream);
+            source.connect(analyser);
+            
+            const dataArray = new Uint8Array(analyser.frequencyBinCount);
+            
+            // Запускаем интервал для обновления индикатора громкости
+            audioInterval = setInterval(() => {
+                analyser.getByteFrequencyData(dataArray);
+                
+                // Вычисляем среднюю громкость
+                let sum = 0;
+                for (let i = 0; i < dataArray.length; i++) {
+                    sum += dataArray[i];
+                }
+                const average = sum / dataArray.length;
+                
+                // Обновляем индикатор громкости (0-100%)
+                const volumePercent = Math.min(100, Math.max(0, average * 100 / 255));
+                volumeLevel.style.width = volumePercent + '%';
+            }, 100);
+        }
+        
+        // Обработка полученных данных (для чата или другой информации
