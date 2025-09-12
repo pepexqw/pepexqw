@@ -4,102 +4,124 @@
     <meta charset="UTF-8">
     <title>Голосовой чат</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-        button {
-            margin: 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-        }
-        video {
-            width: 320px;
-            height: 240px;
-            border: 1px solid #ccc;
-        }
+        * { box-sizing: border-box; }
+        body { font-family: Arial, Helvetica, sans-serif; display: flex; justify-content: space-between; background-color: #fafafa; }
+        header { width: 100%; padding: 1rem; background-color: #fff; color: #333; text-align: center; }
+        aside { min-width: 250px; max-width: 300px; background-color: #ddd; padding: 1rem; overflow-y: auto; }
+        main { flex-grow: 1; padding: 1rem; }
+        h1 { font-size: 1.5em; }
+        ul { list-style-type: none; padding-left: 0; }
+        li { padding: 0.5rem; transition: all 0.3s ease-in-out; }
+        li.active { background-color: yellowgreen; color: white; }
+        form { display: inline-block; margin-bottom: 1rem; }
+        input[type=submit], button { margin-right: 0.5rem; padding: 0.5rem 1rem; }
+        video { display: none; } /* Скрываем элемент видео */
     </style>
 </head>
 <body>
-<h1>Голосовой чат</h1>
-<div id="controls">
-    <button onclick="toggleMic()">Микрофон: Выкл.</button>
-    <button onclick="toggleCamera()">Камера: Выкл.</button>
-    <button onclick="shareScreen()">Демонстрация экрана</button>
-</div>
-<video id="localVideo" autoplay muted></video>
-<script>
-    let localStream = null;
-    const micEnabled = false;
-    const cameraEnabled = false;
-    
-    // Включаем / отключаем микрофон
-    function toggleMic() {
-        if (!micEnabled && !cameraEnabled) return alert('Сначала включите камеру');
-        
-        navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(stream => {
-                localStream = stream;
-                document.querySelector('#localVideo').srcObject = localStream;
-                
-                updateButtonText();
-            })
-            .catch(err => console.error("Ошибка доступа к микрофону:", err));
-    }
+    <!-- Вход -->
+    <header>
+        <form onsubmit="return joinRoom();">
+            <input type="text" placeholder="Ваше имя..." required />
+            <input type="submit" value="Подключиться"/>
+        </form>
+    </header>
 
-    // Включаем / отключаем камеру
-    function toggleCamera() {
-        if (cameraEnabled) {
-            stopLocalStream();
-            updateButtonText();
-            return;
+    <!-- Основная область с действиями -->
+    <main>
+        <section>
+            <button onclick="toggleMic()">Микрофон: Выкл.</button>
+        </section>
+    </main>
+
+    <!-- Справа список пользователей -->
+    <aside>
+        <ul id="usersList"></ul>
+    </aside>
+
+    <!-- Локальное видео скрыто -->
+    <video id="localVideo" autoplay muted style="display:none;"></video>
+
+    <script>
+        const usersListElement = document.getElementById('usersList');
+        let username = '';
+        let localStream = null;
+        let micActive = false;
+
+        // Подключение к комнате
+        function joinRoom(event) {
+            event.preventDefault();
+            username = this.elements[0].value.trim();
+            addUser(username); // Эмулируем подключение нового пользователя
+            showConnectedUsers([username]); // Эмулируем получение списка текущих пользователей
+            return false;
         }
 
-        navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-            .then(stream => {
-                localStream = stream;
-                document.querySelector('#localVideo').srcObject = localStream;
-                updateButtonText();
-            })
-            .catch(err => console.error("Ошибка доступа к камере:", err));
-    }
-
-    // Демонстрируем экран
-    async function shareScreen() {
-        try {
-            const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: { cursor: 'always' }, audio: true });
-            
-            if (screenStream) {
-                document.querySelector('#localVideo').srcObject = screenStream;
-                localStream = screenStream;
-                updateButtonText();
+        // Показываем всех подключенных пользователей
+        function showConnectedUsers(users) {
+            usersListElement.innerHTML = ''; // очищаем предыдущий список
+            for(let user of users) {
+                const li = document.createElement('li');
+                li.textContent = user;
+                usersListElement.appendChild(li);
             }
-        } catch (err) {
-            console.error("Ошибка захвата экрана:", err);
         }
-    }
 
-    // Остановка потока медиа
-    function stopLocalStream() {
-        if (localStream) {
-            localStream.getTracks().forEach(track => track.stop());
-            localStream = null;
+        // Имитация изменения статуса пользователя
+        function setUserActivity(userName, active) {
+            const userLi = Array.from(usersListElement.children)
+                                .find(li => li.textContent === userName);
+            if(!userLi) return;
+            userLi.classList.toggle('active', active);
         }
-    }
 
-    // Обновляем состояние кнопок
-    function updateButtonText() {
-        const micBtn = document.querySelectorAll('button')[0];
-        const camBtn = document.querySelectorAll('button')[1];
-        
-        if (localStream) {
-            micBtn.textContent = `Микрофон: ${localStream.getAudioTracks()[0].enabled ? 'Вкл.' : 'Выкл.'}`;
-            camBtn.textContent = `Камера: ${localStream.getVideoTracks()[0].enabled ? 'Вкл.' : 'Выкл.'}`;
-        } else {
-            micBtn.textContent = 'Микрофон: Выкл.';
-            camBtn.textContent = 'Камера: Выкл.';
+        // Включаем / отключаем микрофон
+        function toggleMic() {
+            if(micActive || !localStream) {
+                stopLocalStream();
+                micActive = false;
+                updateButtonText();
+                return;
+            }
+
+            navigator.mediaDevices.getUserMedia({audio:true})
+                .then((stream) => {
+                    localStream = stream;
+                    micActive = true;
+                    updateButtonText();
+                })
+                .catch(err => console.error("Ошибка доступа к микрофону:", err));
         }
-    }
-</script>
+
+        // Останавливаем поток
+        function stopLocalStream() {
+            if(localStream) {
+                localStream.getTracks().forEach(track => track.stop());
+                localStream = null;
+            }
+        }
+
+        // Обновление текста кнопки
+        function updateButtonText() {
+            const micBtn = document.querySelector('button');
+            micBtn.textContent = `Микрофон: ${micActive ? 'Вкл.' : 'Выкл.'}`;
+        }
+
+        // Добавляет текущего пользователя в список
+        function addUser(name) {
+            const newLI = document.createElement('li');
+            newLI.textContent = name;
+            usersListElement.appendChild(newLI);
+        }
+
+        // Эмуляция присоединения другого пользователя
+        function emulateNewUserJoined(name) {
+            addUser(name);
+            showConnectedUsers(Array.from(usersListElement.children).map(el => el.textContent));
+        }
+
+        // Примечание: здесь должен быть ваш обработчик подключения новых пользователей,
+        // отправляющий события серверу и слушающий уведомления о присоединениях.
+    </script>
 </body>
 </html>
