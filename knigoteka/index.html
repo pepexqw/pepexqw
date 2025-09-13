@@ -1,22 +1,95 @@
 <!DOCTYPE html>
-<index>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Книготека — pepexqw_</title>
-    <link rel="stylesheet" href="/static/style.css">
-    <link rel="shortcut icon" href="site_logo.png" type="image/x-icon">
-    <!-- Подключение Font-Awesome для иконок -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
- 
-   <style>
-   </style>
- </head>
- <body>
- <h1>test</h1>
- <p1>gg</p1>
- </body>
-</index>
+    <title>@pepexqw_ | Книготека</title>
+    <link rel="shortcut icon" type="image/png" href="site_logo.png"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            line-height: 1.6;
+        }
 
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,.1);
+        }
+
+        .logo {
+            width: 100px; /* Размер логотипа можете менять */
+            height: auto;
+        }
+
+        .site-title {
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .book-list li a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .book-list li a:hover {
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #eee;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo-container">
+            <img src="site_logo.png" alt="Логотип @pepexqw_" class="logo">
+        </div>
+        <h1 class="site-title">@pepexqw_: Книготека</h1>
+    </header>
+    
+    <main class="content">
+        <section id="books">
+            <h2>Каталог книг:</h2>
+            <ul class="book-list">
+                <li><a href="#">Книга №1</a></li>
+                <li><a href="#">Книга №2</a></li>
+                <li><a href="#">Книга №3</a></li>
+            </ul>
+        </section>
+        
+        <section id="about">
+            <h2>О проекте:</h2>
+            <p>Это проект @pepexqw_. Здесь собраны лучшие книги для вас.</p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 Все права защищены.</p>
+    </footer>
+</body>
+</html>
