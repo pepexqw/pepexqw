@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liberaf - Форум для свободного обсуждения</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: white;
+            color: #2c3e50;
+            padding: 20px 0;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.07);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #3498db;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 32px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 25px;
+        }
+        
+        nav ul li a {
+            color: #2c3e50;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        nav ul li a i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        nav ul li a:hover {
+            color: #3498db;
+        }
+        
+        .main-content {
+            padding: 30px 0;
+        }
+        
+        .forum-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+        }
+        
+        .forum-title {
+            font-size: 24px;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+        
+        .forum-title i {
+            margin-right: 12px;
+            color: #3498db;
+        }
+        
+        .btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .forum-list {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+        
+        .forum-item {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+        
+        .forum-item:hover {
+            background-color: #f9f9f9;
+        }
+        
+        .forum-item:last-child {
+            border-bottom: none;
+        }
+        
+        .forum-info h3 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .forum-info h3 i {
+            margin-right: 10px;
+            color: #3498db;
+        }
+        
+        .forum-info p {
+            color: #7f8c8d;
+            font-size: 15px;
+            margin-left: 28px;
+        }
+        
+        .forum-stats {
+            text-align: right;
+            color: #7f8c8d;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .forum-stats span {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            background: #f8f9fa;
+            padding: 6px 12px;
+            border-radius: 20px;
+        }
+        
+        .forum-stats i {
+            margin-right: 6px;
+        }
+        
+        .topics-count {
+            color: #3498db;
+        }
+        
+        .messages-count {
+            color: #27ae60;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+            transform: scale(0.9);
+            opacity: 0;
+            animation: modalAppear 0.3s forwards;
+        }
+        
+        @keyframes modalAppear {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-header h2 {
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+        
+        .modal-header h2 i {
+            margin-right: 10px;
+            color: #3498db;
+        }
+        
+        .close-modal {
+            font-size: 24px;
+            cursor: pointer;
+            color: #7f8c8d;
+            transition: color 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: #e74c3c;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+        }
+        
+        .form-group label i {
+            margin-right: 10px;
+            color: #3498db;
+        }
+        
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        footer {
+            background-color: white;
+            color: #2c3e50;
+            padding: 40px 0 20px;
+            margin-top: 50px;
+            box-shadow: 0 -2px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 20px;
+            color: #3498db;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-section h3 i {
+            margin-right: 10px;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #7f8c8d;
+            margin-bottom: 12px;
+            display: block;
+            text-decoration: none;
+            transition: color 0.3s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .footer-section a i {
+            margin-right: 8px;
+            font-size: 14px;
+        }
+        
+        .footer-section a:hover {
+            color: #3498db;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            margin-top: 20px;
+            color: #7f8c8d;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .copyright i {
+            margin: 0 5px;
+            color: #e74c3c;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            nav ul li {
+                margin: 8px 12px;
+            }
+            
+            .forum-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .forum-header .btn {
+                margin-top: 15px;
+                align-self: flex-end;
+            }
+            
+            .forum-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .forum-stats {
+                flex-direction: row;
+                margin-top: 15px;
+                align-self: stretch;
+                justify-content: space-around;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+            }
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            opacity: 0;
+            transition: all 0.4s;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        
+        .notification i {
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        .notification.success {
+            border-left: 4px solid #27ae60;
+            color: #27ae60;
+        }
+        
+        .notification.error {
+            border-left: 4px solid #e74c3c;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-comments"></i>
+                <span>LiberaF</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Главная</a></li>
+                    <li><a href="#"><i class="fas fa-users"></i> Сообщество</a></li>
+                    <li><a href="#"><i class="fas fa-star"></i> Лучшее</a></li>
+                    <li><a href="#"><i class="fas fa-bell"></i> Уведомления</a></li>
+                    <li><a href="#"><i class="fas fa-user"></i> Профиль</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container main-content">
+        <div class="forum-header">
+            <h1 class="forum-title"><i class="fas fa-comment-dots"></i> Форумы для обсуждения</h1>
+            <button class="btn" id="createForumBtn">
+                <i class="fas fa-plus"></i> Создать новый форум
+            </button>
+        </div>
+
+        <div class="forum-list" id="forumList">
+            <!-- Форум 1 -->
+            <div class="forum-item">
+                <div class="forum-info">
+                    <h3><i class="fas fa-newspaper"></i> Обсуждение новостей</h3>
+                    <p>Обсуждаем последние события в мире</p>
+                </div>
+                <div class="forum-stats">
+                    <span class="topics-count"><i class="fas fa-list"></i> Темы: 24</span>
+                    <span class="messages-count"><i class="fas fa-comments"></i> Сообщения: 158</span>
+                </div>
+            </div>
+            
+            <!-- Форум 2 -->
+            <div class="forum-item">
+                <div class="forum-info">
+                    <h3><i class="fas fa-laptop-code"></i> Технологии и IT</h3>
+                    <p>Все о технологиях, программировании и гаджетах</p>
+                </div>
+                <div class="forum-stats">
+                    <span class="topics-count"><i class="fas fa-list"></i> Темы: 42</span>
+                    <span class="messages-count"><i class="fas fa-comments"></i> Сообщения: 287</span>
+                </div>
+            </div>
+            
+            <!-- Форум 3 -->
+            <div class="forum-item">
+                <div class="forum-info">
+                    <h3><i class="fas fa-paint-brush"></i> Искусство и культура</h3>
+                    <p>Обсуждаем искусство, музыку, кино и литературу</p>
+                </div>
+                <div class="forum-stats">
+                    <span class="topics-count"><i class="fas fa-list"></i> Темы: 19</span>
+                    <span class="messages-count"><i class="fas fa-comments"></i> Сообщения: 132</span>
+                </div>
+            </div>
+            
+            <!-- Форум 4 -->
+            <div class="forum-item">
+                <div class="forum-info">
+                    <h3><i class="fas fa-graduation-cap"></i> Наука и образование</h3>
+                    <p>Делимся знаниями и обсуждаем научные открытия</p>
+                </div>
+                <div class="forum-stats">
+                    <span class="topics-count"><i class="fas fa-list"></i> Темы: 31</span>
+                    <span class="messages-count"><i class="fas fa-comments"></i> Сообщения: 204</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно создания форума -->
+    <div class="modal" id="createForumModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-plus-circle"></i> Создать новый форум</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <form id="forumForm">
+                <div class="form-group">
+                    <label for="forumName"><i class="fas fa-heading"></i> Название форума</label>
+                    <input type="text" id="forumName" required placeholder="Введите название форума">
+                </div>
+                <div class="form-group">
+                    <label for="forumDescription"><i class="fas fa-align-left"></i> Описание форума</label>
+                    <textarea id="forumDescription" required placeholder="Опишите тематику форума"></textarea>
+                </div>
+                <button type="submit" class="btn"><i class="fas fa-check"></i> Создать форум</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-info-circle"></i> О LiberaF</h3>
+                <p>LiberaF - это открытая платформа для свободного обсуждения любых тем. Мы ценим свободу слова и уважаем мнение каждого участника.</p>
+            </div>
+            <div class="footer-section">
+                <h3><i class="fas fa-link"></i> Быстрые ссылки</h3>
+                <a href="#"><i class="fas fa-home"></i> Главная</a>
+                <a href="#"><i class="fas fa-comments"></i> Форумы</a>
+                <a href="#"><i class="fas fa-gavel"></i> Правила</a>
+                <a href="#"><i class="fas fa-address-book"></i> Контакты</a>
+            </div>
+            <div class="footer-section">
