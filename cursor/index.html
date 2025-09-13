@@ -3,16 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Замена курсора</title>
+    <title>Анимированный курсор</title>
     <style>
-        /* Правильное использование правила cursor */
+        /* Скрываем оригинальный курсор */
         body {
-            cursor: url('курсор.png') 0 0, auto;
+            cursor: none;
+        }
+
+        /* Стилизация изображения курсора */
+        .custom-cursor {
+            position: absolute;
+            width: 32px; /* Ширина изображения */
+            height: 32px; /* Высота изображения */
+            z-index: 1000; /* Над остальными элементами */
+            pointer-events: none; /* Не мешает взаимодействию с элементами */
         }
     </style>
 </head>
 <body>
-    <h1>Тестирование замены курсора</h1>
-    <p>Проверьте, изменился ли курсор на экране.</p>
+    <h1>Привет!</h1>
+    <p>Это простая демонстрация анимированного курсора.</p>
+
+    <!-- Наш новый курсор -->
+    <img src="курсор.png" alt="Custom Cursor" class="custom-cursor"/>
+
+    <script>
+        // Функция для перемещения изображения следом за курсором
+        document.addEventListener('mousemove', function(event) {
+            let customCursor = document.querySelector('.custom-cursor');
+            
+            // Задержка смещения курсора для визуального эффекта
+            setTimeout(() => {
+                customCursor.style.left = event.pageX + 'px';
+                customCursor.style.top = event.pageY + 'px';
+            }, 0); // Можно увеличить задержку для большего эффекта
+        });
+    </script>
 </body>
 </html>
