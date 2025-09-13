@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курсор в виде точки</title>
+    <style>
+        /* Общие настройки */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            color: #333;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            cursor: none; /* Убираем стандартный курсор */
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        p {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Привет!</h1>
+    <p>Здесь курсор мышки заменён на точку.</p>
+    
+    <!-- Наша точка-курсор -->
+    <div class="custom-cursor"></div>
+
+    <script>
+        // Элемент, представляющий собой точку-курсор
+        const dot = document.querySelector('.custom-cursor');
+        
+        // Настраиваем внешний вид точки
+        dot.style.position = 'absolute';
+        dot.style.width = '10px';   // Диаметр точки
+        dot.style.height = '10px';
+        dot.style.borderRadius = '50%'; // Круглая форма
+        dot.style.backgroundColor = '#000'; // Чёрный цвет
+        dot.style.pointerEvents = 'none'; // Чтобы точка не мешала взаимодействовать с элементами
+        dot.style.zIndex = '1000'; // Поднимаем над всеми элементами
+        dot.style.transition = 'transform 0.1s ease-out'; // Немного плавнее движение
+        
+        // Обработчик события движения мыши
+        window.addEventListener('mousemove', function(e) {
+            // Перемещаем нашу точку вслед за курсором
+            dot.style.left = e.clientX + 'px';
+            dot.style.top = e.clientY + 'px';
+        });
+    </script>
+</body>
+</html>
