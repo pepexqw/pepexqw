@@ -8,57 +8,83 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6/css/all.min.css">
     <style>
         body {
+            font-family: Arial, sans-serif;
             background-color: #f8f9fa;
             color: #343a40;
         }
-        
 
-    header {
-        background-color: #343a40;
-        color: white;
-        padding: 1rem 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    
-    nav ul {
-        list-style-type: none;
-        display: flex;
-        justify-content: center;
-        gap: 1rem;
-    }
-    
-    nav ul li a {
-        color: white;
-        text-decoration: none;
-        transition: color 0.3s ease;
-    }
-    
-    nav ul li a:hover {
-        color: #dc3545;
-    }
-    
-    .content-container {
-        padding-top: 2rem;
-    }
-    
-    .icon-list i {
-        margin-right: 0.5rem;
-    }
-    
-    .project-section {
-        margin-top: 2rem;
-    }
-    
-    .btn-switch {
-        float: right;
-    }
-</style>
+        /* Header */
+        header {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #dc3545;
+        }
+
+        /* Content Container */
+        .content-container {
+            padding-top: 2rem;
+        }
+
+        h2 {
+            font-size: 1.5em;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            line-height: 1.5;
+        }
+
+        .icon-list i {
+            margin-right: 0.5rem;
+        }
+
+        /* Project Section */
+        .project-section {
+            margin-top: 2rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #343a40;
+            color: white;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        @media only screen and (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .col-md-6 {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
     <header>
-        <!-- Добавляем логотип слева -->
         <h1 class="logo ms-3">Сайт РЧП</h1>
         <nav class="container me-auto">
             <ul>
@@ -66,101 +92,83 @@
                 <li><a href="#achievements">Заслуги</a></li>
                 <li><a href="#protocols">Протоколы</a></li>
                 <li><a href="#operations">Операции</a></li>
-                <label for="theme-switch" class="btn-switch">
-                    <input type="checkbox" id="theme-switch" style="display:none"/>
-                    <span class="slider round"></span>
-                </label>
             </ul>
         </nav>
     </header>
-    
 
-<div class="content-container container">
-    <div class="row">
-        <div class="col-md-6">
-            <h2 id="about">О Корпорации</h2>
-            <p>РЧП (Решалы Черных Проблем) — секретная корпорация, занимающаяся уничтожением, нейтрализацией и изучением монстров.</p>
-            <p>Наш состав включает:</p>
-            <ul class="list-group icon-list">
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-user-secret"></i> Спецгруппы</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-laptop-code"></i> Чат Джипити</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-shield-alt"></i> Бронетехника</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-helicopter"></i> Авиация</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-wrench"></i> Различное спецоборудование</li>
-            </ul>
+    <div class="content-container container">
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <h2 id="about">О Корпорации</h2>
+                <p>РЧП (Решалы Черных Проблем) — секретная корпорация, занимающаяся уничтожением, нейтрализацией и изучением монстров.</p>
+                <p>Наш состав включает:</p>
+                <ul class="list-group icon-list">
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-user-secret"></i> Спецгруппы</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-laptop-code"></i> Чат Джипити</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-shield-alt"></i> Бронетехника</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-helicopter"></i> Авиация</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-wrench"></i> Различное спецоборудование</li>
+                </ul>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h2 id="achievements">Заслуги</h2>
+                <ul class="list-group icon-list">
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-bomb"></i> Уничтожены: Картун кет, Картун дога, Картун мауса, Картун пиг, Сирено-головый, Мимик из Майнкрафта и Роблокса, Пожиратель теней, Зе слаймер, Господин Страшный, Фонаре-головый, Джеф убийца, Палач (из Сайлент Хилла), Лазарев Медведь, Плачущий Человек, Чу-Чу Чарльз, Лорна (Terrible Mouse), Бабка Гренни, Теди.</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-walking"></i> Сбежали от\из: Закулисья (5 раз), Слендермен.</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-handshake"></i> Приручили\завербовали: Виндиго, Джейн убийцу (псевдоним: Агент Джейн), Candleman (человек-свеча), Эндрю и Эшли Грейвс.</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-quarantine"></i> Нейтрализованы \ поставлены под карантин: Альтернативы из Каталога Манделлы, Кровавая Пьеса (ISIPI), Череп Виндиго (ISIPI), Смайл Дог, Зорго.</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-users"></i> Поддерживают нейтралитет или дружественный контакт с Фондом SCP.</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-id-card"></i> Анонимны для всех, кроме собственных сотрудников и других организаций.</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-question-circle"></i> Знают о "Господинах А-ТА-ТА".</li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-6">
-            <h2 id="achievements">Заслуги</h2>
-            <ul class="list-group icon-list">
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-bomb"></i> Уничтожены: Картун кет, Картун дога, Картун мауса, Картун пиг, Сирено-головый, Мимик из Майнкрафта и Роблокса, Пожиратель теней, Зе слаймер, Господин Страшный, Фонаре-головый, Джеф убийца, Палач (из Сайлент Хилла), Лазарев Медведь, Плачущий Человек, Чу-Чу Чарльз, Лорна (Terrible Mouse), Бабка Гренни, Теди.</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-walking"></i> Сбежали от\из: Закулисья (5 раз), Слендермен.</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-handshake"></i> Приручили\завербовали: Виндиго, Джейн убийцу (псевдоним: Агент Джейн), Candleman (человек-свеча), Эндрю и Эшли Грейвс.</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-quarantine"></i> Нейтрализованы \ поставлены под карантин: Альтернативы из Каталога Манделлы, Кровавая Пьеса (ISIPI), Череп Виндиго (ISIPI), Смайл Дог, Зорго.</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-users"></i> Поддерживают нейтралитет или дружественный контакт с Фондом SCP.</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-id-card"></i> Анонимны для всех, кроме собственных сотрудников и других организаций.</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-question-circle"></i> Знают о "Господинах А-ТА-ТА".</li>
-            </ul>
+        <div class="row project-section">
+            <div class="col-md-6 mb-4">
+                <h2 id="protocols">Протоколы</h2>
+                <ul class="list-group icon-list">
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Ваш брат стал нашим сводным</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Тени рассеются перед нами</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Докторишки</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Сказки на ночь отменяются</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Черепушка</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> За мной собрат</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Чернушки больше не страшны</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Серый Шум</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Зачатки Прошлого</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Брат и Сестра</li>
+                </ul>
+            </div>
+            <div class="col-md-6 mb-4">
+                <h2 id="operations">Выполненные Операции</h2>
+                <ul class="list-group icon-list">
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Улыбка тебе не к лицу</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Громкая хлопушка</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Уборочная комната</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Чучело</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Анимационный зоопарк</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Лампочка перегорела</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Катка на ножах пошла не по плану</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Плаки-плаки</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Ту-ту</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Медвежонок</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Братан с секирой</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Чёрная нямка</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Чел какой-то</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Мимик, который заполонил тренды</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Мимик неизвестного происхождения</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Мышь из лечебницы</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Бабка с палкой</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Медвежонок</li>
+                </ul>
+            </div>
         </div>
     </div>
-    <div class="row project-section">
-        <div class="col-md-6">
-            <h2 id="protocols">Протоколы</h2>
-            <ul class="list-group icon-list">
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Ваш брат стал нашим сводным</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Тени рассеются перед нами</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Докторишки</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Сказки на ночь отменяются</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Черепушка</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> За мной собрат</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Чернушки больше не страшны</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Серый Шум</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Зачатки Прошлого</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-file-contract"></i> Брат и Сестра</li>
-            </ul>
-        </div>
-        <div class="col-md-6">
-            <h2 id="operations">Выполненные Операции</h2>
-            <ul class="list-group icon-list">
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Улыбка тебе не к лицу</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Громкая хлопушка</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Уборочная комната</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Чучело</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Анимационный зоопарк</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Лампочка перегорела</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Катка на ножах пошла не по плану</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Плаки-плаки</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Ту-ту</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Медвежонок</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Братан с секирой</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Чёрная нямка</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Чел какой-то</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Мимик, который заполонил тренды</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Мимик неизвестного происхождения</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Мышь из лечебницы</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Бабка с палкой</li>
-                <li class="list-group-item d-flex align-items-center"><i class="fas fa-tasks"></i> Медвежонок</li>
-            </ul>
-        </div>
-    </div>
-</div>
 
-<footer class="mt-5 bg-dark text-white text-center py-3">
-    <a href="https://github.com/yourusername" target="_blank" class="mx-2"><i class="fab fa-github"></i></a>
-    <a href="https://t.me/yourusername" target="_blank" class="mx-2"><i class="fab fa-telegram-plane"></i></a>
-    <small>© 2025 Корпорация РЧП. Все права защищены.</small>
-</footer>
-
-<script>
-    const toggleSwitch = document.querySelector('#theme-switch');
-    toggleSwitch.addEventListener('change', switchTheme);
-
-    function switchTheme(e) {
-        if (e.target.checked) {
-            document.documentElement.setAttribute('data-theme', 'dark');
-        } else {
-            document.documentElement.setAttribute('data-theme', 'light');
-        }
-    }
-</script>
+    <footer class="mt-5 bg-dark text-white text-center py-3">
+        <a href="https://github.com/yourusername" target="_blank" class="mx-2"><i class="fab fa-github"></i></a>
+        <a href="https://t.me/yourusername" target="_blank" class="mx-2"><i class="fab fa-telegram-plane"></i></a>
+        <small>© 2025 Корпорация РЧП. Все права защищены.</small>
+    </footer>
 </body>
 </html>
