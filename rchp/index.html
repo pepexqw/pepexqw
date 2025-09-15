@@ -71,48 +71,6 @@
             text-align: center;
         }
 
-        /* Modal Window for Aviation */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.4);
-        }
-
-        .modal-content {
-            background-color: #fff;
-            margin: 15% auto;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            max-width: 600px;
-            animation-name: modalopen;
-            animation-duration: 0.5s;
-        }
-
-        @keyframes modalopen {
-            from {opacity: 0;} to {opacity: 1;}
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
         @media only screen and (max-width: 768px) {
             nav ul {
                 flex-direction: column;
@@ -134,8 +92,6 @@
                 <li><a href="#achievements">Заслуги</a></li>
                 <li><a href="#protocols">Протоколы</a></li>
                 <li><a href="#operations">Операции</a></li>
-                <!-- Add an anchor link that opens the modal -->
-                <li><a onclick="document.getElementById('aviationModal').style.display='block'">Авиация</a></li>
             </ul>
         </nav>
     </header>
@@ -209,19 +165,6 @@
         </div>
     </div>
 
-    <!-- Create a Modal window for aviation info -->
-    <div id="aviationModal" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="this.parentNode.parentNode.style.display='none';">×</span>
-            <h2>Парочка боевых единиц РЧП (авиация):</h2>
-            <ol>
-                <li>"Вертушка" - Легкий разведывательный боевой вертолет, оснащенный легким-средним вооружением (пулеметы, легкие баллистические ракеты). Самый распространенный вертолет РЧП, внешне напоминает Ка-52</li>
-                <li>"Шершень" - Тяжелый боевой вертолет, на котором стоит вся прелесть вооружения РЧП. Пулеметы, ракеты, кислотные торпеды и много чего ещё. Визуально напоминает усовершенствованный Ми-26.</li>
-                <li>"ПРЧП" или "ПочтаРЧП" - боевой транспортный вертолет, перевозит от пехоты до техники, может быть разных размеров (в зависимости от того что перевозить), но может напоминать Ми-24.</li>
-            </ol>
-        </div>
-    </div>
-
     <footer class="mt-5 bg-dark text-white text-center py-3">
         <a href="https://github.com/pepexqw" target="_blank" class="mx-2"><i class="fab fa-github"></i></a>
         <a href="https://t.me/+HrXOZUO2Z6g2Mzdi" target="_blank" class="mx-2"><i class="fab fa-telegram-plane"></i></a>
@@ -229,3 +172,6 @@
     </footer>
 </body>
 </html>
+
+
+
