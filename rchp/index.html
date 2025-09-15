@@ -36,6 +36,7 @@
             transition: color 0.3s ease;
         }
 
+        nav ul li a.active,
         nav ul li a:hover {
             color: #dc3545;
         }
@@ -88,10 +89,10 @@
         <h1 class="logo ms-3">Сайт РЧП</h1>
         <nav class="container me-auto">
             <ul>
-                <li><a href="#about">О Корпорации</a></li>
-                <li><a href="#achievements">Заслуги</a></li>
-                <li><a href="#protocols">Протоколы</a></li>
-                <li><a href="#operations">Операции</a></li>
+                <li><a href="#about" onclick="activateLink(this); return false;">О Корпорации</a></li>
+                <li><a href="#achievements" onclick="activateLink(this); return false;">Заслуги</a></li>
+                <li><a href="#protocols" onclick="activateLink(this); return false;">Протоколы</a></li>
+                <li><a href="#operations" onclick="activateLink(this); return false;">Операции</a></li>
             </ul>
         </nav>
     </header>
@@ -116,7 +117,7 @@
                     <li class="list-group-item d-flex align-items-center"><i class="fas fa-bomb"></i> Уничтожены: Картун кет, Картун дога, Картун мауса, Картун пиг, Сирено-головый, Мимик из Майнкрафта и Роблокса, Пожиратель теней, Зе слаймер, Господин Страшный, Фонаре-головый, Джеф убийца, Палач (из Сайлент Хилла), Лазарев Медведь, Плачущий Человек, Чу-Чу Чарльз, Лорна (Terrible Mouse), Бабка Гренни, Теди.</li>
                     <li class="list-group-item d-flex align-items-center"><i class="fas fa-walking"></i> Сбежали от\из: Закулисья (5 раз), Слендермен.</li>
                     <li class="list-group-item d-flex align-items-center"><i class="fas fa-handshake"></i> Приручили\завербовали: Виндиго, Джейн убийцу (псевдоним: Агент Джейн), Candleman (человек-свеча), Эндрю и Эшли Грейвс.</li>
-                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-quarantine"></i> Нейтрализованы \ поставлены под карантин: Альтернативы из Каталога Манделлы, Кровавая Пьеса (ISIPI), Череп Виндиго (ISIPI), Смайл Дог, Зорго.</li>
+                    <li class="list-group-item d-flex align-items-center"><i class="fas fa-quarantine"></i> Нейтрализованы \ поставлены под карантин: Альтернативы из Каталога Манделла, Кровавая Пьеса (ISIPI), Череп Виндиго (ISIPI), Смайл Дог, Зорго.</li>
                     <li class="list-group-item d-flex align-items-center"><i class="fas fa-users"></i> Поддерживают нейтралитет или дружественный контакт с Фондом SCP.</li>
                     <li class="list-group-item d-flex align-items-center"><i class="fas fa-id-card"></i> Анонимны для всех, кроме собственных сотрудников и других организаций.</li>
                     <li class="list-group-item d-flex align-items-center"><i class="fas fa-question-circle"></i> Знают о "Господинах А-ТА-ТА".</li>
@@ -170,5 +171,16 @@
         <a href="https://t.me/yourusername" target="_blank" class="mx-2"><i class="fab fa-telegram-plane"></i></a>
         <small>© 2025 Корпорация РЧП. Все права защищены.</small>
     </footer>
+
+    <script>
+        // Функция для активации текущего элемента меню
+        function activateLink(link) {
+            var links = document.querySelectorAll("nav ul li a");
+            links.forEach(function(item) {
+                item.classList.remove("active");
+            });
+            link.classList.add("active");
+        }
+    </script>
 </body>
 </html>
