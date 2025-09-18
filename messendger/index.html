@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SecureChat - Простой мессенджер</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            height: 600px;
+            display: flex;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+        }
+        
+        .auth-side {
+            width: 40%;
+            background: linear-gradient(to bottom, #6e8efb, #a777e3);
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .auth-side h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        
+        .auth-side p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        .form-container {
+            width: 60%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #6e8efb;
+        }
+        
+        .input-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            border-color: #6e8efb;
+            outline: none;
+        }
+        
+        button {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: opacity 0.3s;
+        }
+        
+        button:hover {
+            opacity: 0.9;
+        }
+        
+        .switch-form {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+        }
+        
+        .switch-form span {
+            color: #6e8efb;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            text-align: center;
+            min-height: 20px;
+        }
+        
+        .chat-container {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+        
+        .header {
+            padding: 20px;
+            background: linear-gradient(to right, #6e8efb, #a777e3);
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h2 {
+            margin: 0;
+            color: white;
+        }
+        
+        .logout {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .logout:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 18px;
+            max-width: 70%;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .my-message {
+            background-color: #dcf8c6;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .other-message {
+            background-color: #ffffff;
+            border: 1px solid #eaeaea;
+            border-bottom-left-radius: 5px;
+        }
+        
+        .sender {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #6e8efb;
+            font-size: 14px;
+        }
+        
+        .timestamp {
+            font-size: 12px;
+            color: #999;
+            text-align: right;
+            margin-top: 5px;
+        }
+        
+        .message-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            background-color: white;
+        }
+        
+        .message-input input {
+            flex: 1;
+            margin-right: 10px;
+            padding: 12px;
+        }
+        
+        .message-input button {
+            width: auto;
+            padding: 12px 20px;
+        }
+        
+        .storage-info {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #666;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Контейнер авторизации -->
+        <div class="auth-side">
+            <h1>SecureChat</h1>
+            <p>Безопасный и простой мессенджер для общения. Ваши сообщения хранятся локально в вашем браузере.</p>
+        </div>
+        
+        <div id="auth-container" class="form-container">
+            <h2>Вход в мессенджер</h2>
+            <div id="login-form">
+                <div class="input-group">
+                    <label for="login-username">Имя пользователя</label>
+                    <input type="text" id="login-username" placeholder="Введите ваш логин" required>
+                </div>
+                <div class="input-group">
+                    <label for="login-password">Пароль</label>
+                    <input type="password" id="login-password" placeholder="Введите ваш пароль" required>
+                </div>
+                <button onclick="login()">Войти</button>
+                <div class="error" id="login-error"></div>
+                <div class="switch-form">Нет аккаунта? <span onclick="showRegisterForm()">Зарегистрироваться</span></div>
+            </div>
+            
+            <div id="register-form" style="display: none;">
+                <div class="input-group">
+                    <label for="register-username">Имя пользователя</label>
+                    <input type="text" id="register-username" placeholder="Придумайте логин" required>
+                </div>
+                <div class="input-group">
+                    <label for="register-password">Пароль</label>
+                    <input type="password" id="register-password" placeholder="Придумайте пароль" required>
+                </div>
+                <button onclick="register()">Зарегистрироваться</button>
+                <div class="error" id="register-error"></div>
+                <div class="switch-form">Уже есть аккаунт? <span onclick="showLoginForm()">Войти</span></div>
+            </div>
+        </div>
+        
+        <!-- Контейнер чата -->
+        <div id="chat-container" class="chat-container">
+            <div class="header">
+                <h2>Мессенджер</h2>
+                <div class="logout" onclick="logout()">Выйти</div>
+            </div>
+            
+            <div id="messages" class="messages">
+                <!-- Сообщения будут добавляться здесь -->
+            </div>
+            
+            <div class="message-input">
+                <input type="text" id="message-input" placeholder="Введите сообщение..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendMessage()">Отправить</button>
+            </div>
+            
+            <div class="storage-info">
+                Сообщения хранятся в локальном хранилище вашего браузера
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Инициализация данных в локальном хранилище
+        if (!localStorage.getItem('users')) {
+            localStorage.setItem('users', JSON.stringify([]));
+        }
+        
+        if (!localStorage.getItem('messages')) {
+            localStorage.setItem('messages', JSON.stringify([]));
+        }
+        
+        // Проверка, авторизован ли пользователь
+        window.onload = function() {
+            const currentUser = localStorage.getItem('currentUser');
+            if (currentUser) {
+                showChat();
+                loadMessages();
+            }
+        };
+        
+        // Показать форму регистрации
+        function showRegisterForm() {
+            document.getElementById('login-form').style.display = 'none';
+            document.getElementById('register-form').style.display = 'block';
+            document.getElementById('register-error').textContent = '';
+        }
+        
+        // Показать форму входа
+        function showLoginForm() {
+            document.getElementById('register-form').style.display = 'none';
+            document.getElementById('login-form').style.display = 'block';
+            document.getElementById('login-error').textContent = '';
+        }
+        
+        // Регистрация нового пользователя
+        function register() {
+            const username = document.getElementById('register-username').value;
+            const password = document.getElementById('register-password').value;
+            const errorElement = document.getElementById('register-error');
+            
+            if (!username || !password) {
+                errorElement.textContent = 'Заполните все поля';
+                return;
+            }
+            
+            if (username.length < 3) {
+                errorElement.textContent = 'Имя пользователя должно содержать минимум 3 символа';
+                return;
+            }
+            
+            if (password.length < 4) {
+                errorElement.textContent = 'Пароль должен содержать минимум 4 символа';
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('users'));
+            
+            // Проверка, существует ли пользователь
+            if (users.find(user => user.username === username)) {
+                errorElement.textContent = 'Пользователь уже существует';
+                return;
+            }
+            
+            // Добавление нового пользователя
+            users.push({ username, password });
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Очистка полей и переход к форме входа
+            document.getElementById('register-username').value = '';
+            document.getElementById('register-password').value = '';
+            errorElement.textContent = '';
+            
+            showLoginForm();
+            document.getElementById('login-error').textContent = 'Регистрация успешна. Теперь войдите.';
+        }
+        
+        // Авторизация пользователя
+        function login() {
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+            const errorElement = document.getElementById('login-error');
+            
+            if (!username || !password) {
+                errorElement.textContent = 'Заполните все поля';
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('users'));
+            
+            // Проверка учетных данных
+            const user = users.find(user => user.username === username && user.password === password);
+            
+            if (!user) {
+                errorElement.textContent = 'Неверное имя пользователя или пароль';
+                return;
+            }
+            
+            // Сохранение текущего пользователя
+            localStorage.setItem('currentUser', username);
+            
+            // Очистка полей
+            document.getElementById('login-username').value = '';
+            document.getElementById('login-password').value = '';
+            errorElement.textContent = '';
+            
+            showChat();
+            loadMessages();
+        }
+        
+        // Выход из системы
+        function logout() {
+            localStorage.removeItem('currentUser');
+            document.getElementById('auth-container').style.display = 'flex';
+            document.getElementById('chat-container').style.display = 'none';
+        }
+        
+        // Показать чат
+        function showChat() {
+            document.getElementById('auth-container').style.display = 'none';
+            document.getElementById('chat-container').style.display = 'flex';
+        }
+        
+        // Отправка сообщения
+        function sendMessage() {
+            const messageInput = document.getElementById('message-input');
+            const messageText = messageInput.value.trim();
+            
+            if (!messageText) return;
+            
+            const currentUser = localStorage.getItem('currentUser');
+            const messages = JSON.parse(localStorage.getItem('messages'));
+            
+            // Добавление нового сообщения
+            const newMessage = {
+                sender: currentUser,
+                text: messageText,
+                timestamp: new Date().toISOString()
+            };
+            
+            messages.push(newMessage);
+            
+            // Сохранение в localStorage
+            localStorage.setItem('messages', JSON.stringify(messages));
+            
+            // Очистка поля ввода и обновление сообщений
+            messageInput.value = '';
+            loadMessages();
+            
+            // Прокрутка к последнему сообщению
+            const messagesContainer = document.getElementById('messages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // Загрузка сообщений
+        function loadMessages() {
+            const messagesContainer = document.getElementById('messages');
+            const messages = JSON.parse(localStorage.getItem('messages'));
+            const currentUser = localStorage.getItem('currentUser');
+            
+            messagesContainer.innerHTML = '';
+            
+            if (messages.length === 0) {
+                messagesContainer.innerHTML = '<div style="text-align: center; color: #666; margin-top: 30px;">Нет сообщений. Начните общение!</div>';
+                return;
+            }
+            
+            messages.forEach(message => {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                
+                if (message.sender === currentUser) {
+                    messageElement.classList.add('my-message');
+                } else {
+                    messageElement.classList.add('other-message');
+                }
+                
+                const senderElement = document.createElement('div');
+                senderElement.classList.add('sender');
+                senderElement.textContent = message.sender;
+                
+                const textElement = document.createElement('div');
+                textElement.textContent = message.text;
+                
+                const timeElement = document.createElement('div');
+                timeElement.classList.add('timestamp');
+                timeElement.textContent = formatTime(message.timestamp);
+                
+                messageElement.appendChild(senderElement);
+                messageElement.appendChild(textElement);
+                messageElement.appendChild(timeElement);
+                
+                messagesContainer.appendChild(messageElement);
+            });
+            
+            // Прокрутка к последнему сообщению
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        // Форматирование времени
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        }
+        
+        // Обработка нажатия клавиши Enter
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+    </script>
+</body>
+</html>
