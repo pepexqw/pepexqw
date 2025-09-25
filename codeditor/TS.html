@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Темный редактор исходново кода:3</title>
+    <!-- Подключаем стили/скрипты Monaco -->
+    <link rel="stylesheet" data-name="vs/editor/editor.main" href="https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs/basic-layout.css">
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs/loader.js"></script>
+    <style>
+        /* темный фон/тело страницы(выглядит мудрено) */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #2d2d30;
+        }
+        #container {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="container"></div>
+    <script>
+        require.config({ paths: { 'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@latest/min/vs' }});
+        // инициализация редактора с жеской темной темой
+        require(['vs/editor/editor.main'], function() {
+            var editor = monaco.editor.create(document.getElementById("container"), {
+                value: "// Твой код здесь\nconsole.log('Привет мир!');",
+                language: "javascript",
+                theme: "vs-dark" // Здесь указана тёмная тема
+            });
+            
+            // автодополнение по Ctrl+Escape
+            editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Escape, function() {
+                editor.trigger("", "editor.action.triggerSuggest");
+            });
+        });
+    </script>
+</body>
+</html>
