@@ -13,77 +13,84 @@
             background-color: #fafafa;
         }
         video {
-            width: 300px;
+            width: calc(50% - 20px);
+            height: auto;
+            object-fit: cover;
             border-radius: 10px;
             margin: 10px;
         }
     </style>
 </head>
 <body>
-<h1>Примитивный голосовой чат</h1>
-<p>Открйте вторую вкладку и начните общение.</p>
+<!-- Локальное видео -->
 <video id="localVideo" muted playsinline autoplay></video>
+<!-- Удалённое видео -->
 <video id="remoteVideo" playsinline autoplay></video>
 
 <script>
-    const localVideo = document.getElementById('localVideo');
-    const remoteVideo = document.getElementById('remoteVideo');
+    // Элемент для вывода ошибок
+    const errorOutput = document.createElement('div');
+    errorOutput.id = 'error-output';
+    errorOutput.style.color = 'red';
+    document.body.appendChild(errorOutput);
 
-    // Начнем сразу получать разрешение на камеру/микрофон
+    // Подключение к локальной камере/микрофону
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-        .then(stream => {
+        .then(async stream => {
+            const localVideo = document.getElementById('localVideo');
             localVideo.srcObject = stream;
 
-            // Инициализация RTC-соединения
+            // Создаем объект WebRTC соединения
             const connection = new RTCPeerConnection({
-                iceServers: [{
-                    urls: 'stun:stun.l.google.com:19302'
-                }]
+                iceServers: [
+                    { urls: 'stun:stun.l.google.com:19302' }
+                ]
             });
 
-            // Добавляем наши потоки в соединение
+            // Добавляем наш поток в соединение
             connection.addStream(stream);
 
-            // Обработчики кандидатов и новых потоков
-            connection.onicecandidate = event => {
-                if (event.candidate) {
-                    console.log('Обнаружен ICE-кандидат:', event.candidate);
-                }
-            };
-
+            // Прием удаленного потока
             connection.onaddstream = event => {
+                const remoteVideo = document.getElementById('remoteVideo');
                 remoteVideo.srcObject = event.stream;
             };
 
-            // Генерируем и обрабатываем OFERTU
-            connection.createOffer()
-                .then(offer => {
-                    connection.setLocalDescription(offer)
-                        .then(() => {
-                            // Сигнал должен быть передан вручную второму пользователю
-                            console.log('Предоставьте следующее описание партнёру:');
-                            console.log(connection.localDescription.sdp);
+            // Обмен ICE-кандидатами
+            connection.onicecandidate = event => {
+                if (event.candidate) {
+                    console.log('ICE Candidate:', event.candidate);
+                }
+            };
+
+            // Генерируем предложение (Offer)
+            const offer = await connection.createOffer();
+            await connection.setLocalDescription(offer);
+
+            // Предложенное описание выводим в консоль для ручного обмена
+            console.log('Предложите это описание другому участнику:', connection.localDescription.sdp);
+
+            // Ждем прихода Answer от другого участника
+            window.onmessage = event => {
+                const answerSdp = event.data;
+                connection.setRemoteDescription(new RTCSessionDescription({ type: 'answer', sdp: answerSdp }));
+            };
+
+            // Ожидание Offer от второго участника
+            const secondOffer = prompt('Вставьте предложение от другого участника:');
+            connection.setRemoteDescription(new RTCSessionDescription({ type: 'offer', sdp: secondOffer }))
+                .then(() => {
+                    connection.createAnswer()
+                        .then(answer => {
+                            connection.setLocalDescription(answer)
+                                .then(() => {
+                                    console.log('Отправьте этому предложению ответ:', connection.localDescription.sdp);
+                                });
                         });
                 });
-
-            // Ожидаем получение OFFERTA от партнера
-            window.onmessage = event => {
-                const sdp = event.data;
-                connection.setRemoteDescription(new RTCSessionDescription(sdp))
-                    .then(() => {
-                        connection.createAnswer()
-                            .then(answer => {
-                                connection.setLocalDescription(answer)
-                                    .then(() => {
-                                        console.log('Отправьте партнеру следующую ANSWER:');
-                                        console.log(connection.localDescription.sdp);
-                                    });
-                            });
-                    });
-            };
         })
         .catch(error => {
-            console.error('Ошибка доступа к устройству:', error);
+            errorOutput.textContent = `Ошибка доступа к устройствам: ${error}`;
         });
 </script>
 </body>
