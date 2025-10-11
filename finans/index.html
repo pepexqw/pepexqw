@@ -69,5 +69,4 @@
                         <p style="font-size: 0.95rem;">${e.summary.substring(0,150)}...</p>
                         <a href="${e.url}" target="_blank" style="color: #2a5298; text-decoration: none; font-size: 0.9rem;">Read more</a>
                     </div>
-
                 `}),marketNews.innerHTML=a}else marketNews.innerHTML="<p>No recent news available</p>"}function showLoading(){loadingIndicator.style.display="block"}function hideLoading(){loadingIndicator.style.display="none"}function showError(e){errorMessage.textContent=e,errorMessage.style.display="block"}function hideError(){errorMessage.style.display="none"}searchButton.addEventListener("click",searchStock),symbolInput.addEventListener("input",handleSymbolInput),window.addEventListener("DOMContentLoaded",()=>{symbolInput.value="IBM",searchStock()})</script></body></html>
