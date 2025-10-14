@@ -1,5 +1,5 @@
 export default function handler(req, res) {
-    const apiKey = "2134Ffasdj_F1"; // Ваш API-ключ
+    const apiKeys = ["2134Ffasdj_F1", "1231DK4214_D1", "fhJKFHkf_!3f"];
     const { api_key } = req.query; // Извлечение API-ключа из запроса
 
     // Проверка API-ключа
@@ -28,5 +28,6 @@ export default function handler(req, res) {
 
     res.status(200).json({ fact });
 }
+
 
 
