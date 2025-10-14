@@ -1,4 +1,12 @@
 export default function handler(req, res) {
+    const apiKey = "2134Ffasdj_F1"; // Ваш API-ключ
+    const { api_key } = req.query; // Извлечение API-ключа из запроса
+
+    // Проверка API-ключа
+    if (api_key !== apiKey) {
+        return res.status(401).json({ error: "Неавторизованный доступ. Неверный API-ключ." });
+    }
+
     const catFacts = [
         "Кошки могут прыгать в 6 раз выше своего роста.",
         "У кошек 32 мышцы в каждом ухе.",
@@ -20,3 +28,5 @@ export default function handler(req, res) {
 
     res.status(200).json({ fact });
 }
+
+
