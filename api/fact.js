@@ -1,9 +1,9 @@
 export default function handler(req, res) {
-    const apiKeys = ["2134Ffasdj_F1", "1231DK4214_D1", "fhJKFHkf_!3f"];
+    const apiKeys = ["2134Ffasdj_F1", "1231DK4214_D1", "fhJKFHkf_!3f"]; // Массив ваших API-ключей
     const { api_key } = req.query; // Извлечение API-ключа из запроса
 
     // Проверка API-ключа
-    if (api_key !== apiKey) {
+    if (!apiKeys.includes(api_key)) {
         return res.status(401).json({ error: "Неавторизованный доступ. Неверный API-ключ." });
     }
 
@@ -28,6 +28,3 @@ export default function handler(req, res) {
 
     res.status(200).json({ fact });
 }
-
-
-
