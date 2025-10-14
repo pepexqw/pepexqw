@@ -1,0 +1,9 @@
+<script>
+async function fetchCatFact() {
+    const response = await fetch('/api/fact');
+    const data = await response.json();
+    console.log(data.fact);
+}
+
+fetchCatFact();
+</script>
