@@ -30,6 +30,14 @@ export default async function handler(req, res) {
         }
     }
 
+    // Создаем объект ответа без поля PreviousURL
+    const responseData = {
+        Date: cachedData.Date,
+        PreviousDate: cachedData.PreviousDate,
+        Timestamp: cachedData.Timestamp,
+        Valute: cachedData.Valute
+    };
+
     // Возвращаем кэшированные данные
-    res.status(200).json(cachedData);
+    res.status(200).json(responseData);
 }
