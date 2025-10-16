@@ -1,4 +1,12 @@
 export default function handler(req, res) {
+    const apiKeys = ["1234"]; 
+    const { api_key } = req.query; 
+
+    // Проверка API-ключа
+    if (!apiKeys.includes(api_key)) {
+        return res.status(401).json({ error: "Неавторизованный доступ. Неверный API-ключ." });
+    }
+
     const quotes = [
         "Не откладывай на завтра то, что можно сделать послезавтра.",
         "Если кажется, что работать надо с 9 до 6, значит, надо работать с 10 до 5.",
@@ -108,4 +116,5 @@ export default function handler(req, res) {
     const timestamp = new Date().toISOString(); // :3 ISO 8601
 
     res.status(200).json({ quote, timestamp });
+
 }
