@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приведение</title>
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .quote {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .next-button {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .next-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="quote" id="quote">"Каждый день — это новая возможность. Крепитесь и действуйте!"</h1>
+        <button class="next-button" onclick="changeQuote()">Дальше</button>
+    </div>
+
+    <script>
+        let quotes = [
+            "Чем больше мы работаем, тем больше нам везет.",
+            "Ваша жизнь – это ваше сообщение миру. Сделайте его вдохновляющим.",
+            "Успех – это сумма мелких усилий, повторяемых день за днем."
+        ];
+
+        let currentIndex = 0;
+
+        function changeQuote() {
+            currentIndex = (currentIndex + 1) % quotes.length;
+            document.getElementById('quote').textContent = quotes[currentIndex];
+        }
+    </script>
+</body>
+</html>
