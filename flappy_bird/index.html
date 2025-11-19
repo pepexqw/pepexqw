@@ -158,53 +158,51 @@
         let pipes = [];
         let animationId;
 
+        // Загружаем изображение птицы
+        const birdImage = new Image();
+        birdImage.src = 'https://i.ibb.co/fdx8KB3p/6-no-bg-preview-carve-photos.png';
+
         // Параметры птицы
         const bird = {
             x: 50,
             y: canvas.height / 2,
-            width: 34,
-            height: 24,
-            gravity: 0.5,
+            width: 40, // Уменьшенный размер для лучшей игры
+            height: 30,
+            gravity: 0.4, // Уменьшенная гравитация
             velocity: 0,
-            jump: -8,
+            jump: -7, // Уменьшенная сила прыжка
             rotation: 0,
+            wingPosition: 0,
+            wingDirection: 1,
             
             draw: function() {
                 ctx.save();
                 ctx.translate(this.x, this.y);
+                
+                // Анимация крыльев
+                this.wingPosition += 0.1 * this.wingDirection;
+                if (this.wingPosition > 1 || this.wingPosition < -1) {
+                    this.wingDirection *= -1;
+                }
+                
+                // Поворачиваем птицу в зависимости от скорости
+                if (this.velocity >= 5) {
+                    this.rotation = Math.PI/6;
+                } else {
+                    this.rotation = -Math.PI/12;
+                }
                 ctx.rotate(this.rotation);
                 
-                // Тело птицы
-                ctx.fillStyle = '#f8e71c';
-                ctx.beginPath();
-                ctx.ellipse(0, 0, this.width/2, this.height/2, 0, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Крыло
-                ctx.fillStyle = '#f5a623';
-                ctx.beginPath();
-                ctx.ellipse(-5, 0, 10, 8, Math.PI/4, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Глаз
-                ctx.fillStyle = 'white';
-                ctx.beginPath();
-                ctx.arc(8, -5, 6, 0, Math.PI * 2);
-                ctx.fill();
-                
-                ctx.fillStyle = 'black';
-                ctx.beginPath();
-                ctx.arc(10, -5, 3, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Клюв
-                ctx.fillStyle = '#ff6b6b';
-                ctx.beginPath();
-                ctx.moveTo(15, 0);
-                ctx.lineTo(25, -3);
-                ctx.lineTo(25, 3);
-                ctx.closePath();
-                ctx.fill();
+                // Рисуем изображение птицы
+                if (birdImage.complete) {
+                    ctx.drawImage(birdImage, -this.width/2, -this.height/2, this.width, this.height);
+                } else {
+                    // Запасной вариант, если изображение не загрузилось
+                    ctx.fillStyle = '#f8e71c';
+                    ctx.beginPath();
+                    ctx.ellipse(0, 0, this.width/2, this.height/2, 0, 0, Math.PI * 2);
+                    ctx.fill();
+                }
                 
                 ctx.restore();
             },
@@ -213,13 +211,6 @@
                 // Применяем гравитацию
                 this.velocity += this.gravity;
                 this.y += this.velocity;
-                
-                // Поворачиваем птицу в зависимости от скорости
-                if (this.velocity >= 8) {
-                    this.rotation = Math.PI/4;
-                } else {
-                    this.rotation = -Math.PI/8;
-                }
                 
                 // Проверяем столкновение с землей
                 if (this.y + this.height/2 >= canvas.height - 80) {
@@ -239,12 +230,16 @@
             
             flap: function() {
                 this.velocity = this.jump;
+                this.wingPosition = -1; // Анимация взмаха крыла
+                this.wingDirection = 1;
             },
             
             reset: function() {
                 this.y = canvas.height / 2;
                 this.velocity = 0;
                 this.rotation = 0;
+                this.wingPosition = 0;
+                this.wingDirection = 1;
             }
         };
 
@@ -253,12 +248,12 @@
             constructor() {
                 this.width = 52;
                 this.x = canvas.width;
-                this.topHeight = Math.floor(Math.random() * 200) + 50;
-                this.gap = 120;
+                this.topHeight = Math.floor(Math.random() * 180) + 60; // Увеличил минимальную высоту
+                this.gap = 140; // Увеличил зазор между трубами
                 this.bottomY = this.topHeight + this.gap;
                 this.bottomHeight = canvas.height - this.bottomY - 80;
                 this.passed = false;
-                this.speed = 2;
+                this.speed = 1.5; // Уменьшил скорость труб
             }
             
             draw() {
@@ -336,8 +331,8 @@
             
             // Обновляем трубы
             if (gameState === 'playing') {
-                // Создаем новые трубы каждые 100 кадров
-                if (frames % 100 === 0) {
+                // Создаем новые трубы каждые 120 кадров (увеличил интервал)
+                if (frames % 120 === 0) {
                     pipes.push(new Pipe());
                 }
                 
