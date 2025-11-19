@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кафка | Honkai: Star Rail</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #e6e6e6;
+            min-height: 100vh;
+            padding-bottom: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            padding: 2rem 0;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.4);
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #6a11cb;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .logo-placeholder {
+            width: 200px;
+            height: 200px;
+            background: rgba(106, 17, 203, 0.2);
+            border: 3px dashed #6a11cb;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #b19cd9;
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(106, 17, 203, 0.7);
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b19cd9;
+            margin-bottom: 1rem;
+        }
+
+        .character-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .character-image {
+            flex: 1;
+            min-width: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .character-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .character-details {
+            flex: 2;
+            min-width: 300px;
+            background: rgba(15, 52, 96, 0.6);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #9d4edd;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #6a11cb;
+            padding-bottom: 0.5rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            background: rgba(26, 26, 46, 0.7);
+            padding: 1.2rem;
+            border-radius: 8px;
+            border-left: 4px solid #6a11cb;
+        }
+
+        .info-card h3 {
+            color: #b19cd9;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .info-card p {
+            color: #e6e6e6;
+            font-size: 1rem;
+        }
+
+        .abilities {
+            margin-top: 2rem;
+        }
+
+        .ability-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .ability {
+            flex: 1;
+            min-width: 250px;
+            background: rgba(15, 52, 96, 0.6);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .ability h3 {
+            color: #9d4edd;
+            margin-bottom: 0.8rem;
+            font-size: 1.3rem;
+        }
+
+        .ability p {
+            color: #e6e6e6;
+            line-height: 1.5;
+        }
+
+        .quote {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: rgba(106, 17, 203, 0.2);
+            border-radius: 10px;
+            text-align: center;
+            font-style: italic;
+            font-size: 1.2rem;
+            border-left: 4px solid #9d4edd;
+        }
+
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 1px solid #6a11cb;
+            color: #b19cd9;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .character-info {
+                flex-direction: column;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="logo-placeholder">
+                    Место для логотипа<br>Кафки
+                </div>
+            </div>
+            <h1>Кафка</h1>
+            <div class="subtitle">Охотник за Стелларонами | Путь Небытия</div>
+        </header>
+
+        <section class="character-info">
+            <div class="character-image">
+                <!-- Замените на реальное изображение Кафки -->
+                <div style="width:100%; height:400px; background:linear-gradient(135deg, #6a11cb 0%, #2575fc 100%); display:flex; justify-content:center; align-items:center; color:white; font-size:1.2rem;">
+                    Изображение Кафки
+                </div>
+            </div>
+            <div class="character-details">
+                <h2 class="section-title">Общая информация</h2>
+                <p>Кафка — элегантная и спокойная женщина, член фракции «Охотники за Стелларонами». Она использует электрический урон и следует Пути Небытия. Кафка является ключевой фигурой в начале сюжета Honkai: Star Rail.</p>
+                
+                <div class="info-grid">
+                    <div class="info-card">
+                        <h3>Редкость</h3>
+                        <p>5-звёздочный персонаж</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Стихия</h3>
+                        <p>Электрический урон</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Путь</h3>
+                        <p>Небытие</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Фракция</h3>
+                        <p>Охотники за Стелларонами</p>
+                    </div>
+                </div>
+
+                <div class="abilities">
+                    <h2 class="section-title">Роль в сюжете</h2>
+                    <p>Кафка является ключевой фигурой в начале игры. Именно она использовала свой навык «Шёпот духа», чтобы сделать Первопроходца вместилищем для Стелларона, что положило начало вашему приключению.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="character-details">
+            <h2 class="section-title">Боевая роль</h2>
+            <p>Кафка — пятизвездочный персонаж с электрической стихией, которая отлично подходит для отрядов с периодическим уроном, так как является «сердцем» таких команд.</p>
+            
+            <div class="ability-list">
+                <div class="ability">
+                    <h3>Шёпот духа</h3>
+                    <p>Уникальный навык Кафки, который она использовала для передачи Стелларона Первопроходцу. В бою этот навык позволяет ей контролировать противников и накладывать на них эффекты.</p>
+                </div>
+                <div class="ability">
+                    <h3>Электрический урон</h3>
+                    <p>Кафка специализируется на нанесении электрического урона, который особенно эффективен против врагов со щитами и позволяет накладывать эффекты поражения электрическим током.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="character-details">
+            <h2 class="section-title">Характер и внешность</h2>
+            <p>Несмотря на свою роль преступницы, Кафка известна как спокойная, собранная и красивая женщина, которая ценит элегантность даже в бою. Её внешний вид отражает её характер — утончённый, но с намёком на опасность.</p>
+            
+            <div class="quote">
+                "Элегантность — это не роскошь, а необходимость. Даже в хаосе битвы нужно сохранять достоинство."
+            </div>
+        </section>
+
+        <footer>
+            <p>Honkai: Star Rail &copy; HoYoverse. Все права защищены.</p>
+            <p>Фан-сайт, созданный для демонстрации HTML/CSS возможностей</p>
+        </footer>
+    </div>
+</body>
+</html>
