@@ -41,8 +41,8 @@ const systemReports = {
     },
     {
       "id": "RPT-005",
-      "title": "5",
-      "description": "5",
+      "title": "pepexqw",
+      "description": "pepexqw рулит",
       "date": "2025-09-12",
       "category": "Инфраструктура",
       "priority": "high",
@@ -108,6 +108,7 @@ const systemReports = {
     "quote": "Если сомневаешься, иди спать."
   }
 };
+
 
 
 
