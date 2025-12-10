@@ -14,8 +14,8 @@ const systemReports = {
     },
     {
       "id": "RPT-002",
-      "title": "2",
-      "description": "test information for the server",
+      "title": "СРОЧНЫЕ НОВОСТИ!!!",
+      "description": "кто прочитал тот гей",
       "date": "2025-09-12",
       "category": "Визуализация",
       "priority": "medium",
@@ -108,6 +108,7 @@ const systemReports = {
     "quote": "Если сомневаешься, иди спать."
   }
 };
+
 
 
 
