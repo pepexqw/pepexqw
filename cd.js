@@ -5,8 +5,8 @@ const systemReports = {
   "achievements": [
     {
       "id": "RPT-001",
-      "title": "1",
-      "description": "1",
+      "title": "Приведствие",
+      "description": "Здравствуй, в данном приложении будет мои ‘Отчеты’, достижения и т.д\n- Мой сайт pepexqw.vercel.app\n- Мой телеграм @pepexqw\nпользуйся:3",
       "date": "2025-09-12",
       "category": "Разработка",
       "priority": "high",
@@ -108,6 +108,7 @@ const systemReports = {
     "quote": "Если сомневаешься, иди спать."
   }
 };
+
 
 
 
