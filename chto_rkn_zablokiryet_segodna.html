@@ -14,7 +14,7 @@
         }
         
         body {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            background: linear-gradient(135deg, #0c0c1d 0%, #1a1a2e 100%);
             color: #f0f0f0;
             min-height: 100vh;
             display: flex;
@@ -24,30 +24,140 @@
         }
         
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             width: 100%;
             text-align: center;
         }
         
-        header {
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
             margin-bottom: 30px;
-            padding: 20px;
-            border-radius: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            border-radius: 20px;
+            background: rgba(20, 20, 40, 0.7);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            flex-wrap: wrap;
+        }
+        
+        .rkn-logo {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(145deg, #cc0000, #ff3333);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 25px rgba(255, 50, 50, 0.5);
+            border: 5px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .rkn-logo:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+        }
+        
+        .rkn-logo span {
+            font-weight: bold;
+            font-size: 1.8rem;
+            color: white;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+            letter-spacing: 1px;
+        }
+        
+        .rkn-logo .sub {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .title-section {
+            max-width: 700px;
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 10px;
             color: #ff4d4d;
-            text-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+            text-shadow: 0 0 15px rgba(255, 77, 77, 0.7);
         }
         
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             color: #aaa;
             margin-bottom: 5px;
+        }
+        
+        .apps-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin: 40px 0;
+            flex-wrap: wrap;
+            padding: 25px;
+            border-radius: 20px;
+            background: rgba(30, 30, 60, 0.5);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            min-height: 180px;
+        }
+        
+        .app-icon {
+            width: 100px;
+            height: 100px;
+            border-radius: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .app-icon i {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .app-name {
+            font-size: 0.9rem;
+            font-weight: bold;
+            text-align: center;
+            max-width: 90px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .app-icon:hover {
+            transform: translateY(-10px) scale(1.1);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        .app-icon.blocked {
+            filter: grayscale(1) brightness(0.5);
+            opacity: 0.7;
+            transform: scale(0.9);
+        }
+        
+        .app-icon.blocked:hover {
+            transform: scale(0.9);
+        }
+        
+        .app-icon.spared {
+            box-shadow: 0 0 20px rgba(77, 255, 77, 0.7);
         }
         
         .roulette-container {
@@ -60,8 +170,8 @@
         
         .wheel-container {
             position: relative;
-            width: 400px;
-            height: 400px;
+            width: 450px;
+            height: 450px;
         }
         
         #wheel {
@@ -71,8 +181,8 @@
             position: relative;
             overflow: hidden;
             transition: transform 4s cubic-bezier(0.17, 0.67, 0.21, 0.99);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
-            border: 8px solid #333;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            border: 10px solid #333;
         }
         
         .wheel-item {
@@ -87,10 +197,19 @@
             justify-content: center;
             font-weight: bold;
             text-align: center;
-            padding-left: 60px;
-            padding-bottom: 20px;
+            padding-left: 80px;
+            padding-bottom: 30px;
             color: #000;
-            font-size: 16px;
+            font-size: 18px;
+            overflow: hidden;
+        }
+        
+        .wheel-icon {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 1.8rem;
+            z-index: 2;
         }
         
         .wheel-center {
@@ -98,57 +217,75 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 60px;
-            height: 60px;
-            background: #333;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(145deg, #cc0000, #ff3333);
             border-radius: 50%;
             z-index: 10;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 24px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.8);
+            font-size: 2.5rem;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.9);
+            border: 5px solid rgba(255, 255, 255, 0.1);
         }
         
         .pointer {
             position: absolute;
-            top: -30px;
+            top: -40px;
             left: 50%;
             transform: translateX(-50%);
-            width: 40px;
-            height: 60px;
+            width: 50px;
+            height: 70px;
             z-index: 20;
         }
         
         .pointer i {
             color: #ff4d4d;
-            font-size: 60px;
-            filter: drop-shadow(0 0 5px rgba(255, 77, 77, 0.7));
+            font-size: 70px;
+            filter: drop-shadow(0 0 8px rgba(255, 77, 77, 0.8));
         }
         
         .controls {
             display: flex;
             justify-content: center;
-            gap: 30px;
-            margin: 30px 0;
+            gap: 40px;
+            margin: 40px 0;
             flex-wrap: wrap;
         }
         
         .btn {
-            padding: 18px 35px;
-            font-size: 1.3rem;
+            padding: 20px 40px;
+            font-size: 1.4rem;
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
             cursor: pointer;
             font-weight: bold;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            min-width: 200px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            gap: 15px;
+            min-width: 240px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover:before {
+            left: 100%;
         }
         
         #spin-btn {
@@ -167,8 +304,8 @@
         }
         
         .btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
         }
         
         .btn:active {
@@ -176,151 +313,299 @@
         }
         
         .btn:disabled {
-            opacity: 0.6;
+            opacity: 0.5;
             cursor: not-allowed;
             transform: none !important;
         }
         
+        .btn:disabled:hover:before {
+            left: -100%;
+        }
+        
         .result {
             margin-top: 40px;
-            padding: 25px;
-            border-radius: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            min-height: 120px;
+            padding: 30px;
+            border-radius: 20px;
+            background: rgba(30, 30, 60, 0.7);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            min-height: 150px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            border: 2px solid rgba(255, 77, 77, 0.3);
         }
         
         .result-title {
-            font-size: 1.5rem;
-            margin-bottom: 15px;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
             color: #ffcc00;
+            text-shadow: 0 0 10px rgba(255, 204, 0, 0.5);
         }
         
         #result-text {
-            font-size: 1.8rem;
+            font-size: 2.2rem;
             font-weight: bold;
-            min-height: 60px;
+            min-height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .blocked {
             color: #ff4d4d;
-            animation: pulse 1.5s infinite;
+            animation: pulse-red 1.5s infinite;
         }
         
         .spared {
             color: #4dff4d;
-            animation: pulse 1.5s infinite;
+            animation: pulse-green 1.5s infinite;
         }
         
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
+        @keyframes pulse-red {
+            0% { text-shadow: 0 0 10px rgba(255, 77, 77, 0.7); }
+            50% { text-shadow: 0 0 25px rgba(255, 77, 77, 1); }
+            100% { text-shadow: 0 0 10px rgba(255, 77, 77, 0.7); }
+        }
+        
+        @keyframes pulse-green {
+            0% { text-shadow: 0 0 10px rgba(77, 255, 77, 0.7); }
+            50% { text-shadow: 0 0 25px rgba(77, 255, 77, 1); }
+            100% { text-shadow: 0 0 10px rgba(77, 255, 77, 0.7); }
         }
         
         .history {
-            margin-top: 30px;
+            margin-top: 40px;
             width: 100%;
-            padding: 20px;
-            border-radius: 15px;
-            background: rgba(0, 0, 0, 0.3);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            padding: 25px;
+            border-radius: 20px;
+            background: rgba(30, 30, 60, 0.7);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
         
         .history h3 {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: #ffcc00;
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
         
         #history-list {
             list-style-type: none;
-            max-height: 200px;
+            max-height: 250px;
             overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        #history-list::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        #history-list::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        #history-list::-webkit-scrollbar-thumb {
+            background: #ff4d4d;
+            border-radius: 10px;
         }
         
         #history-list li {
-            padding: 10px;
-            margin-bottom: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 8px;
+            border-radius: 12px;
             display: flex;
             justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        #history-list li:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(5px);
         }
         
         .decision-block {
             color: #ff4d4d;
+            font-weight: bold;
         }
         
         .decision-spare {
             color: #4dff4d;
+            font-weight: bold;
+        }
+        
+        .app-in-history {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .app-in-history i {
+            font-size: 1.5rem;
         }
         
         footer {
-            margin-top: 40px;
-            padding: 20px;
+            margin-top: 50px;
+            padding: 25px;
             color: #888;
-            font-size: 0.9rem;
+            font-size: 1rem;
             text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            width: 100%;
+        }
+        
+        .spinning {
+            animation: spin 2s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        
+        .spinning-apps .app-icon {
+            animation: shake 0.5s infinite alternate;
+        }
+        
+        @keyframes shake {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        @media (max-width: 1100px) {
+            .wheel-container {
+                width: 400px;
+                height: 400px;
+            }
+            
+            .apps-row {
+                gap: 20px;
+            }
+            
+            .app-icon {
+                width: 90px;
+                height: 90px;
+            }
         }
         
         @media (max-width: 768px) {
-            .wheel-container {
-                width: 300px;
-                height: 300px;
+            .header-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .rkn-logo {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .rkn-logo span {
+                font-size: 1.5rem;
             }
             
             h1 {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+            
+            .wheel-container {
+                width: 320px;
+                height: 320px;
+            }
+            
+            .wheel-item {
+                font-size: 16px;
+                padding-left: 60px;
+                padding-bottom: 20px;
             }
             
             .btn {
-                min-width: 160px;
-                padding: 15px 25px;
-                font-size: 1.1rem;
+                min-width: 200px;
+                padding: 18px 30px;
+                font-size: 1.2rem;
             }
             
-            .controls {
+            #result-text {
+                font-size: 1.8rem;
+            }
+            
+            .apps-row {
                 gap: 15px;
+            }
+            
+            .app-icon {
+                width: 80px;
+                height: 80px;
+                border-radius: 20px;
+            }
+            
+            .app-icon i {
+                font-size: 2rem;
             }
         }
         
         @media (max-width: 480px) {
             .wheel-container {
-                width: 250px;
-                height: 250px;
-            }
-            
-            .wheel-item {
-                font-size: 14px;
-                padding-left: 40px;
+                width: 280px;
+                height: 280px;
             }
             
             .controls {
                 flex-direction: column;
                 align-items: center;
+                gap: 20px;
             }
             
             .btn {
                 width: 90%;
+            }
+            
+            .apps-row {
+                gap: 10px;
+            }
+            
+            .app-icon {
+                width: 70px;
+                height: 70px;
+                border-radius: 15px;
+            }
+            
+            .app-icon i {
+                font-size: 1.8rem;
+            }
+            
+            .app-name {
+                font-size: 0.8rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1><i class="fas fa-ban"></i> Колесо блокировок РКН</h1>
-            <p class="subtitle">Что сегодня заблокирует Роскомнадзор?</p>
-            <p class="subtitle">Покрути колесо и реши судьбу!</p>
-        </header>
+        <div class="header-container">
+            <div class="rkn-logo">
+                <span>РКН</span>
+                <span class="sub">РОСКОМНАДЗОР</span>
+            </div>
+            <div class="title-section">
+                <h1><i class="fas fa-ban"></i> Колесо блокировок РКН</h1>
+                <p class="subtitle">Что сегодня заблокирует Роскомнадзор?</p>
+                <p class="subtitle">Покрути колесо и реши судьбу!</p>
+            </div>
+        </div>
+        
+        <div class="apps-row" id="apps-row">
+            <!-- Иконки приложений будут добавлены через JavaScript -->
+        </div>
         
         <div class="roulette-container">
             <div class="wheel-container">
@@ -365,28 +650,29 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const wheel = document.getElementById('wheel');
+            const appsRow = document.getElementById('apps-row');
             const spinBtn = document.getElementById('spin-btn');
             const blockBtn = document.getElementById('block-btn');
             const spareBtn = document.getElementById('spare-btn');
             const resultText = document.getElementById('result-text');
             const historyList = document.getElementById('history-list');
             
-            // Варианты для блокировки
+            // Варианты для блокировки с иконками
             const options = [
-                "ТикТок",
-                "YouTube",
-                "WhatsApp",
-                "Instagram*",
-                "Телеграм",
-                "ВКонтакте",
-                "Одноклассники",
-                "Сайт оппозиции",
-                "Случайный VPN",
-                "Стриминговый сервис",
-                "Игра с микроплатежами",
-                "Пиратский сайт",
-                "Иностранная соцсеть",
-                "Новостной портал"
+                {name: "ТикТок", icon: "fab fa-tiktok", color: "#000000"},
+                {name: "YouTube", icon: "fab fa-youtube", color: "#FF0000"},
+                {name: "WhatsApp", icon: "fab fa-whatsapp", color: "#25D366"},
+                {name: "Instagram", icon: "fab fa-instagram", color: "#E4405F"},
+                {name: "Телеграм", icon: "fab fa-telegram", color: "#0088CC"},
+                {name: "ВКонтакте", icon: "fab fa-vk", color: "#0077FF"},
+                {name: "Одноклассники", icon: "fab fa-odnoklassniki", color: "#EE8208"},
+                {name: "Twitter", icon: "fab fa-twitter", color: "#1DA1F2"},
+                {name: "Discord", icon: "fab fa-discord", color: "#5865F2"},
+                {name: "Zoom", icon: "fas fa-video", color: "#2D8CFF"},
+                {name: "Spotify", icon: "fab fa-spotify", color: "#1DB954"},
+                {name: "Netflix", icon: "fas fa-film", color: "#E50914"},
+                {name: "Twitch", icon: "fab fa-twitch", color: "#9146FF"},
+                {name: "Reddit", icon: "fab fa-reddit", color: "#FF4500"}
             ];
             
             const colors = [
@@ -401,6 +687,28 @@
             let selectedOption = null;
             let selectedIndex = -1;
             let history = [];
+            let blockedApps = [];
+            let sparedApps = [];
+            
+            // Создаем ряд иконок приложений
+            function createAppsRow() {
+                appsRow.innerHTML = '';
+                options.forEach((option, index) => {
+                    const app = document.createElement('div');
+                    app.className = 'app-icon';
+                    app.id = `app-${index}`;
+                    app.dataset.index = index;
+                    app.style.background = `linear-gradient(145deg, ${option.color}99, ${option.color}66)`;
+                    app.style.border = `3px solid ${option.color}`;
+                    
+                    app.innerHTML = `
+                        <i class="${option.icon}"></i>
+                        <div class="app-name">${option.name}</div>
+                    `;
+                    
+                    appsRow.appendChild(app);
+                });
+            }
             
             // Создаем колесо
             function createWheel() {
@@ -410,13 +718,22 @@
                 options.forEach((option, index) => {
                     const item = document.createElement('div');
                     item.className = 'wheel-item';
-                    item.textContent = option;
                     item.style.backgroundColor = colors[index % colors.length];
+                    item.style.border = `2px solid ${option.color}`;
                     item.style.transform = `rotate(${index * angle}deg)`;
                     
                     // Добавляем текст под правильным углом
                     const textAngle = index * angle + angle/2;
                     item.style.transform = `rotate(${textAngle}deg)`;
+                    
+                    item.innerHTML = `
+                        <div class="wheel-icon" style="color: ${option.color}">
+                            <i class="${option.icon}"></i>
+                        </div>
+                        <div style="transform: rotate(-${textAngle}deg); font-weight: bold; color: #000;">
+                            ${option.name}
+                        </div>
+                    `;
                     
                     wheel.appendChild(item);
                 });
@@ -430,6 +747,9 @@
                 spinBtn.disabled = true;
                 blockBtn.disabled = true;
                 spareBtn.disabled = true;
+                
+                // Добавляем анимацию тряски иконкам
+                appsRow.classList.add('spinning-apps');
                 
                 // Случайное замедление и остановка
                 const spins = 5 + Math.random() * 3; // 5-8 полных оборотов
@@ -449,15 +769,28 @@
                 // Обновляем результат после завершения вращения
                 setTimeout(() => {
                     isSpinning = false;
-                    resultText.textContent = `Выпало: ${selectedOption}`;
-                    resultText.className = '';
+                    appsRow.classList.remove('spinning-apps');
+                    
+                    // Подсвечиваем выбранное приложение
+                    const selectedApp = document.getElementById(`app-${selectedIndex}`);
+                    selectedApp.style.boxShadow = `0 0 25px ${selectedOption.color}`;
+                    selectedApp.style.transform = 'scale(1.2)';
+                    
+                    // Через 2 секунды убираем подсветку
+                    setTimeout(() => {
+                        selectedApp.style.boxShadow = '';
+                        selectedApp.style.transform = '';
+                    }, 2000);
+                    
+                    resultText.innerHTML = `
+                        <i class="${selectedOption.icon}" style="color: ${selectedOption.color}"></i>
+                        <span>${selectedOption.name}</span>
+                        <span> - выберите решение!</span>
+                    `;
                     
                     // Активируем кнопки решения
                     blockBtn.disabled = false;
                     spareBtn.disabled = false;
-                    
-                    // Сообщение о решении
-                    resultText.textContent = `Выпало: ${selectedOption}. Выберите решение!`;
                 }, 4000);
             }
             
@@ -465,7 +798,16 @@
             function blockOption() {
                 if (!selectedOption || isSpinning) return;
                 
-                resultText.innerHTML = `<span class="blocked"><i class="fas fa-ban"></i> ${selectedOption} заблокирован!</span>`;
+                resultText.innerHTML = `
+                    <i class="${selectedOption.icon}" style="color: ${selectedOption.color}"></i>
+                    <span class="blocked">${selectedOption.name} заблокирован!</span>
+                `;
+                
+                // Добавляем приложение в список заблокированных
+                blockedApps.push(selectedIndex);
+                const appElement = document.getElementById(`app-${selectedIndex}`);
+                appElement.classList.add('blocked');
+                
                 addToHistory(selectedOption, 'block');
                 
                 // Деактивируем кнопки
@@ -478,7 +820,16 @@
             function spareOption() {
                 if (!selectedOption || isSpinning) return;
                 
-                resultText.innerHTML = `<span class="spared"><i class="fas fa-heart"></i> ${selectedOption} пощажен!</span>`;
+                resultText.innerHTML = `
+                    <i class="${selectedOption.icon}" style="color: ${selectedOption.color}"></i>
+                    <span class="spared">${selectedOption.name} пощажен!</span>
+                `;
+                
+                // Добавляем приложение в список пощаженных
+                sparedApps.push(selectedIndex);
+                const appElement = document.getElementById(`app-${selectedIndex}`);
+                appElement.classList.add('spared');
+                
                 addToHistory(selectedOption, 'spare');
                 
                 // Деактивируем кнопки
@@ -498,13 +849,17 @@
                 const historyItem = document.createElement('li');
                 const decisionClass = decision === 'block' ? 'decision-block' : 'decision-spare';
                 const decisionText = decision === 'block' ? 'Заблокирован' : 'Пощажен';
+                const decisionIcon = decision === 'block' ? 'fa-ban' : 'fa-heart';
                 
                 historyItem.innerHTML = `
-                    <span>${option}</span>
-                    <span class="${decisionClass}">
-                        <i class="fas fa-${decision === 'block' ? 'ban' : 'heart'}"></i> 
+                    <div class="app-in-history">
+                        <i class="${option.icon}" style="color: ${option.color}"></i>
+                        <span>${option.name}</span>
+                    </div>
+                    <div class="${decisionClass}">
+                        <i class="fas ${decisionIcon}"></i> 
                         ${decisionText} в ${timeString}
-                    </span>
+                    </div>
                 `;
                 
                 // Добавляем в начало списка
@@ -535,12 +890,18 @@
             blockBtn.addEventListener('click', blockOption);
             spareBtn.addEventListener('click', spareOption);
             
-            // Создаем колесо при загрузке
+            // Создаем ряд иконок и колесо при загрузке
+            createAppsRow();
             createWheel();
             
             // Добавляем пример в историю для наглядности
             setTimeout(() => {
-                addToHistory("Пример сервиса", 'block');
+                addToHistory(options[3], 'block');
+                addToHistory(options[7], 'spare');
+                
+                // Добавляем визуальные эффекты для примера
+                document.getElementById('app-3').classList.add('blocked');
+                document.getElementById('app-7').classList.add('spared');
             }, 1000);
         });
     </script>
