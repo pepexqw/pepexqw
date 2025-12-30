@@ -1,1 +1,641 @@
-test
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>История обновлений | Telegram Бот</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        :root {
+            --primary: #0088cc; /* Telegram blue */
+            --bg-dark: #0f0f23;
+            --bg-card: #1a1a2e;
+            --text: #e0e0e0;
+            --text-secondary: #a0a0c0;
+            --border: #2d2d4d;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: radial-gradient(circle at 20% 30%, rgba(0, 136, 204, 0.05) 0%, transparent 20%),
+                              radial-gradient(circle at 80% 70%, rgba(46, 204, 113, 0.05) 0%, transparent 20%);
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 20px;
+            border-bottom: 2px solid var(--border);
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 20%;
+            right: 20%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+
+        .bot-icon {
+            font-size: 3.5rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+            display: inline-block;
+            background: rgba(0, 136, 204, 0.1);
+            width: 100px;
+            height: 100px;
+            line-height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--primary);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, var(--primary), #2ecc71);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 20px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            min-width: 150px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 25px;
+            border: 2px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--primary), transparent);
+            border-radius: 2px;
+        }
+
+        .update-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 30px;
+            margin-left: 70px;
+            border-left: 5px solid var(--primary);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .update-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .update-card.major {
+            border-left-color: var(--success);
+            background: linear-gradient(to right, rgba(46, 204, 113, 0.05), var(--bg-card));
+        }
+
+        .update-card.minor {
+            border-left-color: var(--text-secondary);
+        }
+
+        .version-badge {
+            position: absolute;
+            left: -70px;
+            top: 25px;
+            width: 50px;
+            height: 50px;
+            background: var(--bg-dark);
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .update-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .update-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .update-date {
+            background: rgba(0, 136, 204, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .update-description {
+            color: var(--text);
+            margin-bottom: 20px;
+            padding-right: 10px;
+        }
+
+        .features {
+            margin-top: 15px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+
+        .feature i {
+            color: var(--success);
+            margin-right: 12px;
+            margin-top: 3px;
+            font-size: 1.1rem;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .tags {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 5px 12px;
+            background: rgba(0, 136, 204, 0.15);
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .tag.new { background: rgba(46, 204, 113, 0.15); color: var(--success); }
+        .tag.fix { background: rgba(231, 76, 60, 0.15); color: var(--danger); }
+        .tag.improvement { background: rgba(243, 156, 18, 0.15); color: var(--warning); }
+
+        footer {
+            text-align: center;
+            margin-top: 60px;
+            padding: 30px;
+            color: var(--text-secondary);
+            border-top: 1px solid var(--border);
+            font-size: 0.9rem;
+        }
+
+        .telegram-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .telegram-link:hover {
+            background: #0077b3;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 136, 204, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .update-card {
+                margin-left: 50px;
+            }
+            
+            .version-badge {
+                left: -50px;
+                width: 40px;
+                height: 40px;
+                font-size: 0.8rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                gap: 15px;
+            }
+            
+            .stat-item {
+                min-width: 120px;
+                padding: 10px;
+            }
+            
+            .stat-value {
+                font-size: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .update-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filters {
+                gap: 10px;
+            }
+            
+            .filter-btn {
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="bot-icon">
+                <i class="fab fa-telegram"></i>
+            </div>
+            <h1>История обновлений</h1>
+            <p class="subtitle">Здесь вы можете отслеживать все изменения и улучшения нашего Telegram-бота. Мы постоянно работаем над добавлением новых функций и улучшением существующих.</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-value">24</div>
+                    <div class="stat-label">Всего обновлений</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">Крупных версий</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">2024</div>
+                    <div class="stat-label">Текущий год</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">2.5.0</div>
+                    <div class="stat-label">Текущая версия</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterUpdates('all')">Все обновления</button>
+            <button class="filter-btn" onclick="filterUpdates('major')">Крупные</button>
+            <button class="filter-btn" onclick="filterUpdates('minor')">Мелкие</button>
+            <button class="filter-btn" onclick="filterUpdates('fixes')">Исправления</button>
+        </div>
+
+        <div class="timeline">
+            <!-- Версия 2.5.0 -->
+            <div class="update-card major" data-category="major">
+                <div class="version-badge">2.5.0</div>
+                <div class="update-header">
+                    <div class="update-title">Интеграция с платёжными системами</div>
+                    <div class="update-date">15 Апрель 2024</div>
+                </div>
+                <div class="update-description">
+                    Крупное обновление с добавлением возможности оплаты прямо в боте и улучшением производительности.
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-plus-circle"></i>
+                        <div class="feature-text">Добавлена поддержка платежей через ЮKassa, Stripe и Crypto</div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <div class="feature-text">Оптимизирована загрузка данных, скорость работы увеличена на 40%</div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-shield-alt"></i>
+                        <div class="feature-text">Улучшена безопасность и добавлено двухфакторная аутентификация</div>
+                    </div>
+                </div>
+                <div class="tags">
+                    <div class="tag new">Новая функция</div>
+                    <div class="tag improvement">Улучшение</div>
+                    <div class="tag">Безопасность</div>
+                </div>
+            </div>
+
+            <!-- Версия 2.4.3 -->
+            <div class="update-card minor" data-category="minor">
+                <div class="version-badge">2.4.3</div>
+                <div class="update-header">
+                    <div class="update-title">Исправления и небольшие улучшения</div>
+                    <div class="update-date">2 Апрель 2024</div>
+                </div>
+                <div class="update-description">
+                    Обновление содержит исправления ошибок и незначительные улучшения пользовательского интерфейса.
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-bug"></i>
+                        <div class="feature-text">Исправлен баг с отображением уведомлений на iOS устройствах</div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-palette"></i>
+                        <div class="feature-text">Обновлены иконки в меню настроек для лучшей читаемости</div>
+                    </div>
+                </div>
+                <div class="tags">
+                    <div class="tag fix">Исправление</div>
+                    <div class="tag improvement">UI/UX</div>
+                </div>
+            </div>
+
+            <!-- Версия 2.4.0 -->
+            <div class="update-card major" data-category="major">
+                <div class="version-badge">2.4.0</div>
+                <div class="update-header">
+                    <div class="update-title">Новая система аналитики</div>
+                    <div class="update-date">18 Март 2024</div>
+                </div>
+                <div class="update-description">
+                    Добавлена мощная система аналитики для администраторов и улучшены инструменты модерации.
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-chart-line"></i>
+                        <div class="feature-text">Добавлены детальные графики активности пользователей</div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-robot"></i>
+                        <div class="feature-text">Улучшен AI-модератор с автоматическим определением спама</div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-download"></i>
+                        <div class="feature-text">Добавлена возможность экспорта данных в CSV и Excel</div>
+                    </div>
+                </div>
+                <div class="tags">
+                    <div class="tag new">Аналитика</div>
+                    <div class="tag">Для админов</div>
+                    <div class="tag improvement">Модерация</div>
+                </div>
+            </div>
+
+            <!-- Версия 2.3.1 -->
+            <div class="update-card minor" data-category="fixes">
+                <div class="version-badge">2.3.1</div>
+                <div class="update-header">
+                    <div class="update-title">Экстренные исправления</div>
+                    <div class="update-date">5 Март 2024</div>
+                </div>
+                <div class="update-description">
+                    Срочное обновление для устранения критических проблем с отправкой медиафайлов.
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <div class="feature-text">Исправлена утечка памяти при загрузке больших файлов</div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-video"></i>
+                        <div class="feature-text">Устранена проблема с отправкой видео длительностью более 5 минут</div>
+                    </div>
+                </div>
+                <div class="tags">
+                    <div class="tag fix">Критическое</div>
+                    <div class="tag">Стабильность</div>
+                </div>
+            </div>
+
+            <!-- Версия 2.3.0 -->
+            <div class="update-card major" data-category="major">
+                <div class="version-badge">2.3.0</div>
+                <div class="update-header">
+                    <div class="update-title">Мини-игры и развлечения</div>
+                    <div class="update-date">20 Февраль 2024</div>
+                </div>
+                <div class="update-description">
+                    Крупное обновление с добавлением развлекательного функционала и мини-игр для пользователей.
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-gamepad"></i>
+                        <div class="feature-text">Добавлено 5 новых мини-игр: викторина, квест, слова и другие</div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-trophy"></i>
+                        <div class="feature-text">Введена система лидеров и ежедневные награды</div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-users"></i>
+                        <div class="feature-text">Добавлен режим мультиплеера для игр с друзьями</div>
+                    </div>
+                </div>
+                <div class="tags">
+                    <div class="tag new">Игры</div>
+                    <div class="tag improvement">Развлечения</div>
+                    <div class="tag">Социальное</div>
+                </div>
+            </div>
+
+            <!-- Версия 2.2.0 -->
+            <div class="update-card major" data-category="major">
+                <div class="version-badge">2.2.0</div>
+                <div class="update-header">
+                    <div class="update-title">Система профилей и достижений</div>
+                    <div class="update-date">28 Январь 2024</div>
+                </div>
+                <div class="update-description">
+                    Полностью переработанная система профилей пользователей с ачивками и статистикой.
+                </div>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-user-circle"></i>
+                        <div class="feature-text">Кастомизируемые профили с аватарами и био</div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-medal"></i>
+                        <div class="feature-text">Система из 50+ достижений для разблокировки</div>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-chart-bar"></i>
+                        <div class="feature-text">Детальная статистика активности в боте</div>
+                    </div>
+                </div>
+                <div class="tags">
+                    <div class="tag new">Профили</div>
+                    <div class="tag">Ачивки</div>
+                    <div class="tag improvement">Статистика</div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Бот постоянно развивается. Следите за обновлениями!</p>
+            <p>Есть предложения? Напишите нам в Telegram</p>
+            <a href="https://t.me/your_bot" class="telegram-link" target="_blank">
+                <i class="fab fa-telegram"></i> Перейти в бота
+            </a>
+            <p style="margin-top: 25px; font-size: 0.8rem; opacity: 0.7;">
+                © 2024 Ваш Telegram Бот. Все права защищены.<br>
+                Версия страницы: 1.0 | Последнее обновление данных: 15.04.2024
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Фильтрация обновлений
+        function filterUpdates(category) {
+            // Обновляем активную кнопку
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Показываем/скрываем карточки
+            const cards = document.querySelectorAll('.update-card');
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.style.display = 'block';
+                } else {
+                    if (card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                }
+            });
+            
+            // Плавная прокрутка вверх
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // Анимация появления карточек при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.update-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+
+        // Подсветка текущей версии
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentVersion = document.querySelector('.update-card:first-child');
+            if (currentVersion) {
+                currentVersion.style.boxShadow = '0 10px 25px rgba(0, 136, 204, 0.3)';
+                currentVersion.style.borderLeftWidth = '8px';
+            }
+        });
+    </script>
+</body>
+</html>
