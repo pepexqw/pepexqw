@@ -6,6 +6,13 @@
       "author": "pepexqw",
       "created_at": "2025-12-31T13:04:14.880219",
       "message_count": 3
+    },
+    {
+      "id": 2,
+      "title": "Гугл.B.Duck",
+      "author": "B.Duck",
+      "created_at": "2025-12-31T13:17:12.603119",
+      "message_count": 1
     }
   ],
   "messages": [
@@ -32,8 +39,16 @@
       "content": "Очень информативное дослье я его отправил правительству! ! ! :3",
       "created_at": "2025-12-31T13:06:44.494428",
       "is_first": false
+    },
+    {
+      "id": 4,
+      "topic_id": 2,
+      "author": "B.Duck",
+      "content": "Я хочу тему. На заднем фоне будет утка с ножом в новогоднем свитере. А над ней надпись ты съел мое печенье?!\n\nА еще на переднем плане будет Nyan Cat с сидящим pepe:3 с новогодней шапкой !",
+      "created_at": "2025-12-31T13:17:12.603138",
+      "is_first": true
     }
   ],
-  "next_topic_id": 2,
-  "next_message_id": 4
+  "next_topic_id": 3,
+  "next_message_id": 5
 }
