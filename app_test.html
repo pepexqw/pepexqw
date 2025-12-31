@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заменить страницу</title>
+    <style>
+        /* Стиль для фрейма, чтобы занимал всю страницу */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="contentFrame" src="http://gepbx-80-251-225-243.a.free.pinggy.link"></iframe>
+
+    <script>
+        // JavaScript для замены src фрейма
+        function replaceFrame(url) {
+            document.getElementById('contentFrame').src = url;
+        }
+
+        // Пример вызова функции для замены URL фрейма
+        // В этом случае фрейм уже заменяет всю страницу
+        // Замените "http://example.com" на нужный вам URL по желанию
+        replaceFrame('http://gepbx-80-251-225-243.a.free.pinggy.link');
+    </script>
+</body>
+</html>
