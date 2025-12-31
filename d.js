@@ -12,7 +12,7 @@
       "title": "Гугл.B.Duck",
       "author": "B.Duck",
       "created_at": "2025-12-31T13:17:12.603119",
-      "message_count": 1
+      "message_count": 2
     }
   ],
   "messages": [
@@ -47,8 +47,16 @@
       "content": "Я хочу тему. На заднем фоне будет утка с ножом в новогоднем свитере. А над ней надпись ты съел мое печенье?!\n\nА еще на переднем плане будет Nyan Cat с сидящим pepe:3 с новогодней шапкой !",
       "created_at": "2025-12-31T13:17:12.603138",
       "is_first": true
+    },
+    {
+      "id": 5,
+      "topic_id": 2,
+      "author": "pepexqw",
+      "content": "Очень крутая тема обязательно добавлю!:3",
+      "created_at": "2025-12-31T13:18:55.633072",
+      "is_first": false
     }
   ],
   "next_topic_id": 3,
-  "next_message_id": 5
+  "next_message_id": 6
 }
