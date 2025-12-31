@@ -5,7 +5,7 @@
       "title": "Правила форума",
       "author": "pepexqw",
       "created_at": "2025-12-31T13:04:14.880219",
-      "message_count": 2
+      "message_count": 3
     }
   ],
   "messages": [
@@ -24,8 +24,16 @@
       "content": "mfmf  dkemcddkif",
       "created_at": "2025-12-31T13:05:34.466525",
       "is_first": false
+    },
+    {
+      "id": 3,
+      "topic_id": 1,
+      "author": "B.Duck",
+      "content": "Очень информативное дослье я его отправил правительству! ! ! :3",
+      "created_at": "2025-12-31T13:06:44.494428",
+      "is_first": false
     }
   ],
   "next_topic_id": 2,
-  "next_message_id": 3
+  "next_message_id": 4
 }
